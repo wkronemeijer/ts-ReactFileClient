@@ -2,15 +2,8 @@
 // i.e. stuff which shouldn't error at all.
 // Now it is a load of functions which `throw new Error` in creative ways.
 
+import { Exception } from "./Assert";
 
-///////////////////////
-// Core of the issue //
-///////////////////////
-
-// Called issue because bug was too judgemental
-/** Splits errors between "exceptions" and "bugs". This base class is for the latter. */
-export class Issue extends Error { }
-// FEATURE: Automatically create a github issue when one of these is thrown.
 
 ///////////////////////////////
 // Throwing in creative ways //
@@ -18,16 +11,32 @@ export class Issue extends Error { }
 
 /** Marks a function as not (yet) implemented. */
 export function notImplemented(): never {
-    throw new Issue("This method is not (yet) implemented.");
+    throw new Error("This method is not (yet) implemented.");
+}
+
+/** Marks a function as no longer supported. */
+export function deprecated(): never {
+    throw new Error("This method is no longer supported.");
 }
 
 /** Marks a function as abstract. */
 export function abstract(): never {
-    throw new Issue("This method is abstract.");
+    throw new Error("This method is abstract.");
 }
 
-// Useful when deep in a conditional expression, and no options remain.
-/** Throw an error, when no other course of action remains. */
-export function panic(reason = "No reason given."): never {
-    throw new Issue(reason);
+/** Throw an error. The only honorable option when no other course of action remains. */
+export function panic(reason?: string): never {
+    throw new Error(reason);
+}
+
+// TODO: Improve this name. 
+/** Throw an exception. The only honorable option when no other course of action remains. */
+export function mildPanic(reason?: string): never {
+    throw new Exception(reason);
+}
+
+// TODO: Better name.
+/** Just like `panic`, except for those cases where some variable has been narrowed to `never`. */
+export function neverPanic(missingCase: never): never {
+    throw new Error(`Missing a case for '${missingCase}'.`);
 }

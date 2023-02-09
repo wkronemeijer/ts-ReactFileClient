@@ -1,38 +1,46 @@
-
-
-
-// TODO: Come up with better names for keyof_t and typeof_t
+///////////
+// keyof //
+///////////
 
 /** A union of all possible `keyof` types. */
 export type keyof_t = keyof any;
+/** Returns all possible keys, not all guaranteed keys. See it as "maximum" keyof for type unions. */
+export type DistributeKeyof<T> = T extends any ? keyof T : never;
+
+////////////
+// typeof //
+////////////
+
 /** A union of all possible `typeof` types. */
 export type typeof_t = typeof __typeofValue;
 /** Dummy variable for typeof_t */
-const __typeofValue = typeof NaN;
+const __typeofValue = typeof NaN; // <- One day they will fix this 
 
+///////////////////////////////////////////////////////////
+// Converting `typeof` strings to types (and back again) //
+///////////////////////////////////////////////////////////
 
-/*
-Template for new typeof-related functions.
-    T extends "string"    ? never :
-    T extends "number"    ? never :
-    T extends "bigint"    ? never :
-    T extends "boolean"   ? never :
-    T extends "symbol"    ? never :
-    T extends "undefined" ? never :
-    T extends "function"  ? never :
-    T extends "object"    ? never :
-    never
-*/
-
-/** Transforms  */
-export type TypeofSource<T extends typeof_t> = 
-    T extends "string"    ? string    :
-    T extends "number"    ? number    :
-    T extends "bigint"    ? bigint    :
-    T extends "boolean"   ? boolean   :
-    T extends "symbol"    ? symbol    :
+/** Transforms from the `typeof` string back to the type. */
+export type TypeStringToType<T extends typeof_t> = 
     T extends "undefined" ? undefined :
-    T extends "function"  ? Function  :
-    T extends "object"    ? object    :
-    unknown
+    T extends   "boolean" ?   boolean :
+    T extends    "string" ?    string :
+    T extends    "number" ?    number :
+    T extends    "bigint" ?    bigint :
+    T extends    "symbol" ?    symbol :
+    T extends  "function" ?  Function :
+    T extends    "object" ?    object :
+    never
+;
+
+/** Transforms from the type to the `typeof` string. */
+export type TypeToTypeString<T> =
+    T extends undefined ? "undefined" :
+    T extends   boolean ?   "boolean" :
+    T extends    string ?    "string" :
+    T extends    number ?    "number" :
+    T extends    bigint ?    "bigint" :
+    T extends    symbol ?    "symbol" :
+    T extends  Function ?  "function" : // Function extends object, so we must check it first.
+    "object"
 ;
