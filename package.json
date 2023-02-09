@@ -1,0 +1,33 @@
+{
+    "name": "uitdrukkingsrekenmachine",
+    "version": "0.1.0",
+    "description": "A simple expresion-based calculator.",
+    "author": "wkronemeijer",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/express": "*",
+        "@types/node": "^18.13.0",
+        "@types/react": "*",
+        "@types/react-dom": "*",
+        "@types/react-router-dom": "*",
+        "css-loader": "*",
+        "history": "*",
+        "less": "*",
+        "less-loader": "*",
+        "sass": "^1.58.0",
+        "sass-loader": "^13.2.0",
+        "source-map-loader": "*",
+        "style-loader": "*",
+        "ts-loader": "*",
+        "typescript": "*",
+        "webpack": "*",
+        "webpack-cli": "*"
+    },
+    "dependencies": {
+        "@types/history": "^5.0.0",
+        "express": "*",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-router-dom": "^6.8.1"
+    }
+}

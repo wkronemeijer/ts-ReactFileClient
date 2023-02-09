@@ -1,0 +1,32 @@
+{
+    "compilerOptions": {
+        "checkJs": true,
+        
+        "types": [
+            "node", 
+            "@local/system"
+        ],
+        
+        // JavaScript interop
+        "target": "ES2022", // ts-loader breaks with ES2020
+        "lib": [
+            "dom",
+            "es2022"
+        ],
+        
+        "module": "CommonJS",
+        "moduleResolution": "node",
+        
+        // Strictness
+        "strict": true,
+        
+        "strictBindCallApply": true,
+        "strictFunctionTypes": true,
+        
+        "noUncheckedIndexedAccess": true,
+        "noUnusedParameters": false,
+        "noUnusedLocals": false,
+        "noImplicitAny": true
+    },
+    "include": ["server"]
+}

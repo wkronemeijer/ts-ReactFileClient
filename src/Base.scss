@@ -1,0 +1,30 @@
+:root {
+    //////////////////
+    // Text styling //
+    //////////////////
+    
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    color: black;
+    
+    ///////////////
+    // Variables //
+    ///////////////
+    
+    // Frosted glass look
+    --frost-radius: 5px;
+    --frost-background: hsla(0, 0, 100%, 25%);
+    --frost-blur: blur(10px);
+}
+
+body {
+    min-height: 100vh;
+    // Background
+    background: url("/background.jpg");
+    background-position: center center;
+}
+
+#Viewport {
+    display: contents;
+}

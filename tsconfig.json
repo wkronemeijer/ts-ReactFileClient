@@ -1,0 +1,36 @@
+{
+    "compilerOptions": {
+        // Emit
+        "outDir": "./dist",
+        "sourceRoot": "./src",
+        
+        "alwaysStrict": true,
+        "sourceMap": true,
+        "module": "commonjs",
+        "jsx": "react-jsx",
+        
+        // JavaScript interop
+        "target": "ES2022", // ts-loader breaks with ES2020
+        "lib": [
+            "dom",
+            "es2022"
+        ],
+        "types": [
+            "react",
+            "react-dom",
+            "react-router-dom"
+        ],
+        
+        // Strictness
+        "strict": true,
+        
+        "strictBindCallApply": true,
+        "strictFunctionTypes": true,
+        
+        "noUncheckedIndexedAccess": true,
+        "noUnusedParameters": false,
+        "noUnusedLocals": false,
+        "noImplicitAny": true
+    },
+    "include": ["./src"]
+}
