@@ -3,8 +3,8 @@
 
 import { Array_firstElement, Array_IndexNotFound, Array_lastElement } from "../Collections/Array";
 import { equals as System_equals, EqualityComparer } from "../Traits/Equatable";
-import { compare as System_compare, Comparer } from "../Traits/Comparable";
-import { ensures, requires } from "../Assert";
+import { compare as System_compare, Comparer, ComparerDelegate } from "../Traits/Comparable";
+import { assert, ensures, requires } from "../Assert";
 import { ArrayMember } from "./Enumeration";
 import { Map_reverse } from "../Collections/Map";
 import { Set_hasAny } from "../Collections/Set";
@@ -20,20 +20,26 @@ export type StringEnum_Member<EAny extends StringEnum<any>> =
 
 // Techincally, this stuff should be stratified by features
 export interface StringEnum<E extends string> 
-extends Iterable<E> {
+extends Iterable<E>, ComparerDelegate<E> {
     /** All values, in ascending order. */
     readonly values: readonly E[];
+    toString(): string;
     /** Default value for this enum. 
      * 
      * Note that reserved names can used for properties (but not for identifiers). */
     readonly default: E;
     
     /** Returns a new {@link StringEnum} with a different {@link default}. */
-    withDefault(newDefault: E): StringEnum<E>;
+    withDefault(newDefault: E): this;
+    
+    /** Returns a new {@link StringEnum} with extra methods. */
+    withMethods<M extends {}>(extraMethods: (Self: this) => M): this & M;
     
     /** All values as a set. Renamed for intellisense. */
     readonly setOfValues: ReadonlySet<E>;
     
+    /** Verifies that given argument is a member of this enum. */
+    check(x: unknown): E;
     /** Checks if a random value belongs to this enum. */
     hasInstance(x: unknown): x is E;
     
@@ -62,10 +68,10 @@ extends Iterable<E> {
 // How to name this...
 // algebraic thing where you convert it, do a thing, then convert it back
 // functor? homomorphism? idk
-function oneway_thingy<E extends readonly string[], T>(
-    values: E,
+function oneway_thingy<EA extends readonly string[], T>(
+    values: EA,
     func: (a: number, b: number) => T
-): (a: ArrayMember<E>, b: ArrayMember<E>) => T {
+): (a: ArrayMember<EA>, b: ArrayMember<EA>) => T {
     
     return (a, b) => {
         const ind_a = values.indexOf(a);
@@ -78,61 +84,81 @@ function oneway_thingy<E extends readonly string[], T>(
     };
 }
 
-function andbackagain_thingy<E extends readonly string[]>(
-    values: E,
+function andbackagain_thingy<EA extends readonly string[]>(
+    values: EA,
     func: (a: number, b: number) => number
-): (a: ArrayMember<E>, b: ArrayMember<E>) => ArrayMember<E> {
+): (a: ArrayMember<EA>, b: ArrayMember<EA>) => ArrayMember<EA> {
     const oneway = oneway_thingy(values, func);
-    return (a, b): ArrayMember<E> => {
+    return (a, b): ArrayMember<EA> => {
         const result = values[oneway(a, b)];
         ensures(result !== undefined, () => `Function '${func.name}' return out of range.`);
         return result;
     };
 }
 
+export type  StringEnum_Placeholder = true;
+/* Alright placeholder options:
+
+true        -> simple
+undefined   -> long, buggy
+null        -> ewww
+0           -> number, breaks code
+"auto"      -> comphrehensive, long
+"iota"      -> is what it is supposed to resemble
+"++"        -> too fiddly
+_           -> short, requires global symbol definition
+__          -> different from ignored parameter, but overlaps with super-secret identifiers
+
+*/
+
 type StringEnum_Initializer<E extends string> =
     | readonly E[]
-    | { readonly [P in E]: number }
+    | { readonly [P in E]: unknown }
 ;
 
 type OrdinalMap<E extends string> = ReadonlyMap<E, number>;
 
-function OrdinalMap_fromInitializer<E extends string>(values: StringEnum_Initializer<E>): OrdinalMap<E> {
-    const result = new Map<E, number>();
-    const usedNames = new Set<E>();
-    const usedOrdinals = new Set<number>();
+function OrdinalMap_fromInitializer<E extends string>(
+    values: StringEnum_Initializer<E>,
+): OrdinalMap<E> {
+    const result       = new Map<E, number>;
+    const usedNames    = new Set<E>;
+    const usedOrdinals = new Set<number>;
     
     function addMember(name: E, ordinal: number): void {
-        requires(!usedNames.has(name), `Duplicate name '${name}'.`);
-        requires(!usedOrdinals.has(ordinal), `Duplicate ordinal '${ordinal}'`);
-
+        requires(!usedNames.has(name),       
+            () => `Duplicate name '${name}'.`);
+        requires(!usedOrdinals.has(ordinal), 
+            () => `Duplicate ordinal '${ordinal}'.`);
+        
         result.set(name, ordinal);
-
         usedNames.add(name);
         usedOrdinals.add(ordinal);
     }
     
+    /** This stores the **next** ordinal. */
+    let iota = 0;
     if (values instanceof Array) {
-        let iota = 0;
         for (const name of values) {
             addMember(name, iota++);
         }
     } else {
         for (const name in values) {
-            const ordinal = values[name];
+            const value   = Number(values[name]);
+            const ordinal = isFinite(value) ? value : iota;
             addMember(name, ordinal);
+            iota = ordinal + 1;
         }
     }
     
     return result;
 }
 
-
-function createStringEnumWithOrdinals<E extends string>(ordinalByMember: OrdinalMap<E>): StringEnum<E> {
-    requires(ordinalByMember.size > 0, `StringEnum must not be empty.`);
-
-    const memberByOrdinal = Map_reverse(ordinalByMember);
-    const leastOrdinal = Math.min(...ordinalByMember.values());
+function createStringEnumWithOrdinals<E extends string>(ordinalByName: OrdinalMap<E>): StringEnum<E> {
+    requires(ordinalByName.size > 0, `StringEnum must not be empty.`);
+    
+    const memberByOrdinal = Map_reverse(ordinalByName);
+    const leastOrdinal    = Math.min(...ordinalByName.values());
     
     const defaultValue = (
         memberByOrdinal.get(0) ??
@@ -140,21 +166,23 @@ function createStringEnumWithOrdinals<E extends string>(ordinalByMember: Ordinal
         panic("Ordinal was empty?")
     );
     
-    const values = Array.from(ordinalByMember.keys());
+    const values      = Array.from(ordinalByName.keys());
     const setOfValues = new Set(values);
-    requires(setOfValues.size === values.length, "All members must be unique.");
+    assert(setOfValues.size === values.length, "All members must be unique.");
     
     const hasInstance = (x: unknown): x is E => Set_hasAny(setOfValues, x);
+    const check       = (x: unknown): E      => hasInstance(x) ? x : panic(`Unknown member '${x}'.`);
     
-    const equals = oneway_thingy(values, System_equals);
+    // | TODO: Wut? Why not `(a, b) => hasInstance(a) && a === b`?
+    const equals  = oneway_thingy(values, System_equals);
     const compare = oneway_thingy(values, System_compare);
-    const min = andbackagain_thingy(values, Math.min);
-    const max = andbackagain_thingy(values, Math.max);
+    const min     = andbackagain_thingy(values, Math.min);
+    const max     = andbackagain_thingy(values, Math.max);
     
     const minimum = Array_firstElement<E>(values) ?? panic();
-    const maximum = Array_lastElement<E>(values) ?? panic();
+    const maximum = Array_lastElement <E>(values) ?? panic();
     
-    const getOrdinal = (x: E): number => ordinalByMember.get(x) ?? panic(`Unknown member '${x}'.`);
+    const getOrdinal = (x: E): number => ordinalByName.get(x) ?? panic(`Unknown member '${x}'.`);
     const fromOrdinal = (ord: number): E | undefined => memberByOrdinal.get(ord);
     
     const result: StringEnum<E> = {
@@ -162,6 +190,7 @@ function createStringEnumWithOrdinals<E extends string>(ordinalByMember: Ordinal
         equals,
         setOfValues,
         hasInstance,
+        check,
         compare,
         min,
         max,
@@ -180,15 +209,15 @@ function createStringEnumWithOrdinals<E extends string>(ordinalByMember: Ordinal
             // const instance: StringEnum<E> = Object.create(this);
             // return Object.assign(instance, { default: newDefault });
         },
+        withMethods(extraMethodsFactory) {
+            return { ...this, ...extraMethodsFactory(this) };
+        }
     };
     
-    return result;  
+    return result;
 }
 
-export function StringEnum_create<E extends string>(values:
-    | readonly E[]
-    | { readonly [P in E]: number },
-): StringEnum<E> {
+export function StringEnum_create<E extends string>(values: StringEnum_Initializer<E>): StringEnum<E> {
     return createStringEnumWithOrdinals(OrdinalMap_fromInitializer(values));
 }
 
@@ -196,28 +225,46 @@ export function StringEnum_create<E extends string>(values:
 // Companions for `enum`s //
 ////////////////////////////
 
-const Alignment = StringEnum_create([
-    "left",
-    "center",
-    "right"
-] as const);
+// type  Justify = StringEnum_Member<typeof Justify>;
+// const Justify = StringEnum_create([
+//     "left",
+//     "center",
+//     "right"
+// ] as const);
 
-const enum2 = StringEnum_create([
-    "top",
-    "middle",
-    "bottom",
-] as const).withDefault("middle");
+// type  Alignment = StringEnum_Member<typeof Alignment>;
+// const Alignment = StringEnum_create([
+//     "top",
+//     "middle",
+//     "bottom",
+// ] as const).withDefault("middle");
 
-const enum3 = StringEnum_create({
-    "black": 0, // mysterious inference error
-    "red": 1,
-    "green": 2,
-    "white": 7,
-    "unset": 9,
-} as const).withDefault("unset");
+// const enum3 = StringEnum_create({
+//     "black": 0, // mysterious inference error
+//     "red": 1,
+//     "green": 2,
+//     "white": 7,
+//     "unset": 9,
+// } as const).withDefault("unset").withMethods(Self => ({
+//     colorText(): string {
+//         throw "notImplemented"
+//     }
+// }));
 
+// enum3.colorText()
 
+// // TODO: integrate this:
 
-for (const align of Alignment) {
-    
-}
+// declare function join<
+//     E1 extends string, 
+//     E2 extends string,
+//     J extends (e1: E1, e2: E2) => string
+// >(
+//     enum1: StringEnum<E1>, 
+//     enum2: StringEnum<E2>, 
+//     joiner: J,
+// ): StringEnum<ReturnType<J>>;
+
+// const combo = (x: Justify, y: Alignment) => `${x} ${y}` as const;
+
+// const position = join(Justify, Alignment, (a, b) => `${a} by ${b}` as const);

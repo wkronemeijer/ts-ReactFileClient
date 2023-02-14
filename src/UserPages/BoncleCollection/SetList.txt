@@ -1,464 +1,464 @@
 BIONICLE Sets of 2001
 Small
-8540 Vakama
-8541 Matau
-8542 Onewa
-8543 Nokama
-8544 Nuju
-8545 Whenua
+8540-1 Vakama
+8541-1 Matau
+8542-1 Onewa
+8543-1 Nokama
+8544-1 Nuju
+8545-1 Whenua
 Medium
-8531 Pohatu
-8532 Onua
-8533 Gali
-8534 Tahu
-8535 Lewa
-8536 Kopaka
+8531-1 Pohatu
+8532-1 Onua
+8533-1 Gali
+8534-1 Tahu
+8535-1 Lewa
+8536-1 Kopaka
 Large
-8537 Nui-Rama
-8538 Muaka & Kane-ra
-8539 Manas
-8548 Nui-Jaga
-8549 Tarakava
+8537-1 Nui-Rama
+8538-1 Muaka & Kane-ra
+8539-1 Manas
+8548-1 Nui-Jaga
+8549-1 Tarakava
 Special Edition
-8546 PowerPack
+8546-1 PowerPack
 Collectible
-8525 Kanohi (American version)
-8530 Kanohi (International version)
+8525-1 Kanohi (American version)
+8530-1 Kanohi (International version)
 Promotional
-1388 Huki
-1389 Onepu
-1390 Maku
-1391 Jala
-1392 Kongu
-1393 Matoro
+1388-1 Huki
+1389-1 Onepu
+1390-1 Maku
+1391-1 Jala
+1392-1 Kongu
+1393-1 Matoro
 BIONICLE Sets of 2002
 Small
-8550 Gahlok Va
-8551 Kohrak Va
-8552 Lehvak Va
-8553 Pahrak Va
-8554 Tahnok Va
-8555 Nuhvok Va
+8550-1 Gahlok Va
+8551-1 Kohrak Va
+8552-1 Lehvak Va
+8553-1 Pahrak Va
+8554-1 Tahnok Va
+8555-1 Nuhvok Va
 Medium
-8560 Pahrak
-8561 Nuhvok
-8562 Gahlok
-8563 Tahnok
-8564 Lehvak
-8565 Kohrak
-8566 Onua Nuva
-8567 Lewa Nuva
-8568 Pohatu Nuva
-8570 Gali Nuva
-8571 Kopaka Nuva
-8572 Tahu Nuva
+8560-1 Pahrak
+8561-1 Nuhvok
+8562-1 Gahlok
+8563-1 Tahnok
+8564-1 Lehvak
+8565-1 Kohrak
+8566-1 Onua Nuva
+8567-1 Lewa Nuva
+8568-1 Pohatu Nuva
+8570-1 Gali Nuva
+8571-1 Kopaka Nuva
+8572-1 Tahu Nuva
 Large
-8556 Boxor
-8557 Exo-Toa
-8558 Cahdok & Gahdok
+8556-1 Boxor
+8557-1 Exo-Toa
+8558-1 Cahdok & Gahdok
 Special Edition
-10023 BIONICLE Master Builder Set
+10023-1 BIONICLE Master Builder Set
 BIONICLE Sets of 2003
 Small
-8581 Kopeke
-8582 Matoro
-8583 Hahli
-8584 Hewkii
-8585 Hafu
-8586 Macku
+8581-1 Kopeke
+8582-1 Matoro
+8583-1 Hahli
+8584-1 Hewkii
+8585-1 Hafu
+8586-1 Macku
 Medium
-8573 Nuhvok-Kal
-8574 Tahnok-Kal
-8575 Kohrak-Kal
-8576 Lehvak-Kal
-8577 Pahrak-Kal
-8578 Gahlok-Kal
-8587 Panrahk
-8588 Kurahk
-8589 Lerahk
-8590 Guurahk
-8591 Vorahk
-8592 Turahk
+8573-1 Nuhvok-Kal
+8574-1 Tahnok-Kal
+8575-1 Kohrak-Kal
+8576-1 Lehvak-Kal
+8577-1 Pahrak-Kal
+8578-1 Gahlok-Kal
+8587-1 Panrahk
+8588-1 Kurahk
+8589-1 Lerahk
+8590-1 Guurahk
+8591-1 Vorahk
+8592-1 Turahk
 Large
-8593 Makuta
-8594 Jaller & Gukko
-8595 Takua & Pewku
-8596 Takanuva
+8593-1 Makuta
+8594-1 Jaller & Gukko
+8595-1 Takua & Pewku
+8596-1 Takanuva
 Limited Edition
-3287 Takutanuva
+3287-1 Takutanuva
 BIONICLE Sets of 2004
 Small
-8607 Nuhrii
-8608 Vhisola
-8609 Tehutti
-8610 Ahkmou
-8611 Orkham
-8612 Ehrye
+8607-1 Nuhrii
+8608-1 Vhisola
+8609-1 Tehutti
+8610-1 Ahkmou
+8611-1 Orkham
+8612-1 Ehrye
 Medium
-8601 Toa Vakama
-8602 Toa Nokama
-8603 Toa Whenua
-8604 Toa Onewa
-8605 Toa Matau
-8606 Toa Nuju
-8614 Vahki Nuurakh
-8615 Vahki Bordakh
-8616 Vahki Vorzakh
-8617 Vahki Zadakh
-8618 Vahki Rorzakh
-8619 Vahki Keerakh
+8601-1 Toa Vakama
+8602-1 Toa Nokama
+8603-1 Toa Whenua
+8604-1 Toa Onewa
+8605-1 Toa Matau
+8606-1 Toa Nuju
+8614-1 Vahki Nuurakh
+8615-1 Vahki Bordakh
+8616-1 Vahki Vorzakh
+8617-1 Vahki Zadakh
+8618-1 Vahki Rorzakh
+8619-1 Vahki Keerakh
 Large
-8621 Turaga Dume & Nivawk
-8622 Nidhiki
-8623 Krekka
+8621-1 Turaga Dume & Nivawk
+8622-1 Nidhiki
+8623-1 Krekka
 Limited Edition
-8811 Toa Lhikan & Kikanalo
-10202 Ultimate Dume
+8811-1 Toa Lhikan & Kikanalo
+10202-1 Ultimate Dume
 Collectible
-8613 Kanoka Disk Launcher Pack
+8613-1 Kanoka Disk Launcher Pack
 BIONICLE Sets of 2005
 Small
-4868 Rahaga Gaaki
-4869 Rahaga Pouks
-4870 Rahaga Kualus
-4877 Rahaga Norik
-4878 Rahaga Bomonga
-4879 Rahaga Iruini
+4868-1 Rahaga Gaaki
+4869-1 Rahaga Pouks
+4870-1 Rahaga Kualus
+4877-1 Rahaga Norik
+4878-1 Rahaga Bomonga
+4879-1 Rahaga Iruini
 Medium
-8736 Toa Hordika Vakama
-8737 Toa Hordika Nokama
-8738 Toa Hordika Whenua
-8739 Toa Hordika Onewa
-8740 Toa Hordika Matau
-8741 Toa Hordika Nuju
-8742 Visorak Vohtorak
-8743 Visorak Boggarak
-8744 Visorak Oohnorak
-8745 Visorak Roporak
-8746 Visorak Keelerak
-8747 Visorak Suukorak
+8736-1 Toa Hordika Vakama
+8737-1 Toa Hordika Nokama
+8738-1 Toa Hordika Whenua
+8739-1 Toa Hordika Onewa
+8740-1 Toa Hordika Matau
+8741-1 Toa Hordika Nuju
+8742-1 Visorak Vohtorak
+8743-1 Visorak Boggarak
+8744-1 Visorak Oohnorak
+8745-1 Visorak Roporak
+8746-1 Visorak Keelerak
+8747-1 Visorak Suukorak
 Large
-8755 Keetongu
-8756 Sidorak
-8761 Roodaka
+8755-1 Keetongu
+8756-1 Sidorak
+8761-1 Roodaka
 Playsets
-8757 Visorak Battle Ram
-8758 Tower of Toa
-8759 Battle of Metru Nui
+8757-1 Visorak Battle Ram
+8758-1 Tower of Toa
+8759-1 Battle of Metru Nui
 Special Edition
-8762 Toa Iruini
-8763 Toa Norik
-8769 Visorak's Gate
-10203 Voporak
+8762-1 Toa Iruini
+8763-1 Toa Norik
+8769-1 Visorak's Gate
+10203-1 Voporak
 Collectible
-8748 Rhotuka
+8748-1 Rhotuka
 BIONICLE Sets of 2006
 Small
-8721 Velika
-8722 Kazi
-8723 Piruk
-8724 Garan
-8725 Balta
-8726 Dalu
+8721-1 Velika
+8722-1 Kazi
+8723-1 Piruk
+8724-1 Garan
+8725-1 Balta
+8726-1 Dalu
 Medium
-8900 Reidak
-8901 Hakann
-8902 Vezok
-8903 Zaktan
-8904 Avak
-8905 Thok
-8727 Toa Jaller
-8728 Toa Hahli
-8729 Toa Nuparu
-8730 Toa Hewkii
-8731 Toa Kongu
-8732 Toa Matoro
+8900-1 Reidak
+8901-1 Hakann
+8902-1 Vezok
+8903-1 Zaktan
+8904-1 Avak
+8905-1 Thok
+8727-1 Toa Jaller
+8728-1 Toa Hahli
+8729-1 Toa Nuparu
+8730-1 Toa Hewkii
+8731-1 Toa Kongu
+8732-1 Toa Matoro
 Large
-8733 Axonn
-8734 Brutaka
-8764 Vezon & Fenrakk
+8733-1 Axonn
+8734-1 Brutaka
+8764-1 Vezon & Fenrakk
 Playsets
-8892 Piraka Outpost
-8893 Lava Chamber Gate
-8894 Piraka Stronghold
+8892-1 Piraka Outpost
+8893-1 Lava Chamber Gate
+8894-1 Piraka Stronghold
 Special Edition
-8625 Umbra
-8626 Irnakk
-10204 Vezon & Kardas
-8624 Race for the Mask of Life
+8625-1 Umbra
+8626-1 Irnakk
+10204-1 Vezon & Kardas
+8624-1 Race for the Mask of Life
 Collectible
-8719 Zamor Spheres
+8719-1 Zamor Spheres
 BIONICLE Sets of 2007
 Small
-8929 Defilak
-8930 Dekar
-8931 Thulox
-8932 Morak
+8929-1 Defilak
+8930-1 Dekar
+8931-1 Thulox
+8932-1 Morak
 Medium
-8916 Takadox
-8917 Kalmah
-8918 Carapar
-8919 Mantax
-8920 Ehlek
-8921 Pridak
-8910 Toa Kongu
-8911 Toa Jaller
-8912 Toa Hewkii
-8913 Toa Nuparu
-8914 Toa Hahli
-8915 Toa Matoro
+8916-1 Takadox
+8917-1 Kalmah
+8918-1 Carapar
+8919-1 Mantax
+8920-1 Ehlek
+8921-1 Pridak
+8910-1 Toa Kongu
+8911-1 Toa Jaller
+8912-1 Toa Hewkii
+8913-1 Toa Nuparu
+8914-1 Toa Hahli
+8915-1 Toa Matoro
 Large
-8922 Gadunka
-8923 Hydraxon
-8924 Maxilos & Spinax
+8922-1 Gadunka
+8923-1 Hydraxon
+8924-1 Maxilos & Spinax
 Playsets
-8925 Barraki Deepsea Patrol
-8926 Toa Undersea Attack
-8927 Toa Terrain Crawler
+8925-1 Barraki Deepsea Patrol
+8926-1 Toa Undersea Attack
+8927-1 Toa Terrain Crawler
 Limited Edition
-8935 Nocturn
-8939 Lesovikk
-8940 Karzahni
+8935-1 Nocturn
+8939-1 Lesovikk
+8940-1 Karzahni
 Collectible
-8934 Squid Ammo
+8934-1 Squid Ammo
 BIONICLE Sets of 2008
 Small
-8944 Tanma
-8945 Solek
-8946 Photok
-8947 Radiak
-8948 Gavla
-8949 Kirop
+8944-1 Tanma
+8945-1 Solek
+8946-1 Photok
+8947-1 Radiak
+8948-1 Gavla
+8949-1 Kirop
 Medium
-8685 Toa Kopaka
-8686 Toa Lewa
-8687 Toa Pohatu
-8691 Antroz
-8692 Vamprah
-8693 Chirox
-8688 Toa Gali
-8689 Toa Tahu
-8690 Toa Onua
-8694 Krika
-8695 Gorast
-8696 Bitil
+8685-1 Toa Kopaka
+8686-1 Toa Lewa
+8687-1 Toa Pohatu
+8691-1 Antroz
+8692-1 Vamprah
+8693-1 Chirox
+8688-1 Toa Gali
+8689-1 Toa Tahu
+8690-1 Toa Onua
+8694-1 Krika
+8695-1 Gorast
+8696-1 Bitil
 Large
-8697 Toa Ignika
-8698 Vultraz
-8699 Takanuva
-8941 Rockoh T3
-8942 Jetrax T6
-8943 Axalara T9
+8697-1 Toa Ignika
+8698-1 Vultraz
+8699-1 Takanuva
+8941-1 Rockoh T3
+8942-1 Jetrax T6
+8943-1 Axalara T9
 Limited Edition
-8942 Jetrax T6 (Limited Edition)
-8952 Mutran & Vican
-8953 Makuta Icarax
-8954 Mazeka
+8942-2 Jetrax T6 (Limited Edition)
+8952-1 Mutran & Vican
+8953-1 Makuta Icarax
+8954-1 Mazeka
 BIONICLE Sets of 2009
 Small
-8972 Atakus
-8973 Raanu
-8974 Tarduk
-8975 Berix
-8976 Metus
-8977 Zesk
+8972-1 Atakus
+8973-1 Raanu
+8974-1 Tarduk
+8975-1 Berix
+8976-1 Metus
+8977-1 Zesk
 Medium
-8978 Skrall
-8979 Malum
-8980 Gresh
-8981 Tarix
-8982 Strakk
-8983 Vorox
-8984 Stronius
-8985 Ackar
-8986 Vastus
-8987 Kiina
-8988 Gelu
-8989 Mata Nui
+8978-1 Skrall
+8979-1 Malum
+8980-1 Gresh
+8981-1 Tarix
+8982-1 Strakk
+8983-1 Vorox
+8984-1 Stronius
+8985-1 Ackar
+8986-1 Vastus
+8987-1 Kiina
+8988-1 Gelu
+8989-1 Mata Nui
 Large
-8990 Fero & Skirmix
-8991 Tuma
-8992 Cendox V1
-8993 Kaxium V3
-8994 Baranus V7
-8995 Thornatus V9
-8996 Skopio XV-1
+8990-1 Fero & Skirmix
+8991-1 Tuma
+8992-1 Cendox V1
+8993-1 Kaxium V3
+8994-1 Baranus V7
+8995-1 Thornatus V9
+8996-1 Skopio XV-1
 Limited Edition
-8998 Toa Mata Nui
+8998-1 Toa Mata Nui
 BIONICLE Sets of 2010
 Small
-7116 Tahu
-7117 Gresh
-7135 Takanuva
-7136 Skrall
-7137 Piraka
-7138 Rahkshi
+7116-1 Tahu
+7117-1 Gresh
+7135-1 Takanuva
+7136-1 Skrall
+7137-1 Piraka
+7138-1 Rahkshi
 BIONICLE Sets of 2015
 Small
-70778 Protector of Jungle
-70779 Protector of Stone
-70780 Protector of Water
-70781 Protector of Earth
-70782 Protector of Ice
-70783 Protector of Fire
+70778-1 Protector of Jungle
+70779-1 Protector of Stone
+70780-1 Protector of Water
+70781-1 Protector of Earth
+70782-1 Protector of Ice
+70783-1 Protector of Fire
 Medium
-70784 Lewa – Master of Jungle
-70785 Pohatu – Master of Stone
-70786 Gali – Master of Water
-70790 Lord of Skull Spiders
-70791 Skull Warrior
-70792 Skull Slicer
-70793 Skull Basher
-70794 Skull Scorpio
+70784-1 Lewa – Master of Jungle
+70785-1 Pohatu – Master of Stone
+70786-1 Gali – Master of Water
+70790-1 Lord of Skull Spiders
+70791-1 Skull Warrior
+70792-1 Skull Slicer
+70793-1 Skull Basher
+70794-1 Skull Scorpio
 Large
-70787 Tahu – Master of Fire
-70788 Kopaka – Master of Ice
-70789 Onua – Master of Earth
-70795 Mask Maker vs. Skull Grinder
+70787-1 Tahu – Master of Fire
+70788-1 Kopaka – Master of Ice
+70789-1 Onua – Master of Earth
+70795-1 Mask Maker vs. Skull Grinder
 Promotional
-5002941 BIONICLE Hero Pack
+5002941-1 BIONICLE Hero Pack
 BIONICLE Sets of 2016
 Small
-71300 Uxar Creature of Jungle
-71301 Ketar Creature of Stone
-71302 Akida Creature of Water
-71303 Ikir Creature of Fire
-71304 Terak Creature of Earth
+71300-1 Uxar Creature of Jungle
+71301-1 Ketar Creature of Stone
+71302-1 Akida Creature of Water
+71303-1 Ikir Creature of Fire
+71304-1 Terak Creature of Earth
 Medium
-71305 Lewa Uniter of Jungle
-71306 Pohatu Uniter of Stone
-71307 Gali Uniter of Water
-71312 Ekimu the Mask Maker
-71313 Lava Beast
-71314 Storm Beast
-71315 Quake Beast
+71305-1 Lewa Uniter of Jungle
+71306-1 Pohatu Uniter of Stone
+71307-1 Gali Uniter of Water
+71312-1 Ekimu the Mask Maker
+71313-1 Lava Beast
+71314-1 Storm Beast
+71315-1 Quake Beast
 Large
-71308 Tahu Uniter of Fire
-71309 Onua Uniter of Earth
-71310 Umarak the Hunter
-71311 Kopaka and Melum - Unity set
-71316 Umarak the Destroyer
+71308-1 Tahu Uniter of Fire
+71309-1 Onua Uniter of Earth
+71310-1 Umarak the Hunter
+71311-1 Kopaka and Melum - Unity set
+71316-1 Umarak the Destroyer
 Promotional
-601601 Skull Scorpion
-601602 Ekimu's Hawk
+601601-1 Skull Scorpion
+601602-1 Ekimu's Hawk
 Hero Factory Sets of 2010
 Small
-7164 Preston Stormer
-7165 Natalie Breez
-7167 William Furno
-7168 Duncan Bulk
-7169 Mark Surge
-7170 Jimi Stringer
+7164-1 Preston Stormer
+7165-1 Natalie Breez
+7167-1 William Furno
+7168-1 Duncan Bulk
+7169-1 Mark Surge
+7170-1 Jimi Stringer
 Medium
-7147 XPlode
-7148 Meltdown
-7156 Corroder
-7157 Thunder
+7147-1 XPlode
+7148-1 Meltdown
+7156-1 Corroder
+7157-1 Thunder
 Large
-7145 Von Nebula
-7158 Furno Bike
-7160 Drop Ship
-7162 Rotor
+7145-1 Von Nebula
+7158-1 Furno Bike
+7160-1 Drop Ship
+7162-1 Rotor
 Limited Edition
-7179 Bulk & Vapour
+7179-1 Bulk & Vapour
 Hero Factory Sets of 2011 1HY
 Small
-2063 Stormer 2.0
-2065 Furno 2.0
-2067 Evo 2.0
-2068 Nex 2.0
-2141 Surge 2.0
-2142 Breez 2.0
+2063-1 Stormer 2.0
+2065-1 Furno 2.0
+2067-1 Evo 2.0
+2068-1 Nex 2.0
+2141-1 Surge 2.0
+2142-1 Breez 2.0
 Medium
-2192 Drilldozer
-2193 Jetbug
-2194 Nitroblast
+2192-1 Drilldozer
+2193-1 Jetbug
+2194-1 Nitroblast
 Large
-2235 Fire Lord
+2235-1 Fire Lord
 Special Edition
-11995 Hero Recon Team
+11995-1 Hero Recon Team
 Hero Factory Sets of 2011 2HY
 Small
-2143 Rocka 3.0
-2144 Nex 3.0
-2145 Stormer 3.0
-2182 Bulk 3.0
-2183 Stringer 3.0
-2191 Furno 3.0
+2143-1 Rocka 3.0
+2144-1 Nex 3.0
+2145-1 Stormer 3.0
+2182-1 Bulk 3.0
+2183-1 Stringer 3.0
+2191-1 Furno 3.0
 Medium
-2231 Waspix
-2232 Raw-Jaw
-2233 Fangz
+2231-1 Waspix
+2232-1 Raw-Jaw
+2233-1 Fangz
 Large
-2236 Scorpio
-2282 Rocka XL
-2283 Witch Doctor
+2236-1 Scorpio
+2282-1 Rocka XL
+2283-1 Witch Doctor
 Hero Factory Sets of 2012
 Small
-6200 EVO
-6201 TOXIC REAPA
-6216 JAWBLADE
-6217 SURGE
-6221 NEX
-6229 XT4
-6228 THRONRAXX
-6282 STRINGER
+6200-2 EVO
+6201-1 TOXIC REAPA
+6216-1 JAWBLADE
+6217-1 SURGE
+6221-1 NEX
+6229-1 XT4
+6228-1 THRONRAXX
+6282-1 STRINGER
 Medium
-6202 ROCKA
-6218 SPLITFACE
-6227 BREEZ
-6293 FURNO
-6222 CORE HUNTER
-6223 BULK
-6283 VOLTIX
+6202-1 ROCKA
+6218-1 SPLITFACE
+6227-1 BREEZ
+6293-1 FURNO
+6222-1 CORE HUNTER
+6223-1 BULK
+6283-1 VOLTIX
 Large
-6203 BLACK PHANTOM
-6230 STORMER XL
-6231 SPEEDA DEMON
+6203-1 BLACK PHANTOM
+6230-1 STORMER XL
+6231-1 SPEEDA DEMON
 Promotional
-4648933 "Hero Factory Accessory Pack"
-4659607 "Booster Pack"
-5000194 "Weapon"
+4648933-1 Hero Factory Accessory Pack
+4659607-1 Booster Pack
+5000194-1 Weapon
 Hero Factory Sets of 2013
 Small
-44002 ROCKA
-44003 SCAROX
-44004 BULK
-44006 BREEZ
-44012 EVO
-44013 AQUAGON
+44002-1 ROCKA
+44003-1 SCAROX
+44004-1 BULK
+44006-1 BREEZ
+44012-1 EVO
+44013-1 AQUAGON
 Medium
-44001 PYROX
-44005 BRUIZER
-44007 OGRUM
-44008 SURGE
-44010 STORMER
-44011 FROST BEAST
+44001-1 PYROX
+44005-1 BRUIZER
+44007-1 OGRUM
+44008-1 SURGE
+44010-1 STORMER
+44011-1 FROST BEAST
 Large
-44000 FURNO XL
-44009 DRAGON BOLT
-44014 JET ROCKA
+44000-1 FURNO XL
+44009-1 DRAGON BOLT
+44014-1 JET ROCKA
 Promotional
-40084 Accessory Pack
+40084-1 Accessory Pack
 Hero Factory Sets of 2014
 Small
-44015 EVO Walker
-44016 JAW Beast vs. STORMER
-44023 ROCKA Crawler
-44024 TUNNELER Beast vs. SURGE
+44015-1 EVO Walker
+44016-1 JAW Beast vs. STORMER
+44023-1 ROCKA Crawler
+44024-1 TUNNELER Beast vs. SURGE
 Medium
-44017 STORMER Freeze Machine
-44018 FURNO Jet Machine
-44019 ROCKA Stealth Machine
-44020 FLYER Beast vs. BREEZ
-44025 BULK Drill Machine
-44026 CRYSTAL Beast vs. BULK
-44027 BREEZ Flea Machine
+44017-1 STORMER Freeze Machine
+44018-1 FURNO Jet Machine
+44019-1 ROCKA Stealth Machine
+44020-1 FLYER Beast vs. BREEZ
+44025-1 BULK Drill Machine
+44026-1 CRYSTAL Beast vs. BULK
+44027-1 BREEZ Flea Machine
 Large
-44021 SPLITTER Beast vs. FURNO & EVO
-44022 EVO XL Machine
-44028 SURGE & ROCKA Combat Machine
-44029 QUEEN Beast vs. FURNO, EVO & STORMER
+44021-1 SPLITTER Beast vs. FURNO & EVO
+44022-1 EVO XL Machine
+44028-1 SURGE & ROCKA Combat Machine
+44029-1 QUEEN Beast vs. FURNO, EVO & STORMER
 Promotional
-40116 HF Hero Minimodel
-40117 HF Villains Minimodel
+40116-1 HF Hero Minimodel
+40117-1 HF Villains Minimodel

@@ -1,0 +1,22 @@
+All those StringEnums are cool, but frankly it also kind of sucks. How do we get maximum value from categorization, with minimal effort?
+
+Also notice that there are a number of functional dependencies
+
+
+
+Most BN can be divided by the 6 elements
+
+Most waves consists of 6 sets, 1 of each element
+    (Exception is Phantoka and Mistika)
+
+HF does not have elements, but it does have the colors
+
+small, medium, large single figure sets
+playsets (lol)
+ammo, collectibles
+figure with vehicle
+multi-character (Karzahni comes to mind)
+
+interface idea: 
+top-left select which kinds of set to view
+top-right shows distribution of elements (standard and special)

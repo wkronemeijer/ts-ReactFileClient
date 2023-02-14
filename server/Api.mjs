@@ -4,7 +4,7 @@ import { getPageMap } from "./FindFiles.mjs";
 
 export const ApiRouter = Router();
 
-if (API_DELAY > 0) {
+if (API_DELAY > 5) {
     ApiRouter.use((req, res, next) => { 
         setTimeout(next, API_DELAY);
     });

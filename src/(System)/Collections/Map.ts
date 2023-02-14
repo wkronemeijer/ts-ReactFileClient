@@ -13,6 +13,17 @@ export function Map_map<K, V, W>(
     return result;
 }
 
+export function Map_fromDictionary<K extends keyof_t, V>(
+    dictionary: Record<K, V>,
+): Map<K, V> {
+    const result = new Map<K, V>;
+    for (const key in dictionary) {
+        const value = dictionary[key];
+        result.set(key, value);
+    }
+    return result;
+}
+
 /** Converts a partial dictionary into a map. */
 export function Map_fromPartialDictionary<K extends keyof_t, V>(
     dictionary: Partial<Record<K, V>>,

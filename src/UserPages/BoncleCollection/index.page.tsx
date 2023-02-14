@@ -2,7 +2,10 @@ import "./Style.scss";
 
 import { register } from "../../ReactFileClient/PageRegistry/Registry";
 import { RegistryTag } from "../../ReactFileClient/PageRegistry/RegistryTag";
+import { BoncleApp } from "./Components/BoncleApp";
+import { BoncleDatabase } from "./Domain/RawBoncleData";
 
 register(RegistryTag`Boncle Collection`, <>
-    Hello, world!
+    <p>Hello, world!</p>
+    <BoncleApp boncles={BoncleDatabase}/>
 </>);

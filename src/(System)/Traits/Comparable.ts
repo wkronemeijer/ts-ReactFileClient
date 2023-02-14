@@ -113,6 +113,12 @@ export interface ComparableObject {
     [ComparableObject_compareTo](other: this): Ordering;
 }
 
+export interface ComparableObjectMk2<
+    Self extends ComparableObjectMk2<Self>,
+> {
+    compare(other: Self): Ordering;
+}
+
 function ComparableObject_hasInstance(x: unknown): x is ComparableObject {
     return (
         typeof x === "object"                               &&
@@ -197,6 +203,16 @@ export const compare:
     <T extends Comparable>(a: T, b: T) => Ordering 
     = compareLoosely satisfies Comparer<Comparable>
 ;
+
+//////////////
+// Delegate //
+//////////////
+
+export interface ComparerDelegate<T> {
+    readonly compare: Comparer<T>;
+}
+
+export const ComparerDelegate_default: ComparerDelegate<any> = { compare };
 
 ///////////////////
 // Lexicographic //

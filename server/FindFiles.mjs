@@ -60,7 +60,7 @@ export function getPageMap() {
     const tags      = Object.keys(pathByTag);
     const maxLength = Math.max(...tags.map(tag => tag.length)) + 2; // including ''
     
-    devTerminal.trace(`getPageMap: ${tags.length} page(s) were found.`);
+    // devTerminal.trace(`getPageMap: ${tags.length} page(s) were found.`);
     for (let tag in pathByTag) {
         const key   = `'${tag}'`.padEnd(maxLength);
         const value = pathByTag[tag];

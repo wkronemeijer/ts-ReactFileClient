@@ -52,3 +52,11 @@ export function Set_hasAny<T extends primitive_t>(set: ReadonlySet<T>, value: un
     return set.has(value as any);
 }
 
+export function Set_overlapsWith<T>(set: ReadonlySet<T>, iterable: Iterable<T>): boolean {
+    for (const item of iterable) {
+        if (set.has(item)) {
+            return true;
+        }
+    }
+    return false;
+}

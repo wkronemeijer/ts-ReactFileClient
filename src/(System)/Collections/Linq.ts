@@ -1,6 +1,6 @@
 
 import { Array_firstElement, Array_lastElement } from "./Array";
-import { Comparable, compare, Comparer } from "../Traits/Comparable";
+import { Comparable, compare, Comparer, ComparerDelegate, ComparerDelegate_default } from "../Traits/Comparable";
 import { Dictionary, Dictionary_create } from "./Dictionary";
 import { deprecated, notImplemented } from "../Errors";
 import { identity } from "../Function";
@@ -228,8 +228,13 @@ export class Linq<T> implements Iterable<T> {
         }());
     }
     
-    orderOn<U extends Comparable>(selector: Selector<T, U>): Linq<T> {
-        return this.orderBy((a, b) => compare(selector(a), selector(b)));
+    orderOn<U extends Comparable>(
+        selector: Selector<T, U>,
+        delegate: ComparerDelegate<U> = ComparerDelegate_default,
+    ): Linq<T> {
+        return this.orderBy((a, b) =>
+            delegate.compare(selector(a), selector(b))
+        );
     }
     
     //////////////////////
@@ -319,6 +324,10 @@ export class Linq<T> implements Iterable<T> {
             dict[keySelector(element)] = valueSelector(element);
         }
         return dict;
+    }
+    
+    toString(joiner = ", "): string {
+        return Array.from(this).join(joiner);
     }
     
     // Generic to(Collection) is not possible, because HKTs aren't a thing.
