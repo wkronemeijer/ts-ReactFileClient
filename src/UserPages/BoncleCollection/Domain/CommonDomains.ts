@@ -5,17 +5,17 @@ const $ = BoncleTagRoot;
 
 // Kind of the feature we are building this whole app for...
 export type  BoncleDisplayElement = StringEnum_Member<typeof BoncleDisplayElement>;
-export const BoncleDisplayElement = StringEnum_create($._displayElements);
+export const BoncleDisplayElement = StringEnum_create($._displayElements).withDefault("_displayNone");
 
 // Kind of the feature we are building this whole app for...
 export type  BoncleSetSize = StringEnum_Member<typeof BoncleSetSize>;
-export const BoncleSetSize = StringEnum_create($._sized);
+export const BoncleSetSize = StringEnum_create($._sized).withDefault("medium");
 
 export type  BoncleTheme = StringEnum_Member<typeof BoncleTheme>;
 export const BoncleTheme = StringEnum_create($._theme);
 
-export type  BoncleReleaseSeason = StringEnum_Member<typeof BoncleReleaseSeason>;
-export const BoncleReleaseSeason = StringEnum_create($._seasonOfRelease);
-
 export type  BoncleReleaseYear = StringEnum_Member<typeof BoncleReleaseYear>;
 export const BoncleReleaseYear = StringEnum_create($._yearOfRelease);
+
+export type  BoncleSex = StringEnum_Member<typeof BoncleSex>;
+export const BoncleSex = StringEnum_create($._sex);

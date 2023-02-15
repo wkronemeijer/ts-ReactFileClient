@@ -1,19 +1,23 @@
-import { BoncleTagSet, BoncleTagSet_determineYear, BoncleTagSet_extract, BoncleTagSet_extractDefault } from "./TagSet";
-import { BoncleDisplayElement, BoncleTheme } from "./CommonDomains";
+import { BoncleTagSet, BoncleTagSet_determineYear, BoncleTagSet_search, BoncleTagSet_find, BoncleTagSet_findLast } from "./TagSet";
+import { BoncleDisplayElement, BoncleSetSize, BoncleSex, BoncleTheme } from "./CommonDomains";
 import { BoncleSetNumber } from "./SetNumber";
 
 export class BoncleSet {
-    readonly yearOfRelease : number;
-    readonly theme         : BoncleTheme;
-    readonly displayElement: BoncleDisplayElement | undefined;
+    readonly element: BoncleDisplayElement;
+    readonly theme  : BoncleTheme;
+    readonly size   : BoncleSetSize;
+    readonly year   : number;
+    readonly sex    : BoncleSex | undefined;
     
     constructor(
         public readonly setNumber: BoncleSetNumber,
         public readonly title    : string,
         public readonly tags     : BoncleTagSet,
     ) {
-        this.yearOfRelease  = BoncleTagSet_determineYear(tags);
-        this.theme          = BoncleTagSet_extractDefault(tags, BoncleTheme);
-        this.displayElement = BoncleTagSet_extract(tags, BoncleDisplayElement);
+        this.year    = BoncleTagSet_determineYear(tags);
+        this.sex     = BoncleTagSet_search(tags, BoncleSex);
+        this.element = BoncleTagSet_find(tags, BoncleDisplayElement);
+        this.theme   = BoncleTagSet_find(tags, BoncleTheme);
+        this.size    = BoncleTagSet_findLast(tags, BoncleSetSize);
     }
 }

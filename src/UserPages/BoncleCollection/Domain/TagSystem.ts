@@ -12,6 +12,7 @@ import { BoncleTag } from "./Definitions/StandardTags";
 import { panic } from "../../../(System)/Errors";
 import { StringBuilder } from "../../../(System)/Text/StringBuilder";
 import { from } from "../../../(System)/Collections/Linq";
+import { identity } from "../../../(System)/Function";
 
 /*
 The idea:
@@ -106,8 +107,6 @@ export class BoncleTagSystem {
                 n++;
             }
         }
-        console.log(`expand: add ${n} times`);
-        
         return result;
     }
     
@@ -123,8 +122,28 @@ export class BoncleTagSystem {
         builder.appendLine(`BoncleTagSystem contents:`);
         builder.indent();
         
+        const size = from(this.terminalsByTag.keys()).select(key => key.length).max(identity);
+        
         for (const [initial, terminals] of this.terminalsByTag) {
-            builder.appendLine(`${initial} --> ${from(terminals).toString(' ')}`);
+            if (BoncleTag.isInternal(initial)) {
+                continue;
+            }
+            
+            const publicTags   = from(terminals).where(BoncleTag.isPublic  ).toString(' ');
+            // const internalTags = from(terminals).where(BoncleTag.isInternal).toString(' ');
+            
+            builder.append(initial.padEnd(size));
+            builder.append(" ⟶");
+            if (publicTags) {
+                builder.append(' ');
+                builder.append(publicTags);
+            }
+            // if (internalTags) {
+            //     builder.append(' ');
+            //     builder.append(internalTags);
+            // }
+            
+            builder.appendLine();
         }
         
         builder.dedent();

@@ -14,16 +14,19 @@ export type  BoncleTagRoot = typeof BoncleTagRoot;
 export const BoncleTagRoot = {
     _displayElements: {
         // Opponent process colors...
-        displayWhite: {},
-        displayRed  : {},
-        displayGreen: {},
-        displayBlue : {},
-        displayGold : {},
-        displayBlack: {},
+        _displayRed  : {},
+        _displayBlue : {},
+        _displayGreen: {},
+        _displayWhite: {},
+        _displayGold : {},
+        _displayBlack: {},
+        _displayNone : {},
     },
     _seasonOfRelease: {
-        winter: {},
-        summer: {},
+        // Only purpose is to order sets by release
+        // winter is default, summer is by mid 
+        // ...mid 2002... reads well
+        mid: {},
     },
     _yearOfRelease: {
         "2001": {},
@@ -64,8 +67,6 @@ export const BoncleTagRoot = {
         },
     },
     _theme: {
-        // Theme is derived from year of release
-        // No inference needed.
         bionicleGen1: {},
         bionicleGen2: {},
     },
@@ -77,7 +78,7 @@ export const BoncleTagRoot = {
         "5-in-1": {},
         "6-in-1": {},
     },
-    elemental: {
+    _elemental: {
         fire     : { ta : {} },
         water    : { ga : {} },
         air      : { le : {} },
@@ -95,7 +96,10 @@ export const BoncleTagRoot = {
     _sized: {
         small : {},
         medium: {},
-        large : {},
+        large : {
+            titan: {},
+        },
+        // Whats the difference between large and huge?
         huge  : {},
     },
     special: {
@@ -196,6 +200,39 @@ export const BoncleTagRoot = {
             creatureOf: {},
         },
     },
+    // = occurs more than once
+    // Useful to compare different iterations
+    _famousPeople: {
+        ogToaTeam: {
+            tahu  : {},
+            gali  : {},
+            lewa  : {},
+            kopaka: {},
+            pohatu: {},
+            onua  : {},
+        },
+        ogTuragaTeam: {
+            vakama: {},
+            nokama: {},
+            matau : {},
+            nuju  : {},
+            onewa : {},
+            whenua: {},
+        },
+        ogMatoran: {
+            ogMatoranTeam: {
+                jaller: {},
+                hahli : {},
+                kongu : {},
+                matoro: {},
+                hewkii: {},
+                nuparu: {},
+            },
+            kopeke: {},
+            macku:  {},
+        },
+        takanuva:  {},
+    },
     _faction: {
         goodGuy: {},
         badGuy : {},
@@ -205,8 +242,10 @@ export const BoncleTagRoot = {
         vehicle: {},
         combinerModel: {},
         playset: {},
-        ammo: {},
         allStars: {},
+        booster: {
+            ammo: {},
+        },
     },
 } as const satisfies BoncleTagTree;
 
@@ -234,9 +273,18 @@ function *allKeys_iter(branch: BoncleTagTree): Iterable<BoncleTag> {
     }
 }
 
+const isHidden = (s: string) => s.startsWith('_');
+
 export type  BoncleTag = ExpandType<AllKeys<BoncleTagRoot>>;
 export const BoncleTag = StringEnum_create(allKeys(BoncleTagRoot)).withMethods(Self => ({
-    isHidden(self: BoncleTag): boolean {
-        return self.startsWith('_');
+    /** @bound */
+    isPublic(self: BoncleTag): boolean {
+        return !isHidden(self);
+    },
+    /** @bound */
+    isInternal(self: BoncleTag): boolean {
+        return isHidden(self);
     },
 }));
+
+console.log(`There are ${BoncleTag.values.length} tags in the database.`);

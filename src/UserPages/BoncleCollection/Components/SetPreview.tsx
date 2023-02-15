@@ -1,6 +1,6 @@
 import { BoncleSetNumber } from "../Domain/SetNumber";
 
-export function BonclePreview(props: {
+export function BoncleSetPreview(props: {
     readonly setNumber: BoncleSetNumber;
 }): JSX.Element {
     const { setNumber } = props;

@@ -31,6 +31,33 @@ const rootRules: readonly rootRule[] = [
     rule("skrall -> male"), // did we ever see female Skrall? we know they exist
     rule("allStars -> small"),
     
+    // Famous people 
+    rule("tahu   -> ta "),
+    rule("gali   -> ga "),
+    rule("lewa   -> le "),
+    rule("kopaka -> ko "),
+    rule("pohatu -> po "),
+    rule("onua   -> onu"), // Wait a sec...
+    
+    rule("vakama -> ta "),
+    rule("nokama -> ga "),
+    rule("matau  -> le "),
+    rule("nuju   -> ko "),
+    rule("onewa  -> po "),
+    rule("whenua -> onu"),
+    
+    rule("jaller -> ta "),
+    rule("hahli  -> ga "),
+    rule("kongu  -> le "),
+    rule("matoro -> ko "),
+    rule("hewkii -> po "),
+    rule("nuparu -> onu"),
+    
+    rule("kopeke   -> ko"),
+    rule("macku    -> ga"),
+    
+    rule("takanuva -> av"),
+    
     // Gender rules
     rule("ta  -> male"),
     rule("ga  -> female"),
@@ -40,18 +67,18 @@ const rootRules: readonly rootRule[] = [
     rule("onu -> male"),
     
     // Element -> DisplayElement
-    rule("fire   -> displayRed"),
-    rule("water  -> displayBlue"),
-    rule("air    -> displayGreen"),
-    rule("jungle -> displayGreen"),
-    rule("ice    -> displayWhite"),
-    rule("light  -> displayWhite"),
-    rule("stone  -> displayGold"),
-    rule("sand   -> displayGold"),
-    rule("iron   -> displayGold"),
-    rule("earth  -> displayBlack"),
-    rule("rock   -> displayBlack"), // Skrall...
-    rule("shadow -> displayBlack"),
+    rule("fire   -> _displayRed"),
+    rule("water  -> _displayBlue"),
+    rule("air    -> _displayGreen"),
+    rule("jungle -> _displayGreen"),
+    rule("ice    -> _displayWhite"),
+    rule("light  -> _displayWhite"),
+    rule("stone  -> _displayGold"),
+    rule("sand   -> _displayGold"),
+    rule("iron   -> _displayGold"),
+    rule("earth  -> _displayBlack"),
+    rule("rock   -> _displayBlack"), // Skrall...
+    rule("shadow -> _displayBlack"),
     // Sizes 
     rule("toa         -> medium"),
     rule("glatorian   -> medium"),
@@ -62,6 +89,7 @@ const rootRules: readonly rootRule[] = [
     rule("turaga      -> small"),
     rule("rahaga      -> small"),
     rule("matoran     -> small"),
+    rule("hydruka     -> small"),
     rule("agori       -> small"),
     rule("bohrokVa    -> small"),
     
@@ -70,8 +98,19 @@ const rootRules: readonly rootRule[] = [
     
     //  _theme inference
     rule("2001 -> bionicleGen1"),
+    rule("2002 -> bionicleGen1"),
+    rule("2003 -> bionicleGen1"),
+    rule("2004 -> bionicleGen1"),
+    rule("2005 -> bionicleGen1"),
+    rule("2006 -> bionicleGen1"),
+    rule("2007 -> bionicleGen1"),
+    rule("2008 -> bionicleGen1"),
+    rule("2009 -> bionicleGen1"),
+    rule("2010 -> bionicleGen1"),
+    rule("2015 -> bionicleGen2"),
+    rule("2016 -> bionicleGen2"),
     
-    // 
+    // Weesa not animal!
     rule("rahi       -> animal"),
     rule("creatureOf -> animal"),
 ];
