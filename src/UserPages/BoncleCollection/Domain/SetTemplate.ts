@@ -1,4 +1,4 @@
-import { BoncleTag } from "./Definitions/StandardTags";
+import { BoncleTag } from "./Definitions/Tag";
 import { BoncleSetNumber } from "./SetNumber";
 
 export interface BoncleSetTemplate {

@@ -1,6 +1,4 @@
-import { StringEnum_create } from "../../../../(System)/Data/StringEnum";
-import { ExpandType } from "../../../../(System)/Types/Magic";
-import { assert } from "../../../../(System)/Assert";
+import { StringEnum } from "../../../../(System)/Data/StringEnum";
 
 // There is a desire for negative rules
 // badGuy -> -goodGuy
@@ -10,7 +8,6 @@ export interface BoncleTagTree {
     [s: string] : BoncleTagTree;
 }
 
-export type  BoncleTagRoot = typeof BoncleTagRoot;
 export const BoncleTagRoot = {
     _displayElements: {
         // Opponent process colors...
@@ -27,6 +24,28 @@ export const BoncleTagRoot = {
         // winter is default, summer is by mid 
         // ...mid 2002... reads well
         mid: {},
+    },
+    _armament: {
+        _projectileArmament: {
+            bambooDisk: {},
+            kanokaDisk: {},
+            rhotukaSpinner: {},
+            zamorLauncher: {},
+            airLauncher: {},
+            squidLauncher: {},
+            cordakBlaster: {},
+            midakSkyBlaster: {},
+            nynrahGhostBlaster: {},
+            thornaxLauncher: {},
+            elementalBlaster: {},
+        },
+    },
+    _kanohi: {
+        
+        
+        ignika: {},
+        kraakhan: {},
+        maskOfCreation: {},
     },
     _yearOfRelease: {
         "2001": {},
@@ -71,29 +90,27 @@ export const BoncleTagRoot = {
         bionicleGen2: {},
     },
     _multiplicity: {
-        "1-in-1": {},
-        "2-in-1": {},
-        "3-in-1": {},
+        "2-in-1": { and    : {}},
+        "3-in-1": { andAlso: {}},
         "4-in-1": {},
-        "5-in-1": {},
-        "6-in-1": {},
     },
-    _elemental: {
-        fire     : { ta : {} },
-        water    : { ga : {} },
-        air      : { le : {} },
-        ice      : { ko : {} },
-        stone    : { po : {} },
-        earth    : { onu: {} },
-        light    : { av : {} },
-        shadow   : {},
-        jungle   : {},
-        // wtf were they doing on bara magna
-        sand     : {},
-        rock     : {}, // for the skrall :?
+    _elemental: { // in ascending order
+        _noElement: {},
         iron     : {},
+        rock     : {}, // for the skrall, 
+        earth    : { onu: {} },
+        sand     : {},
+        stone    : { po : {} },
+        ice      : { ko : {} },
+        jungle   : {},
+        air      : { le : {} },
+        water    : { ga : {} },
+        fire     : { ta : {} },
+        shadow   : {},
+        light    : { av : {} },
     },
     _sized: {
+        // Use explicit size when combining
         small : {},
         medium: {},
         large : {
@@ -117,6 +134,7 @@ export const BoncleTagRoot = {
             },
         },
         baraMagna: {},
+        okoto: {},
     },
     _species: {
         _matoranUniverseSpecies: {
@@ -157,6 +175,7 @@ export const BoncleTagRoot = {
             bohrok: {
                 vanillaBohrok: {},
                 bohrokKal: {},
+                bahrag: {},
             },
             bohrokVa: {},
             makuta: {
@@ -166,10 +185,10 @@ export const BoncleTagRoot = {
                 },
             },
             rahkshi: {},
+            vahki: {},
             skakdi: {
                 piraka: {},
             },
-            steltian: {},
             vortixx: {},
             rahaga: {},
             barraki: {},
@@ -198,7 +217,12 @@ export const BoncleTagRoot = {
             },
             skullHunter: {},
             creatureOf: {},
+            beastOf: {},
         },
+        unnamedSpecies: {
+            steltian: {},
+        },
+        unknownSpecies: {},
     },
     // = occurs more than once
     // Useful to compare different iterations
@@ -232,10 +256,25 @@ export const BoncleTagRoot = {
             macku:  {},
         },
         takanuva:  {},
+        antroz: {},
     },
     _faction: {
         goodGuy: {},
         badGuy : {},
+    },
+    _opinion: {
+        dislike : {},
+        whatever: {
+            like: {
+                love: {},
+            },
+        },
+    },
+    _possession: {
+        dontHave: {
+            want: {},
+        },
+        have: {},
     },
     _uncategorized: {
         animal: {},
@@ -243,48 +282,9 @@ export const BoncleTagRoot = {
         combinerModel: {},
         playset: {},
         allStars: {},
+        promotional: {},
         booster: {
             ammo: {},
         },
     },
 } as const satisfies BoncleTagTree;
-
-type AllKeys_StringKeys<T> = keyof T;
-type AllKeys_Spread<T>     = T extends any ? AllKeys<T> : never;
-type AllKeys<T> = 
-    | AllKeys_StringKeys<T>
-    | AllKeys_Spread<T[AllKeys_StringKeys<T>]>
-;
-
-const whitespace = /\s/;
-function simpleCheck(x: string): BoncleTag {
-    assert(!whitespace.test(x));
-    return x as BoncleTag;
-}
-
-const     allKeys   = (root  : BoncleTagTree) => Array.from(allKeys_iter(root));
-function *allKeys_iter(branch: BoncleTagTree): Iterable<BoncleTag> {
-    let childBranch: BoncleTagTree | undefined;
-    for (const key in branch) {
-        yield simpleCheck(key);
-        if (childBranch = branch[key]) {
-            yield* allKeys_iter(childBranch);
-        }
-    }
-}
-
-const isHidden = (s: string) => s.startsWith('_');
-
-export type  BoncleTag = ExpandType<AllKeys<BoncleTagRoot>>;
-export const BoncleTag = StringEnum_create(allKeys(BoncleTagRoot)).withMethods(Self => ({
-    /** @bound */
-    isPublic(self: BoncleTag): boolean {
-        return !isHidden(self);
-    },
-    /** @bound */
-    isInternal(self: BoncleTag): boolean {
-        return isHidden(self);
-    },
-}));
-
-console.log(`There are ${BoncleTag.values.length} tags in the database.`);

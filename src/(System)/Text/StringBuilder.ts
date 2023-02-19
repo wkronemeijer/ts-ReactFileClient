@@ -1,21 +1,27 @@
 import { ensures } from "../Assert";
+import { Printable } from "../Traits/Printable";
 
 const indentSize = 4;
 const newline    = '\n';
 
-export interface StringBuildable {
+export interface StringBuildable<
+    ExtraArgs extends readonly any[] = [],
+> {
     // method name is hard
     // it is analogous to Serialize(Serializer)
-    buildString(result: StringBuilder): void;
+    buildString(result: StringBuilder, ...args: ExtraArgs): void;
 }
 
 // TODO: IDEA: replaceAll('\n', indentation)
 
 /** Accumulates many strings efficiently to form one long string. */
-export class StringBuilder {
-    static stringify(buildable: StringBuildable): string {
+export class StringBuilder implements Printable {
+    static stringify<ExtraArgs extends readonly any[] = []>(
+        buildable: StringBuildable<ExtraArgs>, 
+        ...args: ExtraArgs
+    ): string {
         const result = new this();
-        buildable.buildString(result);
+        buildable.buildString(result, ...args);
         return result.toString();
     }
     

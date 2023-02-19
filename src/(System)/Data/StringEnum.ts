@@ -5,9 +5,11 @@ import { Array_firstElement, Array_IndexNotFound, Array_lastElement } from "../C
 import { equals as System_equals, EqualityComparer } from "../Traits/Equatable";
 import { compare as System_compare, Comparer, ComparerDelegate } from "../Traits/Comparable";
 import { assert, ensures, requires } from "../Assert";
+import { StringBuilder } from "../Text/StringBuilder";
 import { ArrayMember } from "./Enumeration";
 import { Map_reverse } from "../Collections/Map";
 import { Set_hasAny } from "../Collections/Set";
+import { Printable } from "../Traits/Printable";
 import { panic } from "../Errors";
 
 /////////////////////
@@ -20,7 +22,7 @@ export type StringEnum_Member<EAny extends StringEnum<any>> =
 
 // Techincally, this stuff should be stratified by features
 export interface StringEnum<E extends string> 
-extends Iterable<E>, ComparerDelegate<E> {
+extends Iterable<E>, ComparerDelegate<E>, Printable {
     /** All values, in ascending order. */
     readonly values: readonly E[];
     toString(): string;
@@ -29,11 +31,11 @@ extends Iterable<E>, ComparerDelegate<E> {
      * Note that reserved names can used for properties (but not for identifiers). */
     readonly default: E;
     
-    /** Returns a new {@link StringEnum} with a different {@link default}. */
+    /** Returns a new {@link StringEnum} with a different {@link StringEnum.default}. */
     withDefault(newDefault: E): this;
     
     /** Returns a new {@link StringEnum} with extra methods. */
-    withMethods<M extends {}>(extraMethods: (Self: this) => M): this & M;
+    extend<M extends {}>(extraMethods: (Self: this) => M): this & M;
     
     /** All values as a set. Renamed for intellisense. */
     readonly setOfValues: ReadonlySet<E>;
@@ -111,7 +113,7 @@ __          -> different from ignored parameter, but overlaps with super-secret 
 
 */
 
-type StringEnum_Initializer<E extends string> =
+export type StringEnum_Initializer<E extends string> =
     | readonly E[]
     | { readonly [P in E]: unknown }
 ;
@@ -154,6 +156,25 @@ function OrdinalMap_fromInitializer<E extends string>(
     return result;
 }
 
+function stringifyStringEnum<E extends string>(values: OrdinalMap<E>): string {
+    const result = new StringBuilder();
+    
+    result.append("StringEnum { ");
+    for (const [value, ordinal] of values) {
+        
+        result.append('"');
+        result.append(value); // I would use util.inspect, but that requires node
+        // TODO: Is there a universal util.inspect equivalent?
+        // TODO: Write a util.inspect equivalent.
+        result.append('" => ');
+        result.append(ordinal.toString());
+        result.append("; ");
+    }
+    result.append("}");
+    
+    return result.toString();
+}
+
 function createStringEnumWithOrdinals<E extends string>(ordinalByName: OrdinalMap<E>): StringEnum<E> {
     requires(ordinalByName.size > 0, `StringEnum must not be empty.`);
     
@@ -166,12 +187,13 @@ function createStringEnumWithOrdinals<E extends string>(ordinalByName: OrdinalMa
         panic("Ordinal was empty?")
     );
     
+    // FIXME: Should sort on ordinal
     const values      = Array.from(ordinalByName.keys());
     const setOfValues = new Set(values);
     assert(setOfValues.size === values.length, "All members must be unique.");
     
     const hasInstance = (x: unknown): x is E => Set_hasAny(setOfValues, x);
-    const check       = (x: unknown): E      => hasInstance(x) ? x : panic(`Unknown member '${x}'.`);
+    const check       = (x: unknown): E      => hasInstance(x) ? x : panic(`'${x}' is not a member.`);
     
     // | TODO: Wut? Why not `(a, b) => hasInstance(a) && a === b`?
     const equals  = oneway_thingy(values, System_equals);
@@ -185,8 +207,11 @@ function createStringEnumWithOrdinals<E extends string>(ordinalByName: OrdinalMa
     const getOrdinal = (x: E): number => ordinalByName.get(x) ?? panic(`Unknown member '${x}'.`);
     const fromOrdinal = (ord: number): E | undefined => memberByOrdinal.get(ord);
     
+    const toString = () => stringifyStringEnum(ordinalByName);
+    
     const result: StringEnum<E> = {
         values,
+        toString,
         equals,
         setOfValues,
         hasInstance,
@@ -203,13 +228,9 @@ function createStringEnumWithOrdinals<E extends string>(ordinalByName: OrdinalMa
             return values[Symbol.iterator]();
         },
         withDefault(newDefault) {
-            // Alternative 1: Object spread
             return { ...this, default: newDefault };
-            // Alternative 2: Prototype
-            // const instance: StringEnum<E> = Object.create(this);
-            // return Object.assign(instance, { default: newDefault });
         },
-        withMethods(extraMethodsFactory) {
+        extend(extraMethodsFactory) {
             return { ...this, ...extraMethodsFactory(this) };
         }
     };

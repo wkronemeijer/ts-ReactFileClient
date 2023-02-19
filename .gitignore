@@ -2,3 +2,7 @@ node_modules
 dist/*.js
 dist/*.js.map
 *Cache
+
+*.jpg
+*.jpeg
+*.png

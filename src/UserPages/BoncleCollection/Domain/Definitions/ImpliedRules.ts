@@ -1,5 +1,6 @@
 import { BoncleTagRule } from "../TagRule";
-import { BoncleTag, BoncleTagRoot, BoncleTagTree } from "./StandardTags";
+import { BoncleTagRoot, BoncleTagTree } from "./TagTree";
+import { BoncleTag } from "./Tag";
 
 function *impliedRules_iter(parent: BoncleTag | undefined, branch: BoncleTagTree): Iterable<BoncleTagRule> {
     let childBranch: BoncleTagTree | undefined;

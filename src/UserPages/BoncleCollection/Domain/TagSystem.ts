@@ -1,18 +1,18 @@
+import { StringBuilder } from "../../../(System)/Text/StringBuilder";
 import { requires } from "../../../(System)/Assert";
 import { Stack } from "../../../(System)/Collections/Stack";
+import { panic } from "../../../(System)/Errors";
+import { from } from "../../../(System)/Collections/Linq";
 
 import { BoncleSetNumber_hasInstance } from "./SetNumber";
 import { BoncleTagStandardRules } from "./Definitions/StandardRules";
 import { BoncleTagImpliedRules } from "./Definitions/ImpliedRules";
 import { BoncleSetTemplate } from "./SetTemplate";
-import { BoncleTagRule } from "./TagRule";
-import { BoncleTagSet } from "./TagSet";
+import { BoncleTagCollection, ReadonlyBoncleTagCollection } from "./TagCollection";
+import { BoncleTag } from "./Definitions/Tag";
 import { BoncleSet } from "./Set";
-import { BoncleTag } from "./Definitions/StandardTags";
-import { panic } from "../../../(System)/Errors";
-import { StringBuilder } from "../../../(System)/Text/StringBuilder";
-import { from } from "../../../(System)/Collections/Linq";
-import { identity } from "../../../(System)/Function";
+import { BoncleTagRule } from "./TagRule";
+import { Map_update } from "../../../(System)/Collections/Map";
 
 /*
 The idea:
@@ -28,128 +28,115 @@ strings value equality to the rescue...
 
 */
 
-type  TranslationMap = ReadonlyMap<BoncleTag, Iterable<BoncleTag>>;
-const TranslationMap =         Map<BoncleTag, Iterable<BoncleTag>>;
+type  RuleMap = ReadonlyMap<BoncleTag, BoncleTagRule>;
+const RuleMap =         Map<BoncleTag, BoncleTagRule>;
 
-const tags  = BoncleTag.values;
-const rules = [...BoncleTagStandardRules, ...BoncleTagImpliedRules];
+export interface BoncleTagSystemStats {
+    readonly setCount: number;
+    readonly tagCount: number;
+    readonly standardRuleCount: number;
+    readonly impliedRuleCount: number;
+}
 
 export class BoncleTagSystem {
-    private readonly terminalsByTag: TranslationMap;
+    readonly stats: BoncleTagSystemStats;
     
-    private static createPartialMap(
-        rules: readonly BoncleTagRule[],
-    ): TranslationMap {
-        const tagMap = new Map<BoncleTag, BoncleTag[]>;
-        
-        function getSequents(tag: BoncleTag): BoncleTag[] {
-            let result = tagMap.get(tag);
-            if (!result) {
-                result = [];
-                tagMap.set(tag, result);
-            } 
-            return result;
-        } 
-        
-        for (const rule of rules) {
-            // This may now contain duplicates
-            // Unlikely however, and not an issue either way.
-            getSequents(rule.antecedent).push(...rule.consequent);
-        }
-        
-        return tagMap;
-    }
+    private readonly ruleByAntecendent: RuleMap;
     
-    constructor() {        
+    constructor() {
         const tags  = [...BoncleTag];
         const rules = [...BoncleTagStandardRules, ...BoncleTagImpliedRules];
         
-        const partialMap = BoncleTagSystem.createPartialMap(rules);
-        const   totalMap = new TranslationMap; // goal
-        
-        const nil = new Array<BoncleTag>;
-        const consequents = (tag: BoncleTag): Iterable<BoncleTag> => 
-            partialMap.get(tag) ?? nil
-        ;
+        const rba = new RuleMap;
         
         for (const tag of tags) {
-            const terminals = new BoncleTagSet;
-            
-            // Depth-first because pop() is faster than shift()
-            let current: BoncleTag | undefined;
-            const frontier: Stack<BoncleTag> = [tag];
-            while (current = frontier.pop()) {
-                terminals.add(current);
-                for (const nextTag of consequents(current)) {
-                    if (!terminals.has(nextTag)) {
-                        frontier.push(nextTag);
-                    }
-                }
-            }
-            
-            totalMap.set(tag, terminals);
+            rba.set(tag, BoncleTagRule.empty(tag));
         }
         
-        this.terminalsByTag = totalMap;
-    }
-    
-    private getTerminals(tag: BoncleTag): Iterable<BoncleTag> {
-        return this.terminalsByTag.get(tag) ?? panic(`Missing terminals for '${tag}' (every tag's terminals should include itself).`);
-    }
-    
-    private expand(tagSet: BoncleTagSet): BoncleTagSet {
-        const result = new BoncleTagSet;
-        let n = 0;
-        
-        for (const tag of tagSet) {
-            for (const terminal of this.getTerminals(tag)) {
-                result.add(terminal);
-                n++;
-            }
+        for (const rule of rules) {
+            Map_update(rba, rule.antecedent, panic, acc => acc.join(rule));
         }
+        
+        this.ruleByAntecendent = rba;
+        this.stats = {
+            setCount: -1,
+            tagCount: -1,
+            standardRuleCount: -1,
+            impliedRuleCount: -1,
+        }
+    }
+    
+    //////////////////////////////////////
+    // implements TagCollectionExpander //
+    //////////////////////////////////////
+    
+    private getRule(tag: BoncleTag): BoncleTagRule {
+        return this.ruleByAntecendent.get(tag) ?? panic();
+    }
+    
+    private expand(ogTags: ReadonlyBoncleTagCollection): BoncleTagCollection {
+        const result = new BoncleTagCollection(ogTags);
+        
+        let current: BoncleTag | undefined;
+        // Should be a stack...and yet it shouldn't affect the result
+        // ...famous last words
+        /** All tags recently touched */
+        const frontier: Stack<BoncleTag> = [...result];
+        while (current = frontier.pop()) {
+            frontier.push(...result.applyRule(this.getRule(current)));
+        }
+        
         return result;
     }
     
+    ////////////////////////////////////////
+    // implements TagTemplateInstantiator //
+    ////////////////////////////////////////
+    
     instantiate = (template: BoncleSetTemplate): BoncleSet => {
-        const id    = template.i;
-        requires(BoncleSetNumber_hasInstance(id), () => `'${id}' is not a valid set number.`);
-        const title = template.n;
-        const tags  = this.expand(new Set(template.t));
-        return new BoncleSet(id, title, tags);
+        const id           = template.i;
+        requires(BoncleSetNumber_hasInstance(id), 
+            () => `'${id}' is not a valid set number.`);
+        const title        = template.n;
+        const originalTags = BoncleTagCollection.from(template.t);
+        const expandedTags = this.expand(originalTags);
+        return new BoncleSet(id, title, originalTags, expandedTags);
     }
     
-    buildString(builder: StringBuilder): void {
+    ////////////////////////////////
+    // implements StringBuildable //
+    ////////////////////////////////
+    
+    buildString(builder: StringBuilder, displayHidden: boolean): void {
         builder.appendLine(`BoncleTagSystem contents:`);
         builder.indent();
         
-        const size = from(this.terminalsByTag.keys()).select(key => key.length).max(identity);
+        const size = from(this.ruleByAntecendent.keys()).max(key => key.length);
         
-        for (const [initial, terminals] of this.terminalsByTag) {
-            if (BoncleTag.isInternal(initial)) {
+        for (const [antecedent, rule] of this.ruleByAntecendent) {
+            if (BoncleTag.isInternal(antecedent)) {
                 continue;
             }
             
-            const publicTags   = from(terminals).where(BoncleTag.isPublic  ).toString(' ');
-            // const internalTags = from(terminals).where(BoncleTag.isInternal).toString(' ');
+            const publicTags   = from(rule.sequents).where(BoncleTag.isPublic  ).toString(' ');
+            const internalTags = from(rule.sequents).where(BoncleTag.isInternal).toString(' ');
             
-            builder.append(initial.padEnd(size));
+            builder.append(antecedent.padEnd(size));
             builder.append(" ⟶");
             if (publicTags) {
                 builder.append(' ');
                 builder.append(publicTags);
             }
-            // if (internalTags) {
-            //     builder.append(' ');
-            //     builder.append(internalTags);
-            // }
-            
+            if (displayHidden && internalTags) {
+                builder.append(' ');
+                builder.append(internalTags);
+            }
             builder.appendLine();
         }
-        
         builder.dedent();
     }
     
-    toString(): string {
-        return StringBuilder.stringify(this);
+    toString(displayHidden = false): string {
+        return StringBuilder.stringify(this, displayHidden);
     }
 }

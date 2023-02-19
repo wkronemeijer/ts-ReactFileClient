@@ -15,6 +15,12 @@ export const fst = <T>(array: readonly [T, ...any[]]): T => array[0];
 /** Selects the second element of a tuple. */
 export const snd = <T>(array: readonly [unknown, T, ...any[]]): T => array[1];
 
+export function negate<T>(
+    predicate: (value: T) => unknown,
+):             (value: T) => boolean {
+    return value => !predicate(value);
+}
+
 /*
 Note on name:
 

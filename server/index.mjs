@@ -3,6 +3,7 @@ import { ApiRouter } from "./Api.mjs";
 
 import { PublicRoot, SourceRoot } from "./FindFiles.mjs";
 import { PORT } from "./Config.mjs";
+import { devTerminal, StringBuilder } from "@local/system";
 
 // A server was born
 const app = Express();
@@ -17,6 +18,27 @@ const   indexPath = PublicRoot.join("index.html").toString();
 ////////////////////////
 // Configuring routes //
 ////////////////////////
+
+app.use((req, _res, next) => {
+    if (!req.path.endsWith(".jpg")) {
+        const msg  = new StringBuilder;
+        const time = new Date();
+        
+        msg.append("[");
+        msg.append(time.getHours().toString());
+        msg.append(":");
+        msg.append(time.getMinutes().toString());
+        msg.append(":");
+        msg.append(time.getSeconds().toString());
+        msg.append("] ");
+        msg.append(req.method);
+        msg.append(" ");
+        msg.append(req.path);
+        
+        devTerminal.trace(msg.toString());
+    }
+    next();
+});
 
 // Static
 app.use("/", expressStatic(PublicRoot.toString()));

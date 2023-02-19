@@ -69,3 +69,11 @@ export function Array_shuffle<T>(array: T[]): void {
         ];
     }
 }
+
+export function Array_isEmpty(arr: readonly unknown[]): boolean {
+    return arr.length === 0;
+}
+
+export function Array_isNotEmpty(arr: readonly unknown[]): boolean {
+    return arr.length !== 0;
+}

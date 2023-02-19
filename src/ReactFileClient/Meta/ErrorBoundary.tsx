@@ -32,7 +32,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
             return <div className={ErrorBoundary.name}>
                 <h1 className=  "Title">An ${error.name} has occured.</h1>
                 <p  className="Message">{error.toString()}</p>
-            </div>;
+            </div>
         }
         
         return children;

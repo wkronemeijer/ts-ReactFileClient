@@ -7,120 +7,321 @@ main.Boncle-Collection {
 // Colors //
 ////////////
 
-._displayWhite {
-    --element-color: white;
-    --element-background: white;
-}
 
-._displayRed {
-    --element-color: red;
-    --element-background: red;
-}
-
-._displayGreen {
-    --element-color: lime;
-    --element-background: lime;
-}
-
-._displayBlue {
-    --element-color: deepskyblue;
-    --element-background: deepskyblue;
-}
-
-._displayGold {
-    --element-color: gold;
-    --element-background: gold;
-}
-
-._displayBlack {
-    --element-color: black;
-    --element-background: black;
-}
+// https://en.wikipedia.org/wiki/Natural_Color_System
+._displayWhite { --display-color: #FFFFFF; }
+._displayBlack { --display-color: #000000; }
+._displayRed   { --display-color: #C40233; }
+._displayGreen { --display-color: #009F6B; }
+._displayBlue  { --display-color: #0087BD; }
+._displayGold  { --display-color: #FFD300; }
 
 ////////////////
 // Components //
 ////////////////
 
 .BoncleApp {
+    min-height: 100vh;
     display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    
+    & > .Header {
+        z-index: 1;
+        position: sticky;
+        top: 0;
+        left: 0;
+        right: 0;
+        
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        
+        backdrop-filter: blur(10px);
+        background-color: rgba(#000000, 0.5);
+    }
+    
+    & > .Absorb {
+        
+    }
+    
+    & > .Footer {
+        text-align: center;
+    }
 }
+
+///////////////////////
+// Header components //
+///////////////////////
+
+.BoncleTagSearch {
+    display: grid;
+    
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto auto auto;
+    grid-template-areas: 
+        "title   error   error  "
+        "search  search  confirm"
+        "suggest suggest suggest"
+    ;
+    gap: 4px;
+    padding: 8px;
+    
+    & > .Title       { grid-area: title; }
+    & > .Search      { grid-area: search; }
+    & > .Confirm     { grid-area: confirm; }
+    & > .Suggestions { grid-area: suggest; }
+    & > .Error       { grid-area: error; }
+    
+    & > .Title {
+        font-size: 18px;
+        font-weight: bold;
+        color: gold;
+        padding: 4px;
+    }
+    
+    & > input.Search {
+        
+    }
+    
+    & > button.Confirm {
+        
+    }
+    
+    // & > input:not(focus) ~ .Suggestions {
+    //     color: transparent;
+    // }
+    // idk it is not too bad is it?
+    
+    & > .Suggestions {
+        display: flex;
+        overflow: hidden;
+        padding: 4px;
+        gap: 4px;
+    }
+    
+    & > .Error {
+        
+    }
+    
+    &.Incomplete > .Error {
+        font-weight: bold;
+        padding: 4px;
+        color: white;
+        background-color: red;
+    }
+}
+
+.BoncleBigButtonToggle {
+    display: grid;
+    place-content: stretch;
+    
+    margin: 8px;
+    
+    & > label {
+        display: contents;
+        
+        & > .Area {
+            display: grid;
+            place-content: center;
+            
+            width: 100px;
+            
+            background-color: gold;
+            color: black;
+            font-weight: bold;
+            border-radius: 8px;
+            
+            padding: 8px;
+        }
+    }
+}
+
+.BoncleCenterpiece {
+    display: grid;
+    place-content: center;
+    
+    width: 120px;
+    
+    & > button {
+        display: contents;
+        
+        & > img.BigLogo {
+            min-width : 0;
+            min-height: 0;
+            object-fit: contain;
+            
+            width: 100%
+        }
+    }
+    
+}
+
+.BoncleSelectionStats {
+    
+}
+
+//////////////////
+// Main content //
+//////////////////
 
 .BoncleSetList {
     display: grid;
     
     grid-template-columns: repeat(6, 1fr);
     // grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    place-items: center;
+    padding: 8px;
     gap: 8px;
     
     & > .Header {
         grid-column: 1 / -1;
+        text-align: center;
         
         &.Size {
-            
+            font-size: 24px;
         }
         
         &.Year {
-            
+            font-size: 36px;
         }
-    }
-    
-    & > .Item {
-        display: grid;
-        grid-template-rows: 40px 1fr 40px;
-        
-        border: 1px solid var(--element-color, #444);
-        padding: 8px;
-        
-        aspect-ratio: 1 / 1;
-        
-        background-color: #444;
-        
-        overflow: hidden;
-        
-        & > .Title {
-            font-family: "Trademarker", serif;
-            font-style: italic;
-            font-weight: bold;
-            
-            text-align: center;
-        }
-        
-        & > .Tags {
-            font-family: monospace;
-            font-size: 12px;
-        }
-        
-        // Stuff gets horribly skewed because of this
-        // &.displayRed   { grid-column: 1; }
-        // &.displayBlue  { grid-column: 2; }
-        // &.displayGreen { grid-column: 3; }
-        // &.displayWhite { grid-column: 4; }
-        // &.displayGold  { grid-column: 5; }
-        // &.displayBlack { grid-column: 6; }
     }
 }
 
-.BonclePreview {
-    // aspect-ratio: 1 / 1;
-    // height: 400px;
-    border: 1px solid black;
+.BoncleSetListItem {
+    max-width: 250px;
     
-    // background-image: url(setNo);
-    // ^ is done in code
+    display: grid;
+    
+    aspect-ratio: 3 / 4;
+    border-radius: 5px;
+    
     background-position: center center;
     background-size: cover;
     
-    min-width: 0;
-    min-height: 0;
+    overflow: hidden;
     
-    & > .Media {
-        display: block;
-        // ^ once again, inline screwing around
-        width: 100%;
-        height: 100%;
-        
-        object-fit: contain;
+    & > .Content {
         -webkit-backdrop-filter: contrast(75%) blur((14px / 2));
-        backdrop-filter: contrast(75%) blur((14px / 2));
+        backdrop-filter        : contrast(75%) blur((14px / 2));
+        
+        display: grid;
+        $barSize: 48px;
+        
+        // grid-template-rows: $barSize 1fr $barSize;
+        grid-template-rows: auto 1fr auto;
+        justify-content: stretch;
+        align-content: center;
+        
+        min-width: 0;
+        min-height: 0;
+        
+        & > .Preview {
+            min-width: 0;
+            min-height: 0;
+            
+            & > .Media {
+                display: block;
+                // ^ once again, inline screwing around
+                width: 100%;
+                height: 100%;
+                
+                object-fit: contain;
+            }
+        }
+        
+        & > .Flank {
+            background-color: rgba(#000000, 0.5);
+            padding: 4px;
+        }
+        
+        & > .Header {
+            display: grid;
+            place-content: center;
+            grid-template-rows: auto auto;
+            
+            & > .Title {
+                font-family: "Trademarker", serif;
+                font-style: italic;
+                font-weight: bold;
+                font-size: 20px;
+                text-align: center;
+            }
+            
+            & > .SetNumber {
+                font-size: 12px;
+                
+                color: #ccc;
+                text-align: center;
+            }
+        }
+        
+        & > .Footer {
+            display: flex;
+            justify-content: space-evenly;
+        }
+    }
+}
+
+// .BonclePreview {
+//     background-position: center center;
+//     background-size: cover;
+//     min-width: 0;
+//     min-height: 0;
+//     & > .Media {
+//         display: block;
+//         // ^ once again, inline screwing around
+//         width: 100%;
+//         height: 100%;
+//         object-fit: contain;
+//         -webkit-backdrop-filter: contrast(75%) blur((14px / 2));
+//         backdrop-filter: contrast(75%) blur((14px / 2));
+//     }
+// }
+
+//////////////////////
+// Assorted widgets //
+//////////////////////
+
+.BoncleTagLabel {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 14px;
+    
+    & > .Prefix {
+        font-weight: bold;
+        // color: gold;
+    }
+    
+    & > .Main {
+        
+    }
+}
+
+.BoncleSetWidget {
+    border-radius: 9999px;
+    
+    background-color: rgba(#000000, 0.5);
+    
+    width : 24px;
+    height: 24px;
+    
+    user-select: none;
+    
+    &.Element {
+        & > img.Media {
+            vertical-align: middle;
+            height: 100%;
+            aspect-ratio: 1/1;
+        }
+    }
+    
+    &.Text {
+        display: grid;
+        place-content: center;
+        
+        // &.dislike  { color: olivedrab ; }
+        &.whatever, &.dontHave { color: gray      ; }
+        
+        // &.dontHave {color: gray;}
+        // &.want     {color: red;}
+        // &.have     {color: lime;}
     }
 }

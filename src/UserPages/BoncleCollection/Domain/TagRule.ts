@@ -1,10 +1,9 @@
 import { requires } from "../../../(System)/Assert";
 import { from } from "../../../(System)/Collections/Linq";
-import { BoncleTag } from "./Definitions/StandardTags";
+import { BoncleTag } from "./Definitions/Tag";
 
 export class BoncleTagRule {
-    
-    readonly consequent: ReadonlySet<BoncleTag>;
+    readonly sequents: ReadonlySet<BoncleTag>;
     
     constructor(
         // 1 antecedent greatly limits the inferral power
@@ -12,11 +11,24 @@ export class BoncleTagRule {
         readonly antecedent: BoncleTag,
         consequent: Iterable<BoncleTag>
     ) {
-        this.consequent = new Set(consequent);
-        requires(!this.consequent.has(antecedent));
+        this.sequents = new Set(consequent);
     }
     
+    static empty(antecedent: BoncleTag): BoncleTagRule {
+        return new BoncleTagRule(antecedent, []);
+    }
+    
+    join(other: BoncleTagRule): BoncleTagRule {
+        requires(this.antecedent === other.antecedent, 
+            `Antecedents must match.`);
+        return new BoncleTagRule(this.antecedent, [...this.sequents, ...other.sequents]);
+    }
+    
+    //////////////////////////
+    // implements Printable //
+    //////////////////////////
+    
     toString(): string {
-        return `${this.antecedent} -> ${from(this.consequent)}`;
+        return `${this.antecedent} -> ${from(this.sequents)}`;
     }
 }

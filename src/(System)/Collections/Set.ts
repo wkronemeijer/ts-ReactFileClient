@@ -52,6 +52,7 @@ export function Set_hasAny<T extends primitive_t>(set: ReadonlySet<T>, value: un
     return set.has(value as any);
 }
 
+
 export function Set_overlapsWith<T>(set: ReadonlySet<T>, iterable: Iterable<T>): boolean {
     for (const item of iterable) {
         if (set.has(item)) {
@@ -59,4 +60,12 @@ export function Set_overlapsWith<T>(set: ReadonlySet<T>, iterable: Iterable<T>):
         }
     }
     return false;
+}
+
+export function Set_isEmpty(set: ReadonlySet<unknown>): boolean {
+       return set.size === 0;
+}
+
+export function Set_isNotEmpty(set: ReadonlySet<unknown>): boolean {
+    return set.size !== 0;
 }

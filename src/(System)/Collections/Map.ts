@@ -1,5 +1,6 @@
 import { primitive_t } from "../Types/Primitive";
 import { keyof_t } from "../Types/Typeof";
+import { Selector } from "./Linq";
 
 /** noot noot */
 export function Map_map<K, V, W>(
@@ -60,10 +61,31 @@ export function Map_associateBy<K extends primitive_t, V>(
 }
 
 /** Reverses a map. Restricted to primitive types to remind you that {@link Map}s use the built-in equality operator. */
-export function Map_reverse<A extends primitive_t, B extends primitive_t>(forwardMap: ReadonlyMap<A, B>): Map<B, A> {
+export function Map_reverse<A extends primitive_t, B extends primitive_t>(
+    self: ReadonlyMap<A, B>
+): Map<B, A> {
     const backwardMap = new Map<B, A>();
-    for (const [k, v] of forwardMap) {
+    for (const [k, v] of self) {
         backwardMap.set(v, k);
     }
     return backwardMap;
+}
+
+export function Map_hasAny<K extends primitive_t>(
+    self: ReadonlyMap<K, unknown>, 
+    value: unknown,
+): value is K {
+    return self.has(value as any);
+}
+
+export function Map_update<K, V>(
+    map: Map<K, V>, 
+    key: K, 
+    initializer: Selector<K, V>, 
+    update: Selector<V, V>
+): void {
+    if (!map.has(key)) {
+        map.set(key, initializer(key));
+    }
+    map.set(key, update(map.get(key)!));
 }
