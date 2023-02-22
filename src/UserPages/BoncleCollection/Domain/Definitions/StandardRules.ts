@@ -1,3 +1,5 @@
+import { collect } from "../../../../(System)/Collections/Iterable";
+import { from } from "../../../../(System)/Collections/Linq";
 import { identity } from "../../../../(System)/Function";
 
 import { BoncleTagRule } from "../TagRule";
@@ -41,12 +43,12 @@ const rootRules: readonly rootRule[] = [
     rule("want -> like    "),
     
     // Famous people 
-    rule("tahu   -> ta  "),
-    rule("gali   -> ga  "),
-    rule("lewa   -> le  "), 
-    rule("kopaka -> ko  "),
-    rule("pohatu -> po  "),
-    rule("onua   -> onu "), 
+    rule("tahu   -> ta "),
+    rule("gali   -> ga "),
+    rule("lewa   -> le "), 
+    rule("kopaka -> ko "),
+    rule("pohatu -> po "),
+    rule("onua   -> onu"), 
     
     rule("vakama -> ta "),
     rule("nokama -> ga "),
@@ -65,8 +67,9 @@ const rootRules: readonly rootRule[] = [
     rule("kopeke   -> ko"),
     rule("macku    -> ga"),
     
-    rule("takanuva -> av"),
-    rule("antroz   -> makutaPhantoka fire"),
+    rule("takanuva -> av white"),
+    rule("antroz   -> makutaPhantoka red"),
+    rule("gresh    -> glatorian jungle"),
     
     // Gender rules
     rule("ta  -> male"),
@@ -77,34 +80,35 @@ const rootRules: readonly rootRule[] = [
     rule("onu -> male"),
     
     // Element -> DisplayElement
-    rule("fire   -> _displayRed"),
-    rule("water  -> _displayBlue"),
-    rule("air    -> _displayGreen"),
-    rule("jungle -> _displayGreen"),
-    rule("ice    -> _displayWhite"),
-    rule("light  -> _displayWhite"),
-    rule("stone  -> _displayGold"),
-    rule("sand   -> _displayGold"),
-    rule("iron   -> _displayGold"),
-    rule("earth  -> _displayBlack"),
-    rule("rock   -> _displayBlack"), // Skrall...
-    rule("shadow -> _displayBlack"),
+    rule("fire   -> red"),
+    rule("water  -> blue"),
+    rule("air    -> green"),
+    rule("jungle -> green"),
+    rule("ice    -> white"),
+    rule("light  -> white"),
+    rule("stone  -> yellow"),
+    rule("sand   -> yellow"),
+    rule("iron   -> yellow"),
+    rule("earth  -> black"),
+    rule("rock   -> black"), // Skrall...
+    rule("shadow -> black"),
     
     // Sizes 
-    rule("bahrag      -> large"),
-    rule("toa         -> medium"),
-    rule("glatorian   -> medium"),
-    rule("makutaKarda -> medium"),
-    rule("piraka      -> medium"),
-    rule("barraki     -> medium"),
-    rule("rahkshi     -> medium"),
-    rule("turaga      -> small"),
-    rule("rahaga      -> small"),
-    rule("matoran     -> small"),
-    rule("hydruka     -> small"),
-    rule("agori       -> small"),
-    rule("bohrokVa    -> small"),
-    rule("allStars    -> small"),
+    rule("bahrag    -> large"),
+    rule("toa       -> medium"),
+    rule("glatorian -> medium"),
+    rule("bohrok    -> medium"),
+    rule("rahkshi   -> medium"),
+    rule("piraka    -> medium"),
+    rule("barraki   -> medium"),
+    rule("makuta    -> medium"),
+    rule("turaga    -> small"),
+    rule("rahaga    -> small"),
+    rule("matoran   -> small"),
+    rule("hydruka   -> small"),
+    rule("agori     -> small"),
+    rule("bohrokVa  -> small"),
+    rule("allStars  -> small"),
     
     rule("skullHunter -> medium"),
     rule("masterOf    -> medium"),
@@ -133,13 +137,11 @@ const rootRules: readonly rootRule[] = [
 
 // Note on cycles: track new elements in working set, and expand them *once* if they are non-terminals. Should solve cycle issues (cycles become completely boring that way).
 
-function *standardRules_iter(): Iterable<BoncleTagRule> {
-    for (const rule of rootRules) {
-        const [antecedent, _arrow, ...sequents] = rule;
-        yield new BoncleTagRule(antecedent, sequents);
-    }
-}
-
 export const BoncleTagStandardRules: readonly BoncleTagRule[] = 
-    Array.from(standardRules_iter())
+    from(rootRules)
+    .select(rule => {
+        const [antecedent, _arrow, ...sequents] = rule;
+        return new BoncleTagRule(antecedent, sequents);
+    })
+    .toArray()
 ;

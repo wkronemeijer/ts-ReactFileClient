@@ -36,6 +36,8 @@ export class BoncleSetFilter {
         };
     }
     
+    static readonly default = new this([], [], []);
+    
     /** 
      * Parse a filter from a string. 
      * Parsing never fails: 
@@ -71,7 +73,7 @@ export class BoncleSetFilter {
         return new BoncleSetFilter(all, include, exclude);
     }
     
-    filter(array: readonly BoncleSet[]): BoncleSet[] {
+    select(array: readonly BoncleSet[]): BoncleSet[] {
         return array.filter(this.test);
     }
     

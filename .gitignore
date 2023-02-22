@@ -6,3 +6,5 @@ dist/*.js.map
 *.jpg
 *.jpeg
 *.png
+*.webp
+*.webm

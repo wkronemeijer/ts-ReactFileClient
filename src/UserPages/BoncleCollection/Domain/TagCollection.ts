@@ -41,6 +41,8 @@ extends Iterable<BoncleTag>, IterableEntries, StringBuildable {
      * The fractional part contains the half-year of release. 
      */
     determineYear(): number;
+    
+    toString(): string;
 }
 
 export class BoncleTagCollection 
@@ -186,17 +188,17 @@ implements ReadonlyBoncleTagCollection {
     ////////////////////////////////
     
     buildString(builder: StringBuilder): void {
-        builder.append("BoncleTagSet { ");
         for (const [tag, depth] of this.depthByTag.entries()) {
-            builder.append(tag);
-            builder.append("(");
-            builder.append(depth.toString());
-            builder.append(") ");
+            if (BoncleTag.isPublic(tag)) {
+                builder.append(tag);
+                builder.append("(");
+                builder.append(depth.toString());
+                builder.append(") ");
+            }
         }
-        builder.append("}");
     }
     
     toString(): string {
-        return StringBuilder.stringify(this);
+        return StringBuilder.stringify(this).trim();
     }
 }

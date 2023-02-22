@@ -4,10 +4,10 @@ import { BoncleMyOpinion } from "../../Domain/Definitions/StandardEnums";
 import { BoncleSetWidget } from "./Base";
 
 const table = {
-        dislike : "👎",
-        whatever: "\u2014",
-        like    : "👍",
-        love    : "❤\uFE0F",
+        dislike   : "👎",
+        ambivalent: "\u2014",
+        like      : "👍",
+        love      : "❤\uFE0F",
 } as const satisfies Record<BoncleMyOpinion, ReactNode>;
 
 export const BoncleSetWidget_Opinion = memo((props: {

@@ -1,3 +1,4 @@
+import { Predicate } from "../Linq";
 
 export class PersistentSet<T> implements ReadonlySet<T> {
     readonly size: number;
@@ -6,10 +7,12 @@ export class PersistentSet<T> implements ReadonlySet<T> {
         this.size = this.store.size;
     }
     
+    static readonly default = new PersistentSet<any>(new Set);
+    
     // TODO: Pick 1 name and stick to it.
-    static readonly EmptySet = new PersistentSet<any>(new Set);
-    static readonly Empty    = this.EmptySet
-    static readonly default  = this.EmptySet;
+    static empty<T>(): PersistentSet<T> {
+        return this.default;
+    }
     
     static from<T>(iterable: Iterable<T>): PersistentSet<T> {
         return new PersistentSet(new Set(iterable));
@@ -64,6 +67,14 @@ export class PersistentSet<T> implements ReadonlySet<T> {
         } else return this;
     }
     
+    toggle(element: T): PersistentSet<T> {
+        if (this.has(element)) {
+            return this.delete(element);
+        } else {
+            return this.add(element);
+        }
+    }
+    
     clear(): PersistentSet<T> {
         if (this.size > 0) {
             return PersistentSet.default;
@@ -74,66 +85,28 @@ export class PersistentSet<T> implements ReadonlySet<T> {
     // Methods Set should have //
     /////////////////////////////
     
-    union<U>(other: Iterable<U>): PersistentSet<T | U> {
-        const newStore: Set<T | U> = this.cloneStore();
-        for (const item of other) {
-            newStore.add(item);
-        }
-        return new PersistentSet(newStore);
-    }
-    
-    intersect(other: Iterable<T>): PersistentSet<T> {
-        const newStore = new Set<T>;
-        for (const item of other) {
-            if (this.has(item)) {
+    filter(predicate: Predicate<T>): PersistentSet<T> {
+        const newStore = this.cloneStore();
+        let change = false;
+        for (const item of this) {
+            if (predicate(item)) {
                 newStore.add(item);
+            } else {
+                change = true;
             }
         }
-        return new PersistentSet(newStore);
+        
+        if (change) {
+            return new PersistentSet(newStore);
+        } else return this;
     }
     
-    /** Set difference */
-    except(other: Iterable<T>): PersistentSet<T> {
-        const newStore = this.cloneStore();
-        for (const item of other) {
-            newStore.delete(item);
-        }
-        return new PersistentSet(newStore);
-    }
-    
-    ///////////////////////
-    // Additional checks //
-    ///////////////////////
+    //////////////////////////
+    // implements Equatable //
+    //////////////////////////
     
     equals(other: PersistentSet<T>): boolean {
         for (const item of other) {
-            if (!this.has(item)) {
-                return false;
-            }
-        }
-        return true;
-    }
-    
-    overlapsWith(other: Iterable<T>): boolean {
-        for (const item of other) {
-            if (this.has(item)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    isSubsetOf(otherSet: ReadonlySet<T>): boolean {
-        for (const item of this) {
-            if (!otherSet.has(item)) {
-                return false;
-            }
-        }
-        return true;
-    }
-    
-    isSupersetOf(otherSet: ReadonlySet<T>): boolean {
-        for (const item of otherSet) {
             if (!this.has(item)) {
                 return false;
             }

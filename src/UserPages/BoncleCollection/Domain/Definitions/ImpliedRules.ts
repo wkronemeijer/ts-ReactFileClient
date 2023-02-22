@@ -1,8 +1,13 @@
 import { BoncleTagRule } from "../TagRule";
 import { BoncleTagRoot, BoncleTagTree } from "./TagTree";
 import { BoncleTag } from "./Tag";
+import { collect } from "../../../../(System)/Collections/Iterable";
 
-function *impliedRules_iter(parent: BoncleTag | undefined, branch: BoncleTagTree): Iterable<BoncleTagRule> {
+export const BoncleTagImpliedRules: readonly BoncleTagRule[] = 
+collect(function* recurse(
+    parent: BoncleTag | undefined, 
+    branch: BoncleTagTree,
+): Iterable<BoncleTagRule> {
     let childBranch: BoncleTagTree | undefined;
     for (const key in branch) {
         const child = BoncleTag.check(key);
@@ -11,11 +16,7 @@ function *impliedRules_iter(parent: BoncleTag | undefined, branch: BoncleTagTree
             yield new BoncleTagRule(child, [parent]);
         }
         if (childBranch = branch[key]) {
-            yield* impliedRules_iter(child, childBranch);
+            yield* recurse(child, childBranch);
         }
     }
-}
-
-export const BoncleTagImpliedRules: readonly BoncleTagRule[] = 
-    Array.from(impliedRules_iter(undefined, BoncleTagRoot))
-;
+})(undefined, BoncleTagRoot);

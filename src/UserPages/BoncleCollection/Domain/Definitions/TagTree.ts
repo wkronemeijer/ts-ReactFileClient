@@ -4,48 +4,71 @@ import { StringEnum } from "../../../../(System)/Data/StringEnum";
 // badGuy -> -goodGuy
 // But how do you resolve conflicts? And loops?
 
+
+const Default = Symbol("Default");
+
+export const BoncleTagTree_Default = Default;
+
+
 export interface BoncleTagTree {
+    [Default]?: boolean;
     [s: string] : BoncleTagTree;
 }
 
 export const BoncleTagRoot = {
     _displayElements: {
         // Opponent process colors...
-        _displayRed  : {},
-        _displayBlue : {},
-        _displayGreen: {},
-        _displayWhite: {},
-        _displayGold : {},
-        _displayBlack: {},
-        _displayNone : {},
-    },
-    _seasonOfRelease: {
-        // Only purpose is to order sets by release
-        // winter is default, summer is by mid 
-        // ...mid 2002... reads well
-        mid: {},
-    },
-    _armament: {
-        _projectileArmament: {
-            bambooDisk: {},
-            kanokaDisk: {},
-            rhotukaSpinner: {},
-            zamorLauncher: {},
-            airLauncher: {},
-            squidLauncher: {},
-            cordakBlaster: {},
-            midakSkyBlaster: {},
-            nynrahGhostBlaster: {},
-            thornaxLauncher: {},
-            elementalBlaster: {},
+        _displayNone: { // ➖
+            [Default]: true,
+        },
+        _displayRed: { // 🔴
+            red   : {},
+            orange: {},
+            bronze: {},
+        },
+        _displayBlue: { // 🔵
+            cyan  : {},
+            blue  : {},
+            purple: {},
+        },
+        _displayGreen: { // 🟢
+            green: {},
+            lime : {},
+        },
+        _displayWhite: { // ⚪
+            white : {},
+            silver: {},
+        },
+        _displayYellow: { // 🟡
+            tan   : {},
+            brown : {},
+            yellow: {},
+            gold  : {},
+        },
+        _displayBlack: { // ⚫
+            gray    : {},
+            black   : {},
+            gunmetal: {},
         },
     },
-    _kanohi: {
-        
-        
-        ignika: {},
-        kraakhan: {},
-        maskOfCreation: {},
+    _opinion: {
+        dislike : {},
+        ambivalent: { [Default]: true },
+        like: {
+            love: {},
+        },
+    },
+    _possession: {
+        dontHave: {
+            [Default]: true,
+            want: {},
+        },
+        have: {},
+    },
+    _seasonOfRelease: {
+        // winter is default, summer is by mid 
+        // "mid 2002" reads well
+        mid: {},
     },
     _yearOfRelease: {
         "2001": {},
@@ -60,54 +83,39 @@ export const BoncleTagRoot = {
         "2010": {},
         "2015": {},
         "2016": {},
+        // No, GWP does not count
     },
     _sex: {
         male  : {},
         female: {},
     },
-    _colored: {
-        white : {},
-        gray  : {},
-        black : {},
-        red   : {},
-        orange: {},
-        tan   : {},
-        yellow: {},
-        green : {},
-        lime  : {},
-        cyan  : {},
-        blue  : {},
-        purple: {},
-        shinyColor: {
-            gold  : {},
-            silver: {},
-            bronze: {},
-            gunmetal: {},
-        },
-    },
     _theme: {
         bionicleGen1: {},
         bionicleGen2: {},
     },
-    _multiplicity: {
-        "2-in-1": { and    : {}},
-        "3-in-1": { andAlso: {}},
-        "4-in-1": {},
+    packageDeal: {
+        "and": {},
+        // Do you really care how big it is?
+        _sizedPackageDeal: {
+            "2-in-1": {},
+            "3-in-1": {},
+            "4-in-1": {},
+        },
     },
     _elemental: { // in ascending order
-        _noElement: {},
-        iron     : {},
-        rock     : {}, // for the skrall, 
-        earth    : { onu: {} },
-        sand     : {},
-        stone    : { po : {} },
-        ice      : { ko : {} },
-        jungle   : {},
-        air      : { le : {} },
-        water    : { ga : {} },
-        fire     : { ta : {} },
-        shadow   : {},
-        light    : { av : {} },
+        _noElement: { [Default]: true },
+        iron      : {},
+        rock      : {}, // for the skrall, 
+        earth     : { onu: {} },
+        sand      : {},
+        stone     : { po : {} },
+        ice       : { ko : {} },
+        jungle    : {},
+        air       : { le : {} },
+        water     : { ga : {} },
+        fire      : { ta : {} },
+        shadow    : {},
+        light     : { av : {} },
     },
     _sized: {
         // Use explicit size when combining
@@ -115,13 +123,10 @@ export const BoncleTagRoot = {
         medium: {},
         large : {
             titan: {},
+            // Whats the difference between large and huge?
+            // Idk maybe we split them later again, there is never more than 1 huge set per year.
+            huge: {},
         },
-        // Whats the difference between large and huge?
-        huge  : {},
-    },
-    special: {
-        limitedEdition: {},
-        specialEdition: {},
     },
     _location: {
         aquaMagna: {
@@ -173,7 +178,6 @@ export const BoncleTagRoot = {
                 },
             },
             bohrok: {
-                vanillaBohrok: {},
                 bohrokKal: {},
                 bahrag: {},
             },
@@ -202,7 +206,6 @@ export const BoncleTagRoot = {
                 boneHunter: {},
             },
             glatorian: {
-                vanillaGlatorian: {},
                 glatorianLegend: {},
             },
             skrall: {},
@@ -224,9 +227,7 @@ export const BoncleTagRoot = {
         },
         unknownSpecies: {},
     },
-    // = occurs more than once
-    // Useful to compare different iterations
-    _famousPeople: {
+    _commonCharacters: {
         ogToaTeam: {
             tahu  : {},
             gali  : {},
@@ -256,27 +257,17 @@ export const BoncleTagRoot = {
             macku:  {},
         },
         takanuva:  {},
+        teridax: {},
         antroz: {},
+        gresh: {},
     },
     _faction: {
         goodGuy: {},
         badGuy : {},
     },
-    _opinion: {
-        dislike : {},
-        whatever: {
-            like: {
-                love: {},
-            },
-        },
-    },
-    _possession: {
-        dontHave: {
-            want: {},
-        },
-        have: {},
-    },
+    
     _uncategorized: {
+        special: {},
         animal: {},
         vehicle: {},
         combinerModel: {},

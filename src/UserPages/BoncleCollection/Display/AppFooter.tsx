@@ -2,7 +2,7 @@ import { memo } from "react";
 
 import { BoncleTagStandardRules } from "../Domain/Definitions/StandardRules";
 import { BoncleTagImpliedRules } from "../Domain/Definitions/ImpliedRules";
-import { BoncleDatabase } from "../Domain/BoncleDatabase";
+import { BoncleDatabase } from "../Domain/Database";
 import { BoncleTag } from "../Domain/Definitions/Tag";
 
 export const BoncleAppFooter = memo(() => {

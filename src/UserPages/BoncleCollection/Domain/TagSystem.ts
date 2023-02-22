@@ -1,18 +1,18 @@
 import { StringBuilder } from "../../../(System)/Text/StringBuilder";
+import { Map_update } from "../../../(System)/Collections/Map";
 import { requires } from "../../../(System)/Assert";
 import { Stack } from "../../../(System)/Collections/Stack";
 import { panic } from "../../../(System)/Errors";
 import { from } from "../../../(System)/Collections/Linq";
 
+import { BoncleTagCollection, ReadonlyBoncleTagCollection } from "./TagCollection";
 import { BoncleSetNumber_hasInstance } from "./SetNumber";
 import { BoncleTagStandardRules } from "./Definitions/StandardRules";
 import { BoncleTagImpliedRules } from "./Definitions/ImpliedRules";
 import { BoncleSetTemplate } from "./SetTemplate";
-import { BoncleTagCollection, ReadonlyBoncleTagCollection } from "./TagCollection";
+import { BoncleTagRule } from "./TagRule";
 import { BoncleTag } from "./Definitions/Tag";
 import { BoncleSet } from "./Set";
-import { BoncleTagRule } from "./TagRule";
-import { Map_update } from "../../../(System)/Collections/Map";
 
 /*
 The idea:
@@ -25,6 +25,13 @@ given tags b, d
 set = tl(b) | tl(d) | ...
 strings value equality to the rescue...
 
+Also tracks depth 
+given a, b, c; a -> c and set = {b, c}
+
+search({a   }, set) == c, but
+search({a, b}, set) == b
+
+search prefers arguments with the least depth
 
 */
 
