@@ -3,7 +3,7 @@ import { Map_update } from "../../../(System)/Collections/Map";
 import { requires } from "../../../(System)/Assert";
 import { Stack } from "../../../(System)/Collections/Stack";
 import { panic } from "../../../(System)/Errors";
-import { from } from "../../../(System)/Collections/Linq";
+import { from } from "../../../(System)/Collections/Sequence";
 
 import { BoncleTagCollection, ReadonlyBoncleTagCollection } from "./TagCollection";
 import { BoncleSetNumber_hasInstance } from "./SetNumber";

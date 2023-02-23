@@ -2,14 +2,16 @@
 // Remember that!
 
 import { Array_firstElement, Array_IndexNotFound, Array_lastElement } from "../Collections/Array";
-import { equals as System_equals, EqualityComparer } from "../Traits/Equatable";
-import { compare as System_compare, Comparer, ComparerDelegate } from "../Traits/Comparable";
+import { equals as System_equals } from "../Traits/Equatable/Equals";
+import { compare as System_compare } from "../Traits/Comparable/Compare";
 import { assert, ensures, requires } from "../Assert";
+import { EqualityComparer } from "../Traits/Equatable/EqualityComparer";
 import { StringBuilder } from "../Text/StringBuilder";
 import { ArrayMember } from "./Enumeration";
 import { Map_reverse } from "../Collections/Map";
 import { Set_hasAny } from "../Collections/Set";
 import { Printable } from "../Traits/Printable";
+import { Comparer } from "../Traits/Comparable/Comparer";
 import { panic } from "../Errors";
 
 /////////////////////
@@ -22,7 +24,7 @@ export type StringEnum_Member<EAny extends StringEnum<any>> =
 
 // Techincally, this stuff should be stratified by features
 export interface StringEnum<E extends string> 
-extends Iterable<E>, ComparerDelegate<E>, Printable {
+extends Iterable<E>, Printable {
     /** All values, in ascending order. */
     readonly values: readonly E[];
     toString(): string;
@@ -188,8 +190,14 @@ function createStringEnumWithOrdinals<E extends string>(ordinalByName: OrdinalMa
     );
     
     // FIXME: Should sort on ordinal
-    const values      = Array.from(ordinalByName.keys());
+    const values = Array.from(ordinalByName.keys()).sort((a, b) => {
+        const ordinalA = ordinalByName.get(a)!;
+        const ordinalB = ordinalByName.get(b)!;
+        return ordinalA - ordinalB;
+    });
+    
     const setOfValues = new Set(values);
+    
     assert(setOfValues.size === values.length, "All members must be unique.");
     
     const hasInstance = (x: unknown): x is E => Set_hasAny(setOfValues, x);
@@ -245,47 +253,3 @@ export function StringEnum_create<E extends string>(values: StringEnum_Initializ
 ////////////////////////////
 // Companions for `enum`s //
 ////////////////////////////
-
-// type  Justify = StringEnum_Member<typeof Justify>;
-// const Justify = StringEnum_create([
-//     "left",
-//     "center",
-//     "right"
-// ] as const);
-
-// type  Alignment = StringEnum_Member<typeof Alignment>;
-// const Alignment = StringEnum_create([
-//     "top",
-//     "middle",
-//     "bottom",
-// ] as const).withDefault("middle");
-
-// const enum3 = StringEnum_create({
-//     "black": 0, // mysterious inference error
-//     "red": 1,
-//     "green": 2,
-//     "white": 7,
-//     "unset": 9,
-// } as const).withDefault("unset").withMethods(Self => ({
-//     colorText(): string {
-//         throw "notImplemented"
-//     }
-// }));
-
-// enum3.colorText()
-
-// // TODO: integrate this:
-
-// declare function join<
-//     E1 extends string, 
-//     E2 extends string,
-//     J extends (e1: E1, e2: E2) => string
-// >(
-//     enum1: StringEnum<E1>, 
-//     enum2: StringEnum<E2>, 
-//     joiner: J,
-// ): StringEnum<ReturnType<J>>;
-
-// const combo = (x: Justify, y: Alignment) => `${x} ${y}` as const;
-
-// const position = join(Justify, Alignment, (a, b) => `${a} by ${b}` as const);

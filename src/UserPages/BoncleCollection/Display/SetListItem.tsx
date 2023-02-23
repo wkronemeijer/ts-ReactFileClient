@@ -1,23 +1,18 @@
-import { Dispatch, memo, useCallback, useMemo } from "react";
-
-import { from } from "../../../(System)/Collections/Linq";
-import { fst } from "../../../(System)/Function";
+import { memo, useCallback } from "react";
 
 import { joinClasses } from "../../../ReactFileClient/ClassHelper";
 
 import { BoncleSetWidget_Possession } from "./SetWidgets/Possession";
+import { BoncleSetSelection_Change } from "../Domain/SetSelection";
 import { BoncleSetWidget_Element } from "./SetWidgets/Element";
 import { BoncleSetWidget_Opinion } from "./SetWidgets/Opinion";
-import { BoncleTag } from "../Domain/Definitions/Tag";
 import { BoncleSet } from "../Domain/Set";
-import { BoncleSetSelection, BoncleSetSelection_Change } from "../Domain/SetSelection";
 
-
-export const BoncleSetListItem = memo((props: {
+export const BoncleSetListItem = memo(function boncleSetListItem(props: {
     readonly set: BoncleSet;
     readonly isSelected: boolean;
     readonly setSelection: BoncleSetSelection_Change;
-}): JSX.Element => {
+}): JSX.Element {
     const { set, isSelected, setSelection } = props;
     const { title } = set;
     
@@ -35,29 +30,28 @@ export const BoncleSetListItem = memo((props: {
         style={{ backgroundImage: `url(${set.previewUrl})` }}
     >
         <div className="Content">
-        <div className="Header Flank">
-            <span className="Title">{title}</span>
-            <span className="SetNumber">
-                <a 
-                    href={set.bricksetUrl}
-                    target="_blank"
-                >{set.setNumber}</a>
-            </span>
+            <div className="Header Flank">
+                <span className="Title">{title}</span>
+                <span className="SetNumber">
+                    <a 
+                        href={set.bricksetUrl}
+                        target="_blank"
+                    >{set.setNumber}</a>
+                </span>
+            </div>
+            <div className="Preview" onClick={Preview_onClick}>
+                <img
+                    className="Media"
+                    src={set.previewUrl} 
+                    alt={set.previewAlt}
+                    title={set.previewTitle}
+                />
+            </div>
+            <div className="Footer Flank Widgets">
+                <BoncleSetWidget_Opinion    opinion   ={set.opinion    }/>
+                <BoncleSetWidget_Element    element   ={set.trueElement}/>
+                <BoncleSetWidget_Possession possession={set.possession }/>
+            </div>
         </div>
-        {/* <BoncleSetPreview setNumber={setNumber} /> */}
-        <div className="Preview" onClick={Preview_onClick}>
-            <img
-                className="Media"
-                src={set.previewUrl} 
-                alt={set.previewAlt}
-                title={set.previewTitle}
-            />
-        </div>
-        <div className="Footer Flank Widgets">
-            <BoncleSetWidget_Opinion    opinion   ={set.opinion    }/>
-            <BoncleSetWidget_Element    element   ={set.trueElement}/>
-            <BoncleSetWidget_Possession possession={set.possession }/>
-        </div>
-    </div>
     </div>
 });

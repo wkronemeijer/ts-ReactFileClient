@@ -1,5 +1,5 @@
 import { collect } from "../../../../(System)/Collections/Iterable";
-import { from } from "../../../../(System)/Collections/Linq";
+import { from } from "../../../../(System)/Collections/Sequence";
 import { identity } from "../../../../(System)/Function";
 
 import { BoncleTagRule } from "../TagRule";

@@ -1,8 +1,8 @@
-
-import { Array_firstElement, Array_lastElement } from "./Array";
-import { Comparable, compare, Comparer, ComparerDelegate, ComparerDelegate_default } from "../Traits/Comparable";
 import { Dictionary, Dictionary_create } from "./Dictionary";
 import { deprecated, notImplemented } from "../Errors";
+import { compare, compareAny } from "../Traits/Comparable/Compare";
+import { Comparable } from "../Traits/Comparable/Comparable";
+import { Comparer } from "../Traits/Comparable/Comparer";
 import { identity } from "../Function";
 
 export interface Selector<T, U> {
@@ -16,9 +16,9 @@ export interface Predicate<T> {
 /** 
  * Immutable wrapper around an iterable. Made to match the C#'s API. 
  * 
- * Not directly callable. Try {@link Linq.empty} or {@link Linq.from} instead.
+ * Not directly callable. Try {@link Sequence.empty} or {@link Sequence.from} instead.
  */
-export class Linq<T> implements Iterable<T> {
+export class Sequence<T> implements Iterable<T> {
     private constructor(private readonly source: Iterable<T>) {}
     
     [Symbol.iterator](): Iterator<T> {
@@ -29,22 +29,34 @@ export class Linq<T> implements Iterable<T> {
     // Creating sequences //
     ////////////////////////
     
-    static empty<T>(): Linq<T> {
-        return this.from([]);
+    /** @bound */
+    static empty<T>(): Sequence<T> {
+        return Sequence.from([]);
     }
     
-    static singleton<T>(element: T): Linq<T> {
-        return this.from([element]);
+    /** @bound */
+    static singleton<T>(element: T): Sequence<T> {
+        return Sequence.from([element]);
     }
     
-    /** Starts a iterable sequence. Made to look like LINQ. */
-    static from<T>(iter: Iterable<T>): Linq<T> {
-        return new Linq(iter);
+    /** 
+     * Starts a iterable sequence. 
+     * Made to look like LINQ. 
+     * 
+     * @bound
+     */
+    static from<T>(iter: Iterable<T>): Sequence<T> {
+        return new Sequence(iter);
     }
     
-    static range(end: number): Linq<number>;
-    static range(start: number, end: number): Linq<number>;
-    static range(startOrEnd: number, _end?: number|undefined): Linq<number> {
+    /** @bound */
+    static of<T>(...elements: T[]): Sequence<T> {
+        return Sequence.from(elements);
+    }
+    
+    static range(end: number): Sequence<number>;
+    static range(start: number, end: number): Sequence<number>;
+    static range(startOrEnd: number, _end?: number|undefined): Sequence<number> {
         ////////////////////
         // Sort overloads //
         ////////////////////
@@ -64,7 +76,7 @@ export class Linq<T> implements Iterable<T> {
         // Implementation //
         ////////////////////
         
-        return new Linq(function*(): Iterable<number> {
+        return new Sequence(function*(): Iterable<number> {
             for (let i = start; i < end ; i++) {
                 yield i;
             }
@@ -75,41 +87,25 @@ export class Linq<T> implements Iterable<T> {
     // Expanding sequences //
     /////////////////////////
     
-    append(element: T): Linq<T> {
+    append(element: T): Sequence<T> {
         const self = this;
-        return new Linq(function*(): Iterable<T> {
+        return new Sequence(function*(): Iterable<T> {
             yield* self;
             yield element;
         }());
     }
     
-    concat<U>(that: Iterable<U>): Linq<T | U> {
+    concat<U>(that: Iterable<U>): Sequence<T | U> {
         const self = this;
-        return new Linq(function*(): Iterable<T | U> {
+        return new Sequence(function*(): Iterable<T | U> {
             yield* self;
             yield* that;
         }());
     }
     
-    append_nonNull(element: T | undefined): Linq<T> {
-        if (element !== undefined) {
-            return this.append(element);
-        } else {
-            return this;
-        }
-    }
-    
-    concat_nonNull<U>(elements: Iterable<U> | undefined): Linq<T | U> {
-        if (elements !== undefined) {
-            return this.concat(elements);
-        } else {
-            return this;
-        }
-    }
-    
-    zip<U>(other: Iterable<U>): Linq<readonly [T, U]> {
+    zip<U>(other: Iterable<U>): Sequence<[T, U]> {
         const self = this;
-        return new Linq(function*(): Iterable<readonly [T, U]> {
+        return new Sequence(function*(): Iterable<[T, U]> {
             const iterator1 = self[Symbol.iterator]();
             const iterator2 = other[Symbol.iterator]();
             
@@ -120,10 +116,10 @@ export class Linq<T> implements Iterable<T> {
                 result1 = iterator1.next();
                 result2 = iterator2.next();
                 
-                if (result1.done || result2.done) {
-                    return;
-                } else {
+                if (!result1.done && !result2.done) {
                     yield [result1.value, result2.value];
+                } else {
+                    return;
                 }
             }
         }());
@@ -133,27 +129,27 @@ export class Linq<T> implements Iterable<T> {
     // Standard fold functions //
     /////////////////////////////
     
-    select<U>(selector: Selector<T, U>): Linq<U> {
+    select<U>(selector: Selector<T, U>): Sequence<U> {
         const self = this;
-        return new Linq(function*(): Iterable<U> {
+        return new Sequence(function*(): Iterable<U> {
             for (const item of self) {
                 yield selector(item);
             }
         }());
     }
     
-    selectMany<U>(selector: Selector<T, Iterable<U>>): Linq<U> {
+    selectMany<U>(selector: Selector<T, Iterable<U>>): Sequence<U> {
         const self = this;
-        return new Linq(function* () {
+        return new Sequence(function* () {
             for (const item of self) {
                 yield* selector(item);
             }
         }());
     }
     
-    where(filter: Predicate<T>): Linq<T> {
+    where(filter: Predicate<T>): Sequence<T> {
         const self = this;
-        return new Linq(function*(): Iterable<T> {
+        return new Sequence(function*(): Iterable<T> {
             for (const item of self) {
                 if (filter(item)) {
                     yield item;
@@ -162,11 +158,11 @@ export class Linq<T> implements Iterable<T> {
         }());
     }
     
-    /** Warning and TODO: only supports primitve equality. */
-    distinct(): Linq<T> {
-        const visitedSet = new Set<T>();
+    /** **Warning** and TODO: only supports primitve equality (i.e. it uses `===`). */
+    distinct(): Sequence<T> {
         const self = this;
-        return new Linq(function*(): Iterable<T> {
+        return new Sequence(function*(): Iterable<T> {
+            const visitedSet = new Set<T>();
             for (const item of self) {
                 if (!visitedSet.has(item)) {
                     yield item;
@@ -176,13 +172,13 @@ export class Linq<T> implements Iterable<T> {
         }());
     }
     /** @deprecated Use {@link distinct} instead. */
-    unique(): Linq<T> {
+    unique(): Sequence<T> {
         deprecated();
     }
     
-    reverse(): Linq<T> {
+    reverse(): Sequence<T> {
         const self = this;
-        return new Linq(function*(): Iterable<T> {
+        return new Sequence(function*(): Iterable<T> {
             yield* self.toArray().reverse();
         }());
     }
@@ -194,9 +190,9 @@ export class Linq<T> implements Iterable<T> {
     associate<K, V>(
         keySelector: Selector<T, K>, 
         valueSelector: Selector<T, V>,
-    ): Linq<readonly [K, V]> { 
+    ): Sequence<[K, V]> { 
         const self = this;
-        return new Linq(function*(): Iterable<[K, V]> {
+        return new Sequence(function*(): Iterable<[K, V]> {
             for (const item of self) {
                 yield [keySelector(item), valueSelector(item)];
             }
@@ -206,74 +202,48 @@ export class Linq<T> implements Iterable<T> {
     // TODO: Make these return pairs, not maps
     associateBy<K>(
         keySelector: Selector<T, K>
-    ): Linq<readonly [K, T]> {
+    ): Sequence<[K, T]> {
         return this.associate(keySelector, identity);
     }
     
     associateWith<V>(
         valueSelector: Selector<T, V>
-    ): Linq<readonly [T, V]> {
+    ): Sequence<[T, V]> {
         return this.associate(identity, valueSelector);
     }
-    
     
     ///////////
     // Sorts //
     ///////////
     
-    orderBy(comparator: Comparer<T>): Linq<T> {
+    orderBy(comparer: Comparer<T>): Sequence<T> {
         const self = this;
-        return new Linq(function*(): Iterable<T> {
-            yield* self.toArray().sort(comparator);
+        return new Sequence(function*(): Iterable<T> {
+            yield* self.toArray().sort(comparer);
         }());
     }
     
     orderOn<U extends Comparable>(
         selector: Selector<T, U>,
-        delegate: ComparerDelegate<U> = ComparerDelegate_default,
-    ): Linq<T> {
-        return this.orderBy((a, b) =>
-            delegate.compare(selector(a), selector(b))
-        );
+        comparer: Comparer<U> = compare,
+    ): Sequence<T> {
+        return this.orderBy((a, b) => comparer(selector(a), selector(b)));
+    }
+    
+    ordered() {
+        return this.orderBy(compareAny);
     }
     
     //////////////////////
     // Modify sequences //
     //////////////////////
     
-    take(n: number): Linq<T> {
+    take(n: number): Sequence<T> {
         const self = this;
-        return new Linq(function*(): Iterable<T> {
+        return new Sequence(function*(): Iterable<T> {
             let i = 0;
             for (const item of self) {
-                if (i < n) {
-                    yield item;
-                } else {
-                    break;
-                }
-                i++;
-            }
-        }());
-    }
-    
-    skip(n: number): Linq<T> {
-        const self = this;
-        return new Linq(function*(): Iterable<T> {
-            let i = 0;
-            for (const item of self) {
-                if (i >= n) {
-                    yield item;
-                }
-                i++;
-            }
-        }());
-    }
-    
-    takeWhile(filter: Predicate<T>): Linq<T> {
-        const self = this;
-        return new Linq(function*(): Iterable<T> {
-            for (const item of self) {
-                if (filter(item)) {
+                if (i++ < n) {
                     yield item;
                 } else {
                     break;
@@ -282,9 +252,31 @@ export class Linq<T> implements Iterable<T> {
         }());
     }
     
-    skipWhile(filter: Predicate<T>): Linq<T> {
+    skip(n: number): Sequence<T> {
         const self = this;
-        return new Linq(function*(): Iterable<T> {
+        return new Sequence(function*(): Iterable<T> {
+            let i = 0;
+            for (const item of self) {
+                if (i++ < n) {
+                    continue;
+                } else {
+                    yield item;
+                }
+            }
+        }());
+    }
+    
+    takeWhile(filter: Predicate<T>): Sequence<T> {
+        const self = this;
+        return new Sequence(function*(): Iterable<T> {
+            notImplemented();
+            // (Old one was a funny looking filter)
+        }());
+    }
+    
+    skipWhile(filter: Predicate<T>): Sequence<T> {
+        const self = this;
+        return new Sequence(function*(): Iterable<T> {
             notImplemented();
         }());
     }
@@ -297,13 +289,12 @@ export class Linq<T> implements Iterable<T> {
         return Array.from(this); 
     }
     
-    
     // Thanks to TS 4.X you can provide type hints without actually invoking a function. 
-    // Making this pseudo-higher kinded type possible.
+    // Making this pseudo """higher kinded type higher order function""" possible.
     to<C extends new (iterable: Iterable<T>) => any>(constructor: C): InstanceType<C> {
         return new constructor(this);
     }
-        
+    
     toSet(): Set<T> {
         return this.to(Set<T>); 
     }
@@ -315,6 +306,18 @@ export class Linq<T> implements Iterable<T> {
         return this.associate(keySelector, valueSelector).to(Map<K, V>);
     }
     
+    toMapBy<K>(
+        keySelector: Selector<T, K>, 
+    ): Map<K, T> {
+        return this.associateBy(keySelector).to(Map<K, T>);
+    }
+    
+    toMapWith<V>(
+        valueSelector: Selector<T, V>,
+    ): Map<T, V> {
+        return this.associateWith(valueSelector).to(Map<T, V>);
+    }
+    
     toDictionary<V>(
         keySelector: Selector<T, string>, 
         valueSelector: Selector<T, V>,
@@ -324,6 +327,12 @@ export class Linq<T> implements Iterable<T> {
             dict[keySelector(element)] = valueSelector(element);
         }
         return dict;
+    }
+    
+    toDictionaryBy(
+        keySelector: Selector<T, string>, 
+    ): Dictionary<T> {
+        return this.toDictionary(keySelector, identity);
     }
     
     toString(joiner = ", "): string {
@@ -355,22 +364,35 @@ export class Linq<T> implements Iterable<T> {
         return Math.min(...this.select(selector));
     }
     
-    /** The first element of the sequence. */
+    /** The first element of the sequence. Terminal operation. */
     first(): T | undefined {
-        // TODO: Do smelly iterator logic
-        // Technically both of these can be a lot more efficient
-        // But muh effort and muh correctness
-        const list = Array.from(this);
-        return Array_firstElement(list);
+        const iterator = this[Symbol.iterator]();
+        
+        const result = iterator.next();
+        if (!result.done) {
+            return result.value;
+        } else { // iterator was empty
+            return undefined;
+        }
     }
     
     /** The last element of the sequence. */
     last(): T | undefined {
-        const list = Array.from(this);
-        return Array_lastElement(list);
+        const iterator = this[Symbol.iterator]();
+        
+        let lastValue: T | undefined;
+        while (true) {
+            const result = iterator.next();
+            if (!result.done) {
+                lastValue = result.value;
+            } else {
+                break;
+            }
+        }
+        return lastValue;
     }
 }
 
-/** Short hand for {@link Linq.from}, made to look like LINQ. */
-export const from = Linq.from;
-// ^ Mind that `Linq.from` does not use this in any form, and so is safe to bind like this.
+/** Short hand for {@link Sequence.from}, made to look like LINQ. */
+export const from = Sequence.from;
+// ^ Don't change, it is used all over the place lol

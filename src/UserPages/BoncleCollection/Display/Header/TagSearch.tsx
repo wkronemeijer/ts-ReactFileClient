@@ -1,6 +1,6 @@
-import { ChangeEventHandler, Dispatch, KeyboardEventHandler, memo, useCallback, useState } from "react";
+import { ChangeEvent, ChangeEventHandler, Dispatch, KeyboardEventHandler, memo, useCallback, useState } from "react";
 
-import { from } from "../../../../(System)/Collections/Linq";
+import { from } from "../../../../(System)/Collections/Sequence";
 
 import { joinClasses } from "../../../../ReactFileClient/ClassHelper";
 
@@ -31,8 +31,14 @@ export const BoncleTagSearch = memo((props: {
     const prefix       = filter.lastTag;
     const suggestions  = getSuggestions(filter, 20);
     
-    const input_onChange = useCallback<ChangeEventHandler<HTMLInputElement>>(event => {
+    const Search_onChange = useCallback((
+        event: ChangeEvent<HTMLInputElement>,
+    ) => {
         onChange(event.target.value);
+    }, [onChange]);
+    
+    const Clear_onClick = useCallback(() => {
+        onChange("");
     }, [onChange]);
     
     return <div className={joinClasses(
@@ -40,18 +46,25 @@ export const BoncleTagSearch = memo((props: {
         isIncomplete && "Incomplete",
     )}>
         <div className="Title">Search sets</div>
-        <input className="Search" type="text" value={value} onChange={input_onChange}/>
+        <input className="Search" type="text" value={value} onChange={Search_onChange}/>
         <div className="Suggestions">
-            {suggestions.length > 0 ? suggestions.map(suggestion => 
-            <BoncleTagLabel tag={suggestion} prefix={prefix}/>) : 
-            "-"}
+            {suggestions.length > 0 && suggestions.map(suggestion => 
+            <BoncleTagLabel 
+                key={suggestion}
+                tag={suggestion} 
+                prefix={prefix}
+            />)}
         </div>
+        <button className="Clear" onClick={Clear_onClick}>
+            Clear
+        </button>
         <div className="Error">
-            {isIncomplete ?
+            {isIncomplete &&
             <div>
-                Unknown tag{filter.incompleteTags.length > 1 && 's'} '{from(filter.incompleteTags).toString("', '")}'
-            </div> : 
-            "-"}
+                Invalid 
+                tag{filter.incompleteTags.length > 1 && 's'} 
+                '{from(filter.incompleteTags).toString("', '")}'
+            </div>}
         </div>
     </div>
 });

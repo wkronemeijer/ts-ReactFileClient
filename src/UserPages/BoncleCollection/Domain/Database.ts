@@ -1,24 +1,26 @@
-import { identity } from "../../../(System)/Function";
-import { from, Linq, Predicate } from "../../../(System)/Collections/Linq";
+import { Map_increment } from "../../../(System)/Collections/Map";
+import { ensures } from "../../../(System)/Assert";
+import { panic } from "../../../(System)/Errors";
+import { from } from "../../../(System)/Collections/Sequence";
 
-import { BoncleDisplayElement, BoncleSetSize, BoncleSpecies } from "./Definitions/StandardEnums";
 import { __boncleTemplateDatabase } from "./RawDatabase";
 import { BoncleTagSystem } from "./TagSystem";
 import { BoncleSetNumber } from "./SetNumber";
 import { BoncleSet } from "./Set";
-import { panic } from "../../../(System)/Errors";
-import { BoncleSetSelection } from "./SetSelection";
+import { BoncleTag } from "./Definitions/Tag";
 
 export const BoncleDatabase = new class implements Iterable<BoncleSet> {
-    readonly setsByNumber: ReadonlyMap<BoncleSetNumber, BoncleSet>;
     readonly sets: readonly BoncleSet[];
     readonly size: number;
+    
+    private readonly setsByNumber: ReadonlyMap<BoncleSetNumber, BoncleSet>;
+    private readonly frequencyByTag: ReadonlyMap<BoncleTag, number>;
     
     constructor() {
         const btrs = new BoncleTagSystem;
         console.log(btrs.toString());
         
-        this.sets = 
+        const sets = this.sets = 
             // make sets
             from(__boncleTemplateDatabase)
             .select(btrs.instantiate)
@@ -27,11 +29,7 @@ export const BoncleDatabase = new class implements Iterable<BoncleSet> {
             .where(set => !set.tags.has("booster"))
             .where(set => !set.tags.has("combinerModel"))
             // sorting
-            .orderOn(set => set.setNumber)
-            .orderOn(set => set.displayElement, BoncleDisplayElement)
-            .orderOn(set => set.species       , BoncleSpecies       )
-            .orderOn(set => set.setSize       , BoncleSetSize       )
-            .orderOn(set => set.year)
+            .orderBy((a, b) => a.compare(b))
             // done
             .toArray()
         ;
@@ -43,6 +41,17 @@ export const BoncleDatabase = new class implements Iterable<BoncleSet> {
             .associateBy(set => set.setNumber)
             .to(Map<BoncleSetNumber, BoncleSet>) // HKTs...one day.
         ;
+        
+        const frequencyByTag = this.frequencyByTag = new Map<BoncleTag, number>;
+        
+        for (const set of sets) {
+            for (const tag of set.tags) {
+                Map_increment(frequencyByTag, tag);
+            }
+        }
+        
+        ensures(this.getTagFrequency("selection") === 0, 
+            `Tag 'selection' should be empty.`);
     }
     
     /////////////////////////
@@ -57,12 +66,18 @@ export const BoncleDatabase = new class implements Iterable<BoncleSet> {
     // implements BoncleDatabase //
     ///////////////////////////////
     
-    find = (id: BoncleSetNumber): BoncleSet => {
-        return this.setsByNumber.get(id) ?? panic(
-            `Unknown set number '${id}'.`);
+    getSetById(id: BoncleSetNumber): BoncleSet | undefined {
+        return this.setsByNumber.get(id);
     }
     
-    where(test: Predicate<BoncleSet>): BoncleSet[] {
-        return this.sets.filter(test);
+    /** @bound */
+    getTagFrequency = (tag: BoncleTag): number => {
+        return this.frequencyByTag.get(tag) ?? 0;
+    }
+    
+    /** @bound */
+    find = (id: BoncleSetNumber): BoncleSet => {
+        return this.getSetById(id) ?? panic(
+            `Unknown set number '${id}'.`);
     }
 }

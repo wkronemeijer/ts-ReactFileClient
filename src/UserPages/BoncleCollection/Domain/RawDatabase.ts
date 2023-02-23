@@ -309,7 +309,7 @@ export const __boncleTemplateDatabase: BoncleTemplateDatabase = [
 {i:"8692-1",n:"Vamprah",t:tags("2008 makutaPhantoka blue                                                               ")},
 {i:"8693-1",n:"Chirox" ,t:tags("2008 makutaPhantoka black                                                              ")},
 
-{i:"8697-1",n:"Toa Ignika"    ,t:tags("2008 toaPhantoka vehicle 2-in-1                                                 ")},
+{i:"8697-1",n:"Toa Ignika"    ,t:tags("2008 large vehicle and toaPhantoka 2-in-1                                                 ")},
 {i:"8952-1",n:"Mutran & Vican",t:tags("2008 large green makutaPhantoka and green matoranOfShadow                2-in-1 ")},
 {i:"8953-1",n:"Icarax"        ,t:tags("2008 titan makuta red                                                           ")},
 

@@ -8,6 +8,7 @@ const test = "☐\uFE0E 👀\uFE0E ☑\uFE0E";
 const table = {
     dontHave: "\u2014",
     want    : "👀\uFE0F",
+    havePartially: "🤔",
     have    : "✔\uFE0F",
 } as const satisfies Record<BoncleMyPossession, ReactNode>;
 

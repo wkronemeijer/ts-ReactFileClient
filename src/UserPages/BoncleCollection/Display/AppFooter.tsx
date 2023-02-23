@@ -7,13 +7,12 @@ import { BoncleTag } from "../Domain/Definitions/Tag";
 
 export const BoncleAppFooter = memo(() => {
     return <div className="Footer">
-        <h2>Stats</h2>
-        <p>Here are some fun stats:</p>
-        <ul>
-            <li>There are {BoncleDatabase.size} sets in the database.</li>
-            <li>There are {BoncleTag.values.length} tags in the database.</li>
-            <li>There are {BoncleTagStandardRules.length} standard rules.</li>
-            <li>There are {BoncleTagImpliedRules.length} implied rules.</li>
-        </ul>
+        <div className="Title">Stats</div>
+        <div className="Assorted">
+            <div>{BoncleDatabase.size} sets</div>
+            <div>{BoncleTag.values.length} tags</div>
+            <div>{BoncleTagStandardRules.length} standard rules</div>
+            <div>{BoncleTagImpliedRules.length} implied rules</div>
+        </div>
     </div>
 });

@@ -7,8 +7,9 @@ import { BoncleSetSelection, BoncleSetSelection_Change } from "../Domain/SetSele
 import { BoncleSetListItem } from "./SetListItem";
 import { BoncleSetSize } from "../Domain/Definitions/StandardEnums";
 import { BoncleSet } from "../Domain/Set";
+import { memo } from "react";
 
-function BoncleSetList_SizeHeader(props: {
+const BoncleSetList_SizeHeader = memo(function sizeHeader(props: {
     readonly size: BoncleSetSize;
 }): JSX.Element {
     const { size } = props;
@@ -16,20 +17,21 @@ function BoncleSetList_SizeHeader(props: {
     return <div className="Size Header">
         {capitalize(size)} sets
     </div>
-}
+});
 
-function BoncleSetList_YearHeader(props: {
+const BoncleSetList_YearHeader = memo(function yearHeader(props: {
     readonly year: number;
 }): JSX.Element {
     const { year } = props;
     
     const realYear      = Math.floor(year);
-    const hasFractional = (year - realYear) > 0.1; // Step is 0.5, so epsilon of 0.1 is good enough
+    const hasFractional = (year - realYear) > 0.1; 
+    // ^ Step is 0.5, so epsilon of 0.1 is good enough
     
     return <div className="Year Header">
         Sets of {hasFractional ? "summer" : "winter"} {realYear}
     </div>
-}
+});
 
 interface BoncleSetList_Props {
     readonly visible      : readonly BoncleSet[];
@@ -88,8 +90,8 @@ const properOrder = collect(function* (
     }
 });
 
-export function BoncleSetList(props: BoncleSetList_Props): JSX.Element {
+export const BoncleSetList = memo(function boncleSetList(props: BoncleSetList_Props): JSX.Element {
     return <div className="BoncleSetList">
         {properOrder(props)}
     </div>
-}
+});

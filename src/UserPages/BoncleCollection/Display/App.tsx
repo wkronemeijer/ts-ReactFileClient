@@ -1,11 +1,8 @@
-import { Reducer, useMemo, useReducer, useState } from "react";
-
-import { PersistentSet } from "../../../(System)/Collections/Persistent/PersistentSet";
+import { useMemo, useState } from "react";
 
 import { useDebounce } from "../../../ReactFileClient/Hooks/useDebounce";
-import { useStable } from "../../../ReactFileClient/Hooks/useStable";
 
-import { BoncleSetSelection, BoncleSetSelection_Empty } from "../Domain/SetSelection";
+import { BoncleSetSelection_Empty } from "../Domain/SetSelection";
 import { BoncleSelectionStats } from "./Header/SelectionStats";
 import { BoncleCenterpiece } from "./Header/Centerpiece";
 import { BoncleTagSearch } from "./Header/TagSearch";
@@ -13,21 +10,19 @@ import { BoncleSetFilter } from "../Domain/SetFilter";
 import { BoncleAppFooter } from "./AppFooter";
 import { BoncleDatabase } from "../Domain/Database";
 import { BoncleSetList } from "./SetList";
-import { neverPanic } from "../../../(System)/Errors";
-import { BoncleSetListItem } from "./SetListItem";
 
 export function BoncleApp(_props: {}): JSX.Element {
     const [selection, setSelection] = useState(BoncleSetSelection_Empty);
     const [search   , setSearch   ] = useState("");
-    
-    const currentSearch = useDebounce(search);
-    
+    const actualSearch = useDebounce(search);
     
     const filter = useMemo(() => 
-        BoncleSetFilter.fromString(currentSearch)
-    , [currentSearch]);
+        BoncleSetFilter.fromString(actualSearch)
+    , [actualSearch]);
     
     const visible = useMemo(() => 
+        // TODO: Sort the selected-but-not-filtered sets at the back?
+        // from(sets).where(test).concat(from(sets).where(has)).distinct().toArray()
         BoncleDatabase.sets.filter(set => 
             filter.test(set) || 
             selection.has(set) 

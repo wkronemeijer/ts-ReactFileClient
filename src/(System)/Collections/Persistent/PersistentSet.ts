@@ -1,4 +1,4 @@
-import { Predicate } from "../Linq";
+import { Predicate } from "../Sequence";
 
 export class PersistentSet<T> implements ReadonlySet<T> {
     readonly size: number;

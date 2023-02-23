@@ -1,5 +1,5 @@
 import { requires } from "../../../(System)/Assert";
-import { from } from "../../../(System)/Collections/Linq";
+import { from } from "../../../(System)/Collections/Sequence";
 import { BoncleTag } from "./Definitions/Tag";
 
 export class BoncleTagRule {

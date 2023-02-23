@@ -3,7 +3,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { RegistryTag } from "./RegistryTag";
 import { requires } from "../../(System)/Assert";
 import { runTask } from "../../(System)/Threading/Task";
-import { compare } from "../../(System)/Traits/Comparable";
+import { compare } from "../../(System)/Traits/Comparable/Compare";
 import { panic } from "../../(System)/Errors";
 import { Page } from "./Page";
 

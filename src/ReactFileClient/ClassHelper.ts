@@ -2,13 +2,11 @@
 /** 
  * Joins strings for the `class` attribute. 
  * 
- * Example usage:
- * 
- *      <div className={joinClasses("MyComponent", 
- *          "DarkMode",
- *          isLarge && "isLarge",
- *      )}>...</div>
- * 
+ * @example 
+ * <div className={joinClasses("MyComponent", 
+ *     "DarkMode",
+ *     isLarge && "isLarge",
+ * )}>...</div>
  */
 export function joinClasses(
     ...args: (string | false | null | undefined)[]

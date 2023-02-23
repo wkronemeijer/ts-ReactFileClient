@@ -3,8 +3,11 @@ import { requires } from "../../../(System)/Assert";
 import { BoncleDisplayElement, BoncleElement, BoncleMyOpinion, BoncleMyPossession, BoncleSetSize, BoncleSpecies, BoncleTheme } from "./Definitions/StandardEnums";
 import { ReadonlyBoncleTagCollection } from "./TagCollection";
 import { BoncleSetNumber } from "./SetNumber";
+import { ComparableObject } from "../../../(System)/Traits/Comparable/Comparable";
+import { Ordering } from "../../../(System)/Traits/Comparable/Ordering";
+import { compare } from "../../../(System)/Traits/Comparable/Compare";
 
-export class BoncleSet {
+export class BoncleSet implements ComparableObject {
     // Interesting properties
     readonly bricksetUrl: string;
     
@@ -48,5 +51,23 @@ export class BoncleSet {
         this.species        = tags.find(BoncleSpecies       );
         this.opinion        = tags.find(BoncleMyOpinion     );
         this.theme          = tags.find(BoncleTheme         );
+    }
+    
+    compare(other: this): Ordering {
+        // What was in Database:
+        // .orderOn(set => set.setNumber)
+        // .orderOn(set => set.displayElement, BoncleDisplayElement.compare)
+        // .orderOn(set => set.species       , BoncleSpecies  .compare     )
+        // .orderOn(set => set.setSize       , BoncleSetSize.compare       )
+        // .orderOn(set => set.year)
+        
+        // Sorry in advance for the formatting
+        return Ordering(
+                     compare(this.year          , other.year          ) ||
+       BoncleSetSize.compare(this.setSize       , other.setSize       ) || 
+       BoncleSpecies.compare(this.species       , other.species       ) || 
+BoncleDisplayElement.compare(this.displayElement, other.displayElement) || 
+                     compare(this.setNumber     , other.setNumber     ) 
+        );
     }
 }

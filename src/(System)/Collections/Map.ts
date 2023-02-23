@@ -1,6 +1,6 @@
+import { keyof_t } from "../Types/KeyOf";
 import { primitive_t } from "../Types/Primitive";
-import { keyof_t } from "../Types/Typeof";
-import { Selector } from "./Linq";
+import { Selector } from "./Sequence";
 
 /** noot noot */
 export function Map_map<K, V, W>(
@@ -88,4 +88,11 @@ export function Map_update<K, V>(
         map.set(key, initializer(key));
     }
     map.set(key, update(map.get(key)!));
+}
+
+export function Map_increment<K>(
+    self: Map<K, number>,
+    key: K,
+): void {
+    self.set(key, (self.get(key) ?? 0) + 1);
 }

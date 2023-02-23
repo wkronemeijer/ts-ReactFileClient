@@ -3,18 +3,27 @@ main.Boncle-Collection {
     color: #eee;
 }
 
+$monospace: "JetBrains Mono", monospace;
+
+@mixin BonclePanelHeader {
+    font-size: 18px;
+    font-weight: bold;
+    color: gold;
+    padding: 4px;
+}
+
 ////////////
 // Colors //
 ////////////
 
 
 // https://en.wikipedia.org/wiki/Natural_Color_System
-._displayWhite { --display-color: #FFFFFF; }
-._displayBlack { --display-color: #000000; }
-._displayRed   { --display-color: #C40233; }
-._displayGreen { --display-color: #009F6B; }
-._displayBlue  { --display-color: #0087BD; }
-._displayGold  { --display-color: #FFD300; }
+._displayWhite  { --display-color: #FFFFFF; }
+._displayRed    { --display-color: #C40233; }
+._displayGreen  { --display-color: #009F6B; }
+._displayBlue   { --display-color: #0087BD; }
+._displayYellow { --display-color: #FFD300; }
+._displayBlack  { --display-color: #000000; }
 
 ////////////////
 // Components //
@@ -33,6 +42,7 @@ main.Boncle-Collection {
         right: 0;
         
         display: grid;
+        gap: 32px;
         grid-template-columns: 1fr auto 1fr;
         
         backdrop-filter: blur(10px);
@@ -44,7 +54,15 @@ main.Boncle-Collection {
     }
     
     & > .Footer {
-        text-align: center;
+        & > .Title {
+            @include BonclePanelHeader;
+        }
+        
+        & > .Assorted {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+        }
     }
 }
 
@@ -56,10 +74,10 @@ main.Boncle-Collection {
     display: grid;
     
     grid-template-columns: auto 1fr auto;
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto auto 1fr;
     grid-template-areas: 
         "title   error   error  "
-        "search  search  confirm"
+        "search  search  clear  "
         "suggest suggest suggest"
     ;
     gap: 4px;
@@ -67,23 +85,23 @@ main.Boncle-Collection {
     
     & > .Title       { grid-area: title; }
     & > .Search      { grid-area: search; }
-    & > .Confirm     { grid-area: confirm; }
+    & > .Clear       { grid-area: clear; }
     & > .Suggestions { grid-area: suggest; }
     & > .Error       { grid-area: error; }
     
     & > .Title {
-        font-size: 18px;
-        font-weight: bold;
-        color: gold;
-        padding: 4px;
+        @include BonclePanelHeader;
     }
     
     & > input.Search {
-        
+        font-family: $monospace;
+        font-size: 14px;
     }
     
-    & > button.Confirm {
-        
+    & > button.Clear {
+        display: grid;
+        place-content: center;
+        padding: 2px;
     }
     
     // & > input:not(focus) ~ .Suggestions {
@@ -110,39 +128,16 @@ main.Boncle-Collection {
     }
 }
 
-.BoncleBigButtonToggle {
-    display: grid;
-    place-content: stretch;
-    
-    margin: 8px;
-    
-    & > label {
-        display: contents;
-        
-        & > .Area {
-            display: grid;
-            place-content: center;
-            
-            width: 100px;
-            
-            background-color: gold;
-            color: black;
-            font-weight: bold;
-            border-radius: 8px;
-            
-            padding: 8px;
-        }
-    }
-}
-
 .BoncleCenterpiece {
     display: grid;
     place-content: center;
+    place-self: center;
     
     width: 120px;
     
     & > button {
         display: contents;
+        cursor: pointer;
         
         & > img.BigLogo {
             min-width : 0;
@@ -156,7 +151,25 @@ main.Boncle-Collection {
 }
 
 .BoncleSelectionStats {
+    & > .Title {
+        @include BonclePanelHeader;
+    }
     
+    & > .DisplayElementComparison {
+        display: flex;
+        gap: 4px;
+        
+        & > .Label {
+            background-color: var(--display-color, #000);
+            border-radius: 9999px;
+            padding: 4px 8px;
+            
+            & > .Frequency {
+                font-family: $monospace;
+                width: 3ch;
+            }
+        }
+    }
 }
 
 //////////////////
@@ -166,6 +179,8 @@ main.Boncle-Collection {
 .BoncleSetList {
     display: grid;
     
+    // Most sized waves have 6 sets in them, making the elements all line up
+    // Alternative with explicit grid-column did NOT work :')
     grid-template-columns: repeat(6, 1fr);
     // grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     place-items: center;
@@ -187,17 +202,28 @@ main.Boncle-Collection {
 }
 
 .BoncleSetListItem {
+    $radius: 5px;
+    $border: 2px;
+    
     max-width: 250px;
     
     display: grid;
     
     aspect-ratio: 3 / 4;
-    border-radius: 5px;
+    border-radius: ($radius + $border);
     
     background-position: center center;
+    background-clip: padding-box;
     background-size: cover;
     
     overflow: hidden;
+    
+    border: $border solid transparent;
+    transition: border-color 100ms;
+    
+    &.Selected {
+        border-color: gold;
+    }
     
     & > .Content {
         -webkit-backdrop-filter: contrast(75%) blur((14px / 2));
@@ -282,7 +308,7 @@ main.Boncle-Collection {
 //////////////////////
 
 .BoncleTagLabel {
-    font-family: "JetBrains Mono", monospace;
+    font-family: $monospace;
     font-size: 14px;
     
     & > .Prefix {

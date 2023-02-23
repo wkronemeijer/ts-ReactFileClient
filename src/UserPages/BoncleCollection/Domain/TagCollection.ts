@@ -1,7 +1,7 @@
 import { StringBuildable, StringBuilder } from "../../../(System)/Text/StringBuilder";
 import { constant } from "../../../(System)/Function";
 import { panic } from "../../../(System)/Errors";
-import { from } from "../../../(System)/Collections/Linq";
+import { from } from "../../../(System)/Collections/Sequence";
 
 import { BoncleReleaseYear } from "./Definitions/StandardEnums";
 import { BoncleTag } from "./Definitions/Tag";
@@ -30,7 +30,7 @@ extends Iterable<BoncleTag>, IterableEntries, StringBuildable {
      * Searches for members of the given enum in this tag set. 
      * Returns `undefined` if no member is found. 
      * Prefers members with the lesser depth, and prefers the greater ordinal at an equal depth.  */
-    search<E extends BoncleTag>(tenum: BoncleTagEnum<E>): E | undefined;
+    search<E extends BoncleTag>(tenum: Iterable<E>): E | undefined;
     /** 
      * Same as {@link search}, but defaults to the given enum's {@link BoncleTagEnum.default} if no member is found. 
      */
@@ -110,10 +110,10 @@ implements ReadonlyBoncleTagCollection {
         return true;
     }
     
-    search<E extends BoncleTag>(tagEnum: BoncleTagEnum<E>): E | undefined {
+    search<E extends BoncleTag>(iterable: Iterable<E>): E | undefined {
         let result      : E | undefined;
         let resultDepth = Infinity;
-        for (const member of tagEnum) {
+        for (const member of iterable) {
             const depth = this.getDepth(member);
             if (depth !== undefined && depth <= resultDepth) {
                 result      = member;

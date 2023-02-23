@@ -3,7 +3,8 @@
 // aaaaaand the award for the must useless function goes to:
 // Exists for symmetry with 
 
-import { Comparable, compare } from "../Traits/Comparable";
+import { Comparable } from "../Traits/Comparable/Comparable";
+import { compare } from "../Traits/Comparable/Compare";
 
 /** Returns the first valid index of an array. */
 export function Array_firstIndex(array: ArrayLike<any>): number | undefined {

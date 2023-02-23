@@ -21,6 +21,10 @@ export const BoncleTagRoot = {
         _displayNone: { // ➖
             [Default]: true,
         },
+        _displayWhite: { // ⚪
+            white : {},
+            silver: {},
+        },
         _displayRed: { // 🔴
             red   : {},
             orange: {},
@@ -34,10 +38,6 @@ export const BoncleTagRoot = {
         _displayGreen: { // 🟢
             green: {},
             lime : {},
-        },
-        _displayWhite: { // ⚪
-            white : {},
-            silver: {},
         },
         _displayYellow: { // 🟡
             tan   : {},
@@ -63,6 +63,7 @@ export const BoncleTagRoot = {
             [Default]: true,
             want: {},
         },
+        havePartially: {},
         have: {},
     },
     _seasonOfRelease: {
@@ -95,7 +96,7 @@ export const BoncleTagRoot = {
     },
     packageDeal: {
         "and": {},
-        // Do you really care how big it is?
+        // TODO: Do you really care how big it is?
         _sizedPackageDeal: {
             "2-in-1": {},
             "3-in-1": {},
@@ -142,7 +143,29 @@ export const BoncleTagRoot = {
         okoto: {},
     },
     _species: {
+        unknownSpecies: {
+            [Default]: true,
+        },
+        unnamedSpecies: {
+            steltian: {},
+        },
         _matoranUniverseSpecies: {
+            matoran: {
+                matoranMata: {},
+                matoranNuva: {},
+                matoranMetru: {},
+                matoranInika: {},
+                matoranMahri: {},
+                matoranKarda: {
+                    matoranOfLight: {},
+                    matoranOfShadow: {},
+                },
+            },
+            rahaga: {},
+            turaga: {
+                turagaMata: {},
+                turagaMetru: {},
+            },
             // technically toa are a kind of matoran
             toa: {
                 toaMata: {},
@@ -162,44 +185,28 @@ export const BoncleTagRoot = {
                 toaMangai: {},
                 toaHagah: {},
             },
-            turaga: {
-                turagaMata: {},
-                turagaMetru: {},
-            },
-            matoran: {
-                matoranMata: {},
-                matoranNuva: {},
-                matoranMetru: {},
-                matoranInika: {},
-                matoranMahri: {},
-                matoranKarda: {
-                    matoranOfLight: {},
-                    matoranOfShadow: {},
-                },
+            vahki: {},
+            rahi: {
+                hydruka: {},
+                visorak: {},
             },
             bohrok: {
                 bohrokKal: {},
                 bahrag: {},
             },
             bohrokVa: {},
+            rahkshi: {},
+            skakdi: {
+                piraka: {},
+            },
+            vortixx: {},
+            barraki: {},
             makuta: {
                 makutaKarda: {
                     makutaPhantoka: {},
                     makutaMistika : {},
                 },
             },
-            rahkshi: {},
-            vahki: {},
-            skakdi: {
-                piraka: {},
-            },
-            vortixx: {},
-            rahaga: {},
-            barraki: {},
-            rahi: {
-                hydruka: {},
-                visorak: {},
-            }
         },
         _spherusMagnaSpecies: {
             agori: {
@@ -211,6 +218,8 @@ export const BoncleTagRoot = {
             skrall: {},
         },
         _okotoSpecies: {
+            creatureOf: {},
+            beastOf: {},
             okotan: {
                 protectorOf: {},
             },
@@ -219,13 +228,7 @@ export const BoncleTagRoot = {
                 uniterOf: {},
             },
             skullHunter: {},
-            creatureOf: {},
-            beastOf: {},
         },
-        unnamedSpecies: {
-            steltian: {},
-        },
-        unknownSpecies: {},
     },
     _commonCharacters: {
         ogToaTeam: {
@@ -277,5 +280,6 @@ export const BoncleTagRoot = {
         booster: {
             ammo: {},
         },
+        selection: {}, // nothing has the selection tag, so inputting it shows just the selection.
     },
 } as const satisfies BoncleTagTree;
