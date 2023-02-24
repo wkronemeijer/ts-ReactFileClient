@@ -4,7 +4,7 @@ import { ExpandType } from "../../../(System)/Types/Magic";
 import { collect } from "../../../(System)/Collections/Iterable";
 import { panic } from "../../../(System)/Errors";
 
-import { BoncleTagTree, BoncleTagTree_Default } from "./Definitions/TagTree";
+import { BoncleTagTree } from "./Definitions/TagTree";
 
 export interface BoncleTagEnum<E extends string> 
 extends StringEnum<E> {
@@ -15,42 +15,13 @@ export type BoncleTagEnum_Member<E extends BoncleTagEnum<any>> =
     ExpandType<StringEnum_Member<E>>
 ;
 
-const searchDefaults = collect(function* recurse(
-    name  : string | undefined,  
-    branch: BoncleTagTree,
-): Iterable<string> {
-    if (BoncleTagTree_Default in branch) {
-        assert(name, "Subtree contained Default in root.");
-        console.log(`Found default '${name}.'`);
-        yield name;
-    }
-    
-    let childBranch: BoncleTagTree | undefined;
-    for (const key in branch) {
-        if (childBranch = branch[key]) {
-            yield* recurse(key, childBranch);
-        }
-    }
-});
-
 function create<E extends string>(
     branch: BoncleTagTree,
     values: StringEnum_Initializer<E>
 ): BoncleTagEnum<E> {
-    const defaults = searchDefaults(undefined, branch);
-    const result   = StringEnum_create(values).extend(_ => ({
+    return StringEnum_create(values).extend(_ => ({
         __tagEnumBrand: true,
     } as const));
-    
-    if (defaults.length > 1) {
-        panic("More than one default in subtree.");
-    } else if (defaults.length < 1) {
-        return result;
-    } else {
-        const newDefault = defaults[0];
-        ensures(result.hasInstance(newDefault));
-        return result.withDefault(newDefault);
-    }
 }
 
 export function BoncleTagEnum_createShallow<T extends BoncleTagTree>(branch :T): BoncleTagEnum<AllKeys_StringKeys<T>> {

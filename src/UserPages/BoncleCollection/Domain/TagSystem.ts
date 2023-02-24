@@ -121,7 +121,10 @@ export class BoncleTagSystem {
         const size = from(this.ruleByAntecendent.keys()).max(key => key.length);
         
         for (const [antecedent, rule] of this.ruleByAntecendent) {
-            if (BoncleTag.isInternal(antecedent)) {
+            if (
+                BoncleTag.isInternal(antecedent) || 
+                rule.sequents.size === 0
+            ) {
                 continue;
             }
             

@@ -24,11 +24,7 @@ export const BoncleDatabase = new class implements Iterable<BoncleSet> {
             // make sets
             from(__boncleTemplateDatabase)
             .select(btrs.instantiate)
-            // screw playset|booster|combinerModel
-            .where(set => !set.tags.has("playset"))
-            .where(set => !set.tags.has("booster"))
-            .where(set => !set.tags.has("combinerModel"))
-            // sorting
+            .where(set => !set.tags.has("_excluded"))
             .orderBy((a, b) => a.compare(b))
             // done
             .toArray()

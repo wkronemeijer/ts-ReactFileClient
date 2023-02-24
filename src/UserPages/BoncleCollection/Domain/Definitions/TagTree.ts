@@ -4,14 +4,7 @@ import { StringEnum } from "../../../../(System)/Data/StringEnum";
 // badGuy -> -goodGuy
 // But how do you resolve conflicts? And loops?
 
-
-const Default = Symbol("Default");
-
-export const BoncleTagTree_Default = Default;
-
-
 export interface BoncleTagTree {
-    [Default]?: boolean;
     [s: string] : BoncleTagTree;
 }
 
@@ -19,7 +12,6 @@ export const BoncleTagRoot = {
     _displayElements: {
         // Opponent process colors...
         _displayNone: { // ➖
-            [Default]: true,
         },
         _displayWhite: { // ⚪
             white : {},
@@ -52,19 +44,26 @@ export const BoncleTagRoot = {
         },
     },
     _opinion: {
-        dislike : {},
-        ambivalent: { [Default]: true },
+        dislike : {
+            hate: {},
+        },
+        whatever: {},
         like: {
             love: {},
         },
     },
     _possession: {
         dontHave: {
-            [Default]: true,
-            want: {},
+            want: {
+                reallyWant: {},
+            },
         },
-        havePartially: {},
-        have: {},
+        maybeHave: {
+            maybeHaveParts: {},
+        },
+        have: {
+            built: {},
+        },
     },
     _seasonOfRelease: {
         // winter is default, summer is by mid 
@@ -91,8 +90,10 @@ export const BoncleTagRoot = {
         female: {},
     },
     _theme: {
-        bionicleGen1: {},
-        bionicleGen2: {},
+        gen1: {},
+        gen2: {},
+        // Screw hero factory
+        // Seriously, HF sets have 0 response on me.
     },
     packageDeal: {
         "and": {},
@@ -104,25 +105,25 @@ export const BoncleTagRoot = {
         },
     },
     _elemental: { // in ascending order
-        _noElement: { [Default]: true },
-        iron      : {},
-        rock      : {}, // for the skrall, 
-        earth     : { onu: {} },
-        sand      : {},
-        stone     : { po : {} },
-        ice       : { ko : {} },
-        jungle    : {},
-        air       : { le : {} },
-        water     : { ga : {} },
-        fire      : { ta : {} },
-        shadow    : {},
-        light     : { av : {} },
+        _noElement: {},
+        iron: {},
+        rock: {}, // for the skrall, 
+        earth: { onu: {} },
+        sand: {},
+        stone: { po: {} },
+        ice: { ko: {} },
+        jungle: {},
+        air: { le: {} },
+        water: { ga: {} },
+        fire: { ta: {} },
+        shadow: {},
+        light: { av: {} },
     },
     _sized: {
         // Use explicit size when combining
-        small : {},
+        small: {},
         medium: {},
-        large : {
+        large: {
             titan: {},
             // Whats the difference between large and huge?
             // Idk maybe we split them later again, there is never more than 1 huge set per year.
@@ -144,7 +145,7 @@ export const BoncleTagRoot = {
     },
     _species: {
         unknownSpecies: {
-            [Default]: true,
+
         },
         unnamedSpecies: {
             steltian: {},
@@ -204,7 +205,7 @@ export const BoncleTagRoot = {
             makuta: {
                 makutaKarda: {
                     makutaPhantoka: {},
-                    makutaMistika : {},
+                    makutaMistika: {},
                 },
             },
         },
@@ -230,56 +231,63 @@ export const BoncleTagRoot = {
             skullHunter: {},
         },
     },
-    _commonCharacters: {
+    _namedCharacters: { 
+        // Only ones with a capital letter (so far)
         ogToaTeam: {
-            tahu  : {},
-            gali  : {},
-            lewa  : {},
-            kopaka: {},
-            pohatu: {},
-            onua  : {},
+            Tahu: {},
+            Gali: {},
+            Lewa: {},
+            Kopaka: {},
+            Pohatu: {},
+            Onua: {},
         },
         ogTuragaTeam: {
-            vakama: {},
-            nokama: {},
-            matau : {},
-            nuju  : {},
-            onewa : {},
-            whenua: {},
+            Vakama: {},
+            Nokama: {},
+            Matau: {},
+            Nuju: {},
+            Onewa: {},
+            Whenua: {},
         },
         ogMatoran: {
             ogMatoranTeam: {
-                jaller: {},
-                hahli : {},
-                kongu : {},
-                matoro: {},
-                hewkii: {},
-                nuparu: {},
+                Jaller: {},
+                Hahli: {},
+                Kongu: {},
+                Matoro: {},
+                Hewkii: {},
+                Nuparu: {},
             },
-            kopeke: {},
-            macku:  {},
+            Kopeke: {},
+            Macku: {},
         },
-        takanuva:  {},
-        teridax: {},
-        antroz: {},
-        gresh: {},
+        Takanuva: {},
+        Teridax: {},
+        Antroz: {},
+        Gresh: {},
+        
+        ToaMataNui: {},
+        Ekimu: {},
+        Umarak: {},
     },
     _faction: {
         goodGuy: {},
-        badGuy : {},
+        badGuy: {},
     },
-    
-    _uncategorized: {
-        special: {},
-        animal: {},
-        vehicle: {},
+    // These models are excluded from the set list
+    _excluded: {
         combinerModel: {},
         playset: {},
-        allStars: {},
-        promotional: {},
         booster: {
             ammo: {},
         },
+    },
+    _uncategorized: {
+        animal: {},
+        vehicle: {},
+        promotional: {},
+    },
+    _special: {
         selection: {}, // nothing has the selection tag, so inputting it shows just the selection.
     },
 } as const satisfies BoncleTagTree;

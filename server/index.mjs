@@ -19,17 +19,21 @@ const   indexPath = PublicRoot.join("index.html").toString();
 // Configuring routes //
 ////////////////////////
 
+function toSexagesimal(n) {
+    return n.toString().padStart(2, '0');
+}
+
 app.use((req, _res, next) => {
     if (!req.path.endsWith(".jpg")) {
         const msg  = new StringBuilder;
         const time = new Date();
         
         msg.append("[");
-        msg.append(time.getHours().toString());
+        msg.append(toSexagesimal(time.getHours()));
         msg.append(":");
-        msg.append(time.getMinutes().toString());
+        msg.append(toSexagesimal(time.getMinutes()));
         msg.append(":");
-        msg.append(time.getSeconds().toString());
+        msg.append(toSexagesimal(time.getSeconds()));
         msg.append("] ");
         msg.append(req.method);
         msg.append(" ");

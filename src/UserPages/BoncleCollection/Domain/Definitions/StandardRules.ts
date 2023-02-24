@@ -29,8 +29,8 @@ function rule<S extends string>(strings: S): Split<S, typeof delimiter> {
 type  rootRule = readonly [BoncleTag, "->", ...readonly BoncleTag[]];
 const rootRules: readonly rootRule[] = [
     // Species
-    rule("skrall -> rock male"), // no female skrall sets
-    rule("makuta -> shadow badGuy"),
+    rule("skrall -> black rock male"), // no female skrall sets
+    rule("makuta -> male shadow badGuy"), // there is 1 female makuta set, out of like 12 
     
     rule("matoranOfLight  -> light"),
     rule("matoranOfShadow -> shadow"),
@@ -38,38 +38,40 @@ const rootRules: readonly rootRule[] = [
     rule("rahi       -> animal"),
     rule("creatureOf -> animal"),
     rule("beastOf    -> animal"),
+    rule("sand       -> animal"),
     
     // My opinions and possessions
-    rule("want -> like    "),
+    rule("want -> like"),
+    rule("reallyWant -> love"),
     
     // Famous people 
-    rule("tahu   -> ta "),
-    rule("gali   -> ga "),
-    rule("lewa   -> le "), 
-    rule("kopaka -> ko "),
-    rule("pohatu -> po "),
-    rule("onua   -> onu"), 
+    rule("Tahu   -> ta "),
+    rule("Gali   -> ga "),
+    rule("Lewa   -> le "), 
+    rule("Kopaka -> ko "),
+    rule("Pohatu -> po "),
+    rule("Onua   -> onu"), 
     
-    rule("vakama -> ta "),
-    rule("nokama -> ga "),
-    rule("matau  -> le "),
-    rule("nuju   -> ko "),
-    rule("onewa  -> po "),
-    rule("whenua -> onu"),
+    rule("Vakama -> ta "),
+    rule("Nokama -> ga "),
+    rule("Matau  -> le "),
+    rule("Nuju   -> ko "),
+    rule("Onewa  -> po "),
+    rule("Whenua -> onu"),
     
-    rule("jaller -> ta "),
-    rule("hahli  -> ga "),
-    rule("kongu  -> le "),
-    rule("matoro -> ko "),
-    rule("hewkii -> po "),
-    rule("nuparu -> onu"),
+    rule("Jaller -> ta "),
+    rule("Hahli  -> ga "),
+    rule("Kongu  -> le "),
+    rule("Matoro -> ko "),
+    rule("Hewkii -> po "),
+    rule("Nuparu -> onu"),
     
-    rule("kopeke   -> ko"),
-    rule("macku    -> ga"),
+    rule("Kopeke   -> ko"),
+    rule("Macku    -> ga"),
     
-    rule("takanuva -> av white"),
-    rule("antroz   -> makutaPhantoka red"),
-    rule("gresh    -> glatorian jungle"),
+    rule("Takanuva -> av white"),
+    rule("Antroz   -> male red makutaPhantoka"),
+    rule("Gresh    -> male jungle glatorian"),
     
     // Gender rules
     rule("ta  -> male"),
@@ -94,7 +96,7 @@ const rootRules: readonly rootRule[] = [
     rule("shadow -> black"),
     
     // Sizes 
-    rule("bahrag    -> large"),
+    rule("bahrag    -> large female"),
     rule("toa       -> medium"),
     rule("glatorian -> medium"),
     rule("bohrok    -> medium"),
@@ -102,13 +104,13 @@ const rootRules: readonly rootRule[] = [
     rule("piraka    -> medium"),
     rule("barraki   -> medium"),
     rule("makuta    -> medium"),
+    rule("visorak   -> medium badGuy rahi"),
     rule("turaga    -> small"),
     rule("rahaga    -> small"),
     rule("matoran   -> small"),
     rule("hydruka   -> small"),
     rule("agori     -> small"),
     rule("bohrokVa  -> small"),
-    rule("allStars  -> small"),
     
     rule("skullHunter -> medium"),
     rule("masterOf    -> medium"),
@@ -119,23 +121,19 @@ const rootRules: readonly rootRule[] = [
     // _faction inference 
     
     //  _theme inference
-    rule("2001 -> bionicleGen1 mataNui        "),
-    rule("2002 -> bionicleGen1 mataNui        "),
-    rule("2003 -> bionicleGen1 mataNui        "),
-    rule("2004 -> bionicleGen1 metruNui       "),
-    rule("2005 -> bionicleGen1 metruNui       "),
-    rule("2006 -> bionicleGen1 voyaNui        "),
-    rule("2007 -> bionicleGen1 mahriNui       "),
-    rule("2008 -> bionicleGen1 kardaNui       "),
-    rule("2009 -> bionicleGen1 baraMagna      "),
-    rule("2010 -> bionicleGen1 baraMagna      "),
-    rule("2015 -> bionicleGen2 okoto          "),
-    rule("2016 -> bionicleGen2 okoto          "),
-    
-    // Weesa not animal!
+    rule("2001 -> gen1 mataNui        "),
+    rule("2002 -> gen1 mataNui        "),
+    rule("2003 -> gen1 mataNui        "),
+    rule("2004 -> gen1 metruNui       "),
+    rule("2005 -> gen1 metruNui       "),
+    rule("2006 -> gen1 voyaNui        "),
+    rule("2007 -> gen1 mahriNui       "),
+    rule("2008 -> gen1 kardaNui       "),
+    rule("2009 -> gen1 baraMagna      "),
+    rule("2010 -> gen1 baraMagna      "),
+    rule("2015 -> gen2 okoto          "),
+    rule("2016 -> gen2 okoto          "),
 ];
-
-// Note on cycles: track new elements in working set, and expand them *once* if they are non-terminals. Should solve cycle issues (cycles become completely boring that way).
 
 export const BoncleTagStandardRules: readonly BoncleTagRule[] = 
     from(rootRules)

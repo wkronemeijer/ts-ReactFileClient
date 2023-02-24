@@ -1,6 +1,6 @@
 import { requires } from "../../../(System)/Assert";
 
-import { BoncleDisplayElement, BoncleElement, BoncleMyOpinion, BoncleMyPossession, BoncleSetSize, BoncleSpecies, BoncleTheme } from "./Definitions/StandardEnums";
+import { BoncleDisplayElement, BoncleElement, BoncleMyOpinion, BoncleMyPossession, BoncleSetSize, BoncleSpecies, BoncleGeneration } from "./Definitions/StandardEnums";
 import { ReadonlyBoncleTagCollection } from "./TagCollection";
 import { BoncleSetNumber } from "./SetNumber";
 import { ComparableObject } from "../../../(System)/Traits/Comparable/Comparable";
@@ -21,10 +21,10 @@ export class BoncleSet implements ComparableObject {
     readonly displayElement: BoncleDisplayElement;
     readonly trueElement   : BoncleElement;
     readonly possession    : BoncleMyPossession;
+    readonly generation    : BoncleGeneration;
     readonly opinion       : BoncleMyOpinion;
     readonly setSize       : BoncleSetSize;
     readonly species       : BoncleSpecies;
-    readonly theme         : BoncleTheme;
     
     constructor(
         public readonly setNumber   : BoncleSetNumber,
@@ -45,25 +45,19 @@ export class BoncleSet implements ComparableObject {
         // You could do a generic solution...
         // The real pain of making your code better
         this.displayElement = tags.find(BoncleDisplayElement);
-        this.trueElement    = tags.find(BoncleElement       );
-        this.possession     = tags.find(BoncleMyPossession  );
         this.setSize        = tags.find(BoncleSetSize       );
         this.species        = tags.find(BoncleSpecies       );
+        
+        this.trueElement    = tags.find(BoncleElement       );
+        this.possession     = tags.find(BoncleMyPossession  );
+        this.generation     = tags.find(BoncleGeneration    );
         this.opinion        = tags.find(BoncleMyOpinion     );
-        this.theme          = tags.find(BoncleTheme         );
     }
     
     compare(other: this): Ordering {
-        // What was in Database:
-        // .orderOn(set => set.setNumber)
-        // .orderOn(set => set.displayElement, BoncleDisplayElement.compare)
-        // .orderOn(set => set.species       , BoncleSpecies  .compare     )
-        // .orderOn(set => set.setSize       , BoncleSetSize.compare       )
-        // .orderOn(set => set.year)
-        
         // Sorry in advance for the formatting
         return Ordering(
-                     compare(this.year          , other.year          ) ||
+                     compare(this.year          , other.year          ) || 
        BoncleSetSize.compare(this.setSize       , other.setSize       ) || 
        BoncleSpecies.compare(this.species       , other.species       ) || 
 BoncleDisplayElement.compare(this.displayElement, other.displayElement) || 

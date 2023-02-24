@@ -1,4 +1,4 @@
-import { Dispatch, memo, SetStateAction, useCallback, useMemo, useReducer, useState } from "react";
+import { Dispatch, memo, ReactNode, SetStateAction, useCallback, useMemo, useReducer, useState } from "react";
 import { from, Predicate } from "../../../../(System)/Collections/Sequence";
 import { Map_increment, Map_update } from "../../../../(System)/Collections/Map";
 import { PersistentSet } from "../../../../(System)/Collections/Persistent/PersistentSet";
@@ -15,6 +15,23 @@ import { BoncleTagEnum } from "../../Domain/TagEnum";
 const relevantElements: readonly BoncleTag[] = 
     BoncleDisplayElement.values.slice(1) // slice off _displayNone;
 ; 
+
+
+
+const reprByTag = {
+    _displayNone  : "➖",
+    _displayRed   : "🔴",
+    _displayBlue  : "🔵",
+    _displayGreen : "🟢",
+    _displayYellow: "🟡",
+    _displayBlack : "⚫",
+    _displayWhite : "⚪",
+    
+    male:   "♂",
+    female: "♀",
+} satisfies Partial<Record<BoncleTag, ReactNode>>;
+const foo = Object.keys(reprByTag) as (keyof typeof reprByTag)[];
+
 
 function extractFrequency<T extends BoncleTag>(
     sets: Iterable<BoncleSet>, 

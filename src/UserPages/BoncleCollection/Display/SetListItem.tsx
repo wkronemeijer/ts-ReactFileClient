@@ -24,8 +24,8 @@ export const BoncleSetListItem = memo(function boncleSetListItem(props: {
         className={joinClasses(
             "BoncleSetListItem", 
             set.displayElement, 
-            set.theme,
-            isSelected ? "Selected" : "NotSelected",
+            set.generation,
+            isSelected && "Selected",
         )}
         style={{ backgroundImage: `url(${set.previewUrl})` }}
     >
@@ -45,6 +45,7 @@ export const BoncleSetListItem = memo(function boncleSetListItem(props: {
                     src={set.previewUrl} 
                     alt={set.previewAlt}
                     title={set.previewTitle}
+                    draggable={false}
                 />
             </div>
             <div className="Footer Flank Widgets">

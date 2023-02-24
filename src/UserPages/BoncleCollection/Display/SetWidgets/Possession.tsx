@@ -3,15 +3,15 @@ import { memo, ReactNode } from "react";
 import { BoncleMyPossession } from "../../Domain/Definitions/StandardEnums";
 import { BoncleSetWidget } from "./Base";
 
-const test = "☐\uFE0E 👀\uFE0E ☑\uFE0E";
-
 const table = {
-    dontHave: "\u2014",
-    want    : "👀\uFE0F",
-    havePartially: "🤔",
-    have    : "✔\uFE0F",
-} as const satisfies Record<BoncleMyPossession, ReactNode>;
-
+    dontHave      : "\u2014",
+    want          : "👀\uFE0F",
+    reallyWant    : "👀\uFE0F",
+    maybeHave     : "?",
+    maybeHaveParts: "?",
+    have          : "✔\uFE0F",
+    built         : "🗿\uFE0F",
+} as const satisfies Partial<Record<BoncleMyPossession, ReactNode>>;
 
 export const BoncleSetWidget_Possession = memo((props: {
     readonly possession : BoncleMyPossession;
@@ -23,6 +23,6 @@ export const BoncleSetWidget_Possession = memo((props: {
         value={possession}
         extraClass="Text"
     >
-        {table[possession]}
+        {(table as any)[possession]}
     </BoncleSetWidget>;
 });

@@ -1,9 +1,10 @@
 import { StringEnum_create } from "../../../../(System)/Data/StringEnum";
 import { ExpandType } from "../../../../(System)/Types/Magic";
+import { collect } from "../../../../(System)/Collections/Iterable";
 import { assert } from "../../../../(System)/Assert";
+import { Member } from "../../../../(System)/Data/Enumeration";
 
 import { BoncleTagTree, BoncleTagRoot } from "./TagTree";
-import { collect } from "../../../../(System)/Collections/Iterable";
 
 type AllKeys_StringKeys<T> = keyof T & string;
 type AllKeys_Spread<T>     = T extends object ? AllKeys<T> : never;
@@ -32,16 +33,16 @@ const allKeys = collect(function* recurse(
     }
 });
 
-const isHidden = (s: string) => s.startsWith('_');
+const isHidden = (tag: string) => tag.startsWith('_');
 
 export type  BoncleTag = ExpandType<AllKeys<typeof BoncleTagRoot>>;
 export const BoncleTag = StringEnum_create(allKeys(BoncleTagRoot)).extend(Self => ({
     /** @bound */
-    isPublic(self: BoncleTag): boolean {
+    isPublic(self: Member<typeof Self>): boolean {
         return !isHidden(self);
     },
     /** @bound */
-    isInternal(self: BoncleTag): boolean {
+    isInternal(self: Member<typeof Self>): boolean {
         return isHidden(self);
     },
 }));

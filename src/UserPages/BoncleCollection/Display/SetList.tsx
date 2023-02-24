@@ -60,6 +60,7 @@ const properOrder = collect(function* (
                 key={`${year}`} 
                 year={year}
             />
+            lastSize = undefined;
         }
         
         lastYear = year;
