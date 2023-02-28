@@ -1,45 +1,70 @@
-import { requires } from "../../../(System)/Assert";
-
-import { BoncleDisplayElement, BoncleElement, BoncleMyOpinion, BoncleMyPossession, BoncleSetSize, BoncleSpecies, BoncleGeneration } from "./Definitions/StandardEnums";
-import { ReadonlyBoncleTagCollection } from "./TagCollection";
-import { BoncleSetNumber } from "./SetNumber";
 import { ComparableObject } from "../../../(System)/Traits/Comparable/Comparable";
 import { Ordering } from "../../../(System)/Traits/Comparable/Ordering";
 import { compare } from "../../../(System)/Traits/Comparable/Compare";
 
+import { BoncleDisplayElement, BoncleElement, BoncleMyOpinion, BoncleMyPossession, BoncleSetSize, BoncleSpecies, BoncleGeneration } from "./Definitions/StandardEnums";
+import { BoncleTagCollection, BoncleTagCollectionExpander, ReadonlyBoncleTagCollection } from "./TagCollection";
+import { BoncleSetTemplate } from "./SetTemplate";
+import { BoncleSetNumber } from "./SetNumber";
+import { panic } from "../../../(System)/Errors";
+
+const parseName_sep = /[\\\|\/\-]/; // one of / | \ -,
+
+function parseName(string: string): {
+    readonly title: string;
+    readonly name: string;
+} {
+    const [part1, part2] = string.split(parseName_sep);
+    
+    let title: string;
+    let name: string;
+    
+    if (part1) {
+        if (part2) {
+            title = part1.trim();
+            name  = part2.trim();
+        } else {
+            title = "";
+            name  = part1.trim();
+        }
+    } else {
+        panic(`Invalid name '${string}'.`);
+    }
+    
+    return { title, name };
+}
+
 export class BoncleSet implements ComparableObject {
     // Interesting properties
     readonly bricksetUrl: string;
-    
     readonly previewUrl  : string;
     readonly previewAlt  : string;
     readonly previewTitle: string;
     
     // Cached tags method results
+    readonly originalTags: ReadonlyBoncleTagCollection;
     readonly year: number;
     
+    readonly species       : BoncleSpecies;
+    readonly setSize       : BoncleSetSize;
     readonly displayElement: BoncleDisplayElement;
+    readonly generation    : BoncleGeneration;
+    
     readonly trueElement   : BoncleElement;
     readonly possession    : BoncleMyPossession;
-    readonly generation    : BoncleGeneration;
     readonly opinion       : BoncleMyOpinion;
-    readonly setSize       : BoncleSetSize;
-    readonly species       : BoncleSpecies;
     
     constructor(
         public readonly setNumber   : BoncleSetNumber,
         public readonly title       : string,
-        public readonly originalTags: ReadonlyBoncleTagCollection,
         public readonly tags        : ReadonlyBoncleTagCollection,
     ) {
-        requires(originalTags.isUnexpanded());
-        
         this.bricksetUrl  = `https://brickset.com/sets/${setNumber}`;
-        
         this.previewUrl   = `./ImageCache/${setNumber}.jpg`;
         this.previewAlt   = `A picture of LEGO set number ${setNumber}.`;
         this.previewTitle = tags.toString();
         
+        this.originalTags = tags.getOriginalCollection();
         this.year = tags.determineYear();
         
         // You could do a generic solution...
@@ -54,9 +79,19 @@ export class BoncleSet implements ComparableObject {
         this.opinion        = tags.find(BoncleMyOpinion     );
     }
     
+    /** @bound */
+    static instantiate(template: BoncleSetTemplate, expander: BoncleTagCollectionExpander): BoncleSet {
+        const setNumber   = template.i;
+        const name        = template.n;
+        const initialTags = BoncleTagCollection.from(template.t);
+        const tags        = expander(initialTags);
+        return new BoncleSet(setNumber, name, tags);
+    }
+    
     compare(other: this): Ordering {
         // Sorry in advance for the formatting
         return Ordering(
+            // year -> generation so it is skipped in sorting
                      compare(this.year          , other.year          ) || 
        BoncleSetSize.compare(this.setSize       , other.setSize       ) || 
        BoncleSpecies.compare(this.species       , other.species       ) || 

@@ -1,7 +1,8 @@
-import { BoncleTagRule } from "../TagRule";
-import { BoncleTagRoot, BoncleTagTree } from "./TagTree";
-import { BoncleTag } from "./Tag";
 import { collect } from "../../../../(System)/Collections/Iterable";
+
+import { BoncleTagTree_Root, BoncleTagTree } from "./TagTree";
+import { BoncleTagRule } from "../TagRule";
+import { BoncleTag } from "./Tag";
 
 export const BoncleTagImpliedRules: readonly BoncleTagRule[] = 
 collect(function* recurse(
@@ -19,4 +20,4 @@ collect(function* recurse(
             yield* recurse(child, childBranch);
         }
     }
-})(undefined, BoncleTagRoot);
+})(undefined, BoncleTagTree_Root);

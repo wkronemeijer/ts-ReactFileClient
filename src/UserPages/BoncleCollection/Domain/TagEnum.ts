@@ -1,8 +1,7 @@
 import { StringEnum, StringEnum_create, StringEnum_Initializer, StringEnum_Member } from "../../../(System)/Data/StringEnum";
-import { assert, ensures, __unsafeAssert } from "../../../(System)/Assert";
+import { __unsafeAssert } from "../../../(System)/Assert";
 import { ExpandType } from "../../../(System)/Types/Magic";
 import { collect } from "../../../(System)/Collections/Iterable";
-import { panic } from "../../../(System)/Errors";
 
 import { BoncleTagTree } from "./Definitions/TagTree";
 

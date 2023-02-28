@@ -5,7 +5,7 @@ import { from } from "../../../../(System)/Collections/Sequence";
 import { joinClasses } from "../../../../ReactFileClient/ClassHelper";
 
 import { BoncleSetFilter } from "../../Domain/SetFilter";
-import { BoncleTagLabel } from "../TagLabel";
+import { BoncleTagLabel } from "../Label/Tag";
 import { BoncleTag } from "../../Domain/Definitions/Tag";
 
 const publicTags = from(BoncleTag).where(BoncleTag.isPublic).toArray();
@@ -20,10 +20,10 @@ function getSuggestions(filter: BoncleSetFilter, limit: number): BoncleTag[] {
     ) : [];
 }
 
-export const BoncleTagSearch = memo((props: {
+export const BoncleTagSearch = memo(function tagSearch(props: {
     readonly value: string;
     readonly onChange: Dispatch<string>;
-}): JSX.Element => {
+}): JSX.Element {
     const { value, onChange } = props;
     
     const filter       = BoncleSetFilter.fromString(value);
@@ -61,9 +61,7 @@ export const BoncleTagSearch = memo((props: {
         <div className="Error">
             {isIncomplete &&
             <div>
-                Invalid 
-                tag{filter.incompleteTags.length > 1 && 's'} 
-                '{from(filter.incompleteTags).toString("', '")}'
+                Invalid tag{filter.incompleteTags.length > 1 && 's'} '{from(filter.incompleteTags).toString("', '")}'
             </div>}
         </div>
     </div>

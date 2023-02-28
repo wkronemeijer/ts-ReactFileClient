@@ -1,14 +1,12 @@
 import { StringBuildable, StringBuilder } from "../../../(System)/Text/StringBuilder";
-import { constant } from "../../../(System)/Function";
-import { panic } from "../../../(System)/Errors";
-import { from } from "../../../(System)/Collections/Sequence";
 
-import { BoncleReleaseYear } from "./Definitions/StandardEnums";
+import { BoncleWholeYear } from "./Definitions/StandardEnums";
 import { BoncleTag } from "./Definitions/Tag";
 import { BoncleTagEnum } from "./TagEnum";
 import { BoncleTagRule } from "./TagRule";
 import { assert } from "../../../(System)/Assert";
-
+import { from } from "../../../(System)/Collections/Sequence";
+import { fst } from "../../../(System)/Function";
 
 interface IterableEntries {
     entries(): IterableIterator<[BoncleTag, number]>;
@@ -23,8 +21,7 @@ extends Iterable<BoncleTag>, IterableEntries, StringBuildable {
     
     getDepth(tag: BoncleTag): number | undefined;
     
-    /** Returns {@link true} if all tags in this set have depth 0. */
-    isUnexpanded(): boolean;
+    getOriginalCollection(): BoncleTagCollection;
     
     /** 
      * Searches for members of the given enum in this tag set. 
@@ -101,15 +98,6 @@ implements ReadonlyBoncleTagCollection {
     // implements ReadonlyBoncleTagSet //
     /////////////////////////////////////
     
-    isUnexpanded(): boolean {
-        for (const depth of this.depthByTag.values()) {
-            if (depth !== 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-    
     search<E extends BoncleTag>(iterable: Iterable<E>): E | undefined {
         let result      : E | undefined;
         let resultDepth = Infinity;
@@ -133,9 +121,21 @@ implements ReadonlyBoncleTagCollection {
      * 
      */
     determineYear(): number {
-        const rawYear  = this.find(BoncleReleaseYear);
+        const rawYear  = this.find(BoncleWholeYear);
         const isSummer = this.has("mid");
         return Number(rawYear) + (isSummer ? 0.5 : 0.0);
+    }
+    
+    private * getRootTags(): Iterable<BoncleTag> {
+        for (const [tag, depth] of this.entries()) {
+            if (depth === 0) {
+                yield tag;
+            }
+        }
+    }
+    
+    getOriginalCollection(): BoncleTagCollection {
+        return BoncleTagCollection.from(this.getRootTags());
     }
     
     /////////////////////////////
@@ -201,4 +201,9 @@ implements ReadonlyBoncleTagCollection {
     toString(): string {
         return StringBuilder.stringify(this).trim();
     }
+}
+
+
+export interface BoncleTagCollectionExpander {
+    (initial: ReadonlyBoncleTagCollection): BoncleTagCollection;
 }

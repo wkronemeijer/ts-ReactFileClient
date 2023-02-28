@@ -57,25 +57,25 @@ export const __boncleTemplateDatabase: BoncleTemplateDatabase = [
 {i:"1392-1",n:"Kongu" ,t:tags("mid 2001 promotional matoranMata Kongu                                                  ")},
 {i:"1393-1",n:"Matoro",t:tags("mid 2001 promotional matoranMata Matoro                                                 ")},
 
-{i:"8540-1",n:"Vakama",t:tags("mid 2001 turagaMata Vakama maybeHaveParts                                               ")},
-{i:"8541-1",n:"Matau" ,t:tags("mid 2001 turagaMata Matau                                                               ")},
-{i:"8542-1",n:"Onewa" ,t:tags("mid 2001 turagaMata Onewa  maybeHaveParts                                               ")},
-{i:"8543-1",n:"Nokama",t:tags("mid 2001 turagaMata Nokama want                                                         ")},
-{i:"8544-1",n:"Nuju"  ,t:tags("mid 2001 turagaMata Nuju   maybeHaveParts                                               ")},
-{i:"8545-1",n:"Whenua",t:tags("mid 2001 turagaMata Whenua like                                                         ")},
+{i:"8540-1",n:"Vakama",t:tags("mid 2001 turagaMata Vakama - maybeHaveParts                                               ")},
+{i:"8541-1",n:"Matau" ,t:tags("mid 2001 turagaMata Matau  -                                                              ")},
+{i:"8542-1",n:"Onewa" ,t:tags("mid 2001 turagaMata Onewa  - maybeHaveParts                                               ")},
+{i:"8543-1",n:"Nokama",t:tags("mid 2001 turagaMata Nokama - want                                                         ")},
+{i:"8544-1",n:"Nuju"  ,t:tags("mid 2001 turagaMata Nuju   - maybeHaveParts                                               ")},
+{i:"8545-1",n:"Whenua",t:tags("mid 2001 turagaMata Whenua - like                                                         ")},
 
-{i:"8531-1",n:"Pohatu",t:tags("mid 2001 toaMata Pohatu like have                                                     ")},
-{i:"8532-1",n:"Onua"  ,t:tags("mid 2001 toaMata Onua   like have                                                     ")},
-{i:"8533-1",n:"Gali"  ,t:tags("mid 2001 toaMata Gali   have                                                          ")},
-{i:"8534-1",n:"Tahu"  ,t:tags("mid 2001 toaMata Tahu   like have                                                     ")},
-{i:"8535-1",n:"Lewa"  ,t:tags("mid 2001 toaMata Lewa   have                                                          ")},
-{i:"8536-1",n:"Kopaka",t:tags("mid 2001 toaMata Kopaka have                                                          ")},
+{i:"8531-1",n:"Pohatu",t:tags("mid 2001 toaMata Pohatu - like have                                                     ")},
+{i:"8532-1",n:"Onua"  ,t:tags("mid 2001 toaMata Onua   - like have                                                     ")},
+{i:"8533-1",n:"Gali"  ,t:tags("mid 2001 toaMata Gali   - i built it                                                    ")},
+{i:"8534-1",n:"Tahu"  ,t:tags("mid 2001 toaMata Tahu   - like have                                                     ")},
+{i:"8535-1",n:"Lewa"  ,t:tags("mid 2001 toaMata Lewa   - i built it                                                    ")},
+{i:"8536-1",n:"Kopaka",t:tags("mid 2001 toaMata Kopaka - have                                                          ")},
 
-{i:"8537-1",n:"Nui-Rama"       ,t:tags("mid 2001 large lime   rahi 2-in-1                                              ")},
-{i:"8538-1",n:"Muaka & Kane-ra",t:tags("mid 2001 large red    rahi 2-in-1                                              ")},
-{i:"8539-1",n:"Manas"          ,t:tags("mid 2001 large yellow rahi 2-in-1                                              ")},
-{i:"8548-1",n:"Nui-Jaga"       ,t:tags("mid 2001 large blue   rahi 2-in-1                                              ")},
-{i:"8549-1",n:"Tarakava"       ,t:tags("mid 2001 large blue   rahi 2-in-1                                              ")},
+{i:"8537-1",n:"Nui-Rama"       ,t:tags("mid 2001 2-in-1 large lime   rahi                                               ")},
+{i:"8538-1",n:"Muaka & Kane-ra",t:tags("mid 2001 2-in-1 large red    rahi                                               ")},
+{i:"8539-1",n:"Manas"          ,t:tags("mid 2001 2-in-1 large yellow rahi                                               ")},
+{i:"8548-1",n:"Nui-Jaga"       ,t:tags("mid 2001 2-in-1 large blue   rahi                                               ")},
+{i:"8549-1",n:"Tarakava"       ,t:tags("mid 2001 2-in-1 large blue   rahi                                               ")},
 
 // {i:"8546-1",n:"PowerPack"   ,t:tags("mid 2001 booster                                                                  ")},
 // {i:"8525-1",n:"Kanohi (US)" ,t:tags("mid 2001 booster                                                                  ")},
@@ -85,26 +85,26 @@ export const __boncleTemplateDatabase: BoncleTemplateDatabase = [
 // Mata Nui (with Bohrok) //
 ////////////////////////////
 
-{i:"8550-1",n:"Gahlok Va",t:tags("2002 water bohrokVa                                                                  ")},
-{i:"8551-1",n:"Kohrak Va",t:tags("2002 ice   bohrokVa                                                                  ")},
+{i:"8550-1",n:"Gahlok Va",t:tags("2002 water bohrokVa     - i have it                                                  ")},
+{i:"8551-1",n:"Kohrak Va",t:tags("2002 ice   bohrokVa     - i have it                                                  ")},
 {i:"8552-1",n:"Lehvak Va",t:tags("2002 air   bohrokVa                                                                  ")},
-{i:"8553-1",n:"Pahrak Va",t:tags("2002 stone bohrokVa                                                                  ")},
-{i:"8554-1",n:"Tahnok Va",t:tags("2002 fire  bohrokVa                                                                  ")},
-{i:"8555-1",n:"Nuhvok Va",t:tags("2002 earth bohrokVa                                                                  ")},
+{i:"8553-1",n:"Pahrak Va",t:tags("2002 stone bohrokVa     - i have it                                                  ")},
+{i:"8554-1",n:"Tahnok Va",t:tags("2002 fire  bohrokVa     - i have it                                                  ")},
+{i:"8555-1",n:"Nuhvok Va",t:tags("2002 earth bohrokVa     - i have it                                                  ")},
 
 {i:"8560-1",n:"Pahrak",t:tags("2002 stone bohrok                                                                       ")},
 {i:"8561-1",n:"Nuhvok",t:tags("2002 earth bohrok                                                                       ")},
-{i:"8562-1",n:"Gahlok",t:tags("2002 water bohrok maybeHaveParts                                                        ")},
+{i:"8562-1",n:"Gahlok",t:tags("2002 water bohrok have                                                                  ")},
 {i:"8563-1",n:"Tahnok",t:tags("2002 fire  bohrok                                                                       ")},
 {i:"8564-1",n:"Lehvak",t:tags("2002 air   bohrok                                                                       ")}, 
-{i:"8565-1",n:"Kohrak",t:tags("2002 ice   bohrok                                                                       ")},
+{i:"8565-1",n:"Kohrak",t:tags("2002 ice   bohrok have                                                                  ")},
 
-{i:"8566-1",n:"Onua Nuva"  ,t:tags("mid 2002 toaNuva Onua want                                                         ")},
-{i:"8567-1",n:"Lewa Nuva"  ,t:tags("mid 2002 toaNuva Lewa                                                              ")},
-{i:"8568-1",n:"Pohatu Nuva",t:tags("mid 2002 toaNuva Pohatu dislike                                                    ")},
-{i:"8570-1",n:"Gali Nuva"  ,t:tags("mid 2002 toaNuva Gali like                                                         ")},
-{i:"8571-1",n:"Kopaka Nuva",t:tags("mid 2002 toaNuva Kopaka like                                                       ")},
-{i:"8572-1",n:"Tahu Nuva"  ,t:tags("mid 2002 toaNuva Tahu have                                                         ")},
+{i:"8566-1",n:"Onua"  ,t:tags("mid 2002 toaNuva Onua - i want it                                                  ")},
+{i:"8567-1",n:"Lewa"  ,t:tags("mid 2002 toaNuva Lewa                                                              ")},
+{i:"8568-1",n:"Pohatu",t:tags("mid 2002 toaNuva Pohatu dislike                                                    ")},
+{i:"8570-1",n:"Gali"  ,t:tags("mid 2002 toaNuva Gali like                                                         ")},
+{i:"8571-1",n:"Kopaka",t:tags("mid 2002 toaNuva Kopaka like                                                       ")},
+{i:"8572-1",n:"Tahu"  ,t:tags("mid 2002 toaNuva Tahu have                                                         ")},
 
 {i:"8556-1",n:"Boxor"          ,t:tags("mid 2002 large vehicle and matoranMata Nuparu love                             ")},
 {i:"8557-1",n:"Exo-Toa"        ,t:tags("mid 2002 titan                                                                 ")},
@@ -118,7 +118,7 @@ export const __boncleTemplateDatabase: BoncleTemplateDatabase = [
 
 {i:"8581-1",n:"Kopeke",t:tags("2003 ko matoranNuva Kopeke                                                              ")},
 {i:"8582-1",n:"Matoro",t:tags("2003 ko matoranNuva Matoro                                                              ")},
-{i:"8583-1",n:"Hahli" ,t:tags("2003 ga matoranNuva Hahli want                                                          ")},
+{i:"8583-1",n:"Hahli" ,t:tags("2003 ga matoranNuva Hahli - i want it                                                          ")},
 {i:"8586-1",n:"Macku" ,t:tags("2003 ga matoranNuva Macku                                                               ")},
 {i:"8584-1",n:"Hewkii",t:tags("2003 po matoranNuva Hewkii                                                              ")},
 {i:"8585-1",n:"Hafu"  ,t:tags("2003 po matoranNuva like                                                                ")},
@@ -134,7 +134,7 @@ export const __boncleTemplateDatabase: BoncleTemplateDatabase = [
 {i:"8587-1",n:"Panrahk",t:tags("mid 2003 brown rahkshi                                                                 ")}, 
 {i:"8588-1",n:"Kurahk" ,t:tags("mid 2003 white rahkshi                                                                 ")},
 {i:"8589-1",n:"Lerahk" ,t:tags("mid 2003 green rahkshi                                                                 ")},
-{i:"8590-1",n:"Guurahk",t:tags("mid 2003 blue  rahkshi like                                                            ")},
+{i:"8590-1",n:"Guurahk",t:tags("mid 2003 blue  rahkshi - i like it                                                             ")},
 {i:"8591-1",n:"Vorahk" ,t:tags("mid 2003 black rahkshi                                                                 ")},
 {i:"8592-1",n:"Turahk" ,t:tags("mid 2003 red   rahkshi maybeHaveParts                                                  ")},
 
@@ -149,12 +149,12 @@ export const __boncleTemplateDatabase: BoncleTemplateDatabase = [
 // Metru Nui //
 ///////////////
 
-{i:"8607-1",n:"Nuhrii" ,t:tags("2004 ta  matoranMetru                                                                  ")},
-{i:"8608-1",n:"Vhisola",t:tags("2004 ga  matoranMetru have                                                             ")},
+{i:"8607-1",n:"Nuhrii" ,t:tags("2004 ta  matoranMetru        - i have it                                               ")},
+{i:"8608-1",n:"Vhisola",t:tags("2004 ga  matoranMetru        - i have it                                               ")},
 {i:"8609-1",n:"Tehutti",t:tags("2004 onu matoranMetru                                                                  ")},
-{i:"8610-1",n:"Ahkmou" ,t:tags("2004 po  matoranMetru maybeHave badGuy                                                 ")},
+{i:"8610-1",n:"Ahkmou" ,t:tags("2004 po  matoranMetru badGuy - i have it                                               ")},
 {i:"8611-1",n:"Orkham" ,t:tags("2004 le  matoranMetru                                                                  ")},
-{i:"8612-1",n:"Ehrye"  ,t:tags("2004 ko  matoranMetru maybeHave                                                        ")},
+{i:"8612-1",n:"Ehrye"  ,t:tags("2004 ko  matoranMetru        - i built it                                              ")},
 
 {i:"8601-1",n:"Vakama",t:tags("2004 toaMetru Vakama have                                                               ")},
 {i:"8602-1",n:"Nokama",t:tags("2004 toaMetru Nokama like have                                                               ")},
@@ -170,10 +170,10 @@ export const __boncleTemplateDatabase: BoncleTemplateDatabase = [
 {i:"8618-1",n:"Rorzakh",t:tags("mid 2004 earth vahki have                                                              ")},
 {i:"8619-1",n:"Keerakh",t:tags("mid 2004 ice   vahki have                                                              ")},
 
-{i:"8623-1",n:"Krekka"           ,t:tags("mid 2004 blue  male titan                                                               ")},
-{i:"8622-1",n:"Nidhiki"          ,t:tags("mid 2004 green male titan                                                               ")},
-{i:"8621-1",n:"Dume & Nivawk"    ,t:tags("mid 2004 2-in-1 ta turagaMetru and large rahi                                        ")},
-{i:"8811-1",n:"Lhikan & Kikanalo",t:tags("mid 2004 2-in-1 ta toaMangai and large rahi love                                 ")},
+{i:"8623-1",n:"Krekka"           ,t:tags("mid 2004 blue  male titan                                                    ")},
+{i:"8622-1",n:"Nidhiki"          ,t:tags("mid 2004 green male titan                                                    ")},
+{i:"8621-1",n:"Dume & Nivawk"    ,t:tags("mid 2004 2-in-1 ta turagaMetru and large rahi                                ")},
+{i:"8811-1",n:"Lhikan & Kikanalo",t:tags("mid 2004 2-in-1 ta toaMangai and large rahi love                             ")},
 
 // {i:"10202-1",n:"Ultimate Dume",t:tags("2004 combinerModel                                                              ")},
 // {i:"8613-1" ,n:"Kanoka Disk Launcher Pack",t:tags("2004 ammo                                                           ")},
@@ -192,11 +192,11 @@ export const __boncleTemplateDatabase: BoncleTemplateDatabase = [
 // EU had visorak first, the hordika
 
 {i:"8736-1",n:"Vakama",t:tags("mid 2005 toaHordika Vakama                                                              ")},
-{i:"8737-1",n:"Nokama",t:tags("mid 2005 toaHordika Nokama reallyWant                                                   ")},
-{i:"8738-1",n:"Whenua",t:tags("mid 2005 toaHordika Whenua maybeHaveParts                                               ")},
-{i:"8739-1",n:"Onewa" ,t:tags("mid 2005 toaHordika Onewa  want                                                         ")},
+{i:"8737-1",n:"Nokama",t:tags("mid 2005 toaHordika Nokama - i reallyWant it                                            ")},
+{i:"8738-1",n:"Whenua",t:tags("mid 2005 toaHordika Whenua - i built it                                                 ")},
+{i:"8739-1",n:"Onewa" ,t:tags("mid 2005 toaHordika Onewa  - i want it                                                  ")},
 {i:"8740-1",n:"Matau" ,t:tags("mid 2005 toaHordika Matau                                                               ")},
-{i:"8741-1",n:"Nuju"  ,t:tags("mid 2005 toaHordika Nuju   like                                                         ")},
+{i:"8741-1",n:"Nuju"  ,t:tags("mid 2005 toaHordika Nuju   - i like it                                                  ")},
 
 {i:"8742-1",n:"Vohtorak",t:tags("2005 fire  visorak                                                                    ")},
 {i:"8743-1",n:"Boggarak",t:tags("2005 water visorak maybeHaveParts                                                     ")},
@@ -207,7 +207,7 @@ export const __boncleTemplateDatabase: BoncleTemplateDatabase = [
 
 {i:"8755-1",n:"Keetongu",t:tags("mid 2005 titan rahi                                                                   ")},
 {i:"8756-1",n:"Sidorak" ,t:tags("mid 2005 titan male steltian                                                          ")},
-{i:"8761-1",n:"Roodaka" ,t:tags("mid 2005 titan female vortixx reallyWant                                              ")},
+{i:"8761-1",n:"Roodaka" ,t:tags("mid 2005 titan female vortixx - i reallyWant it                                      ")},
 
 {i:"8763-1",n:"Norik" ,t:tags("mid 2005 toaHagah ta                                                                    ")},
 {i:"8762-1",n:"Iruini",t:tags("mid 2005 toaHagah le have                                                               ")},
@@ -402,17 +402,17 @@ export const __boncleTemplateDatabase: BoncleTemplateDatabase = [
 /////////////
 
 // Better names...but also a lot shorter :)
-{i:"70778-1",n:"Vizuna" ,t:tags("2015 protectorOf jungle like                                                              ")},
+{i:"70778-1",n:"Vizuna" ,t:tags("2015 protectorOf jungle - like                                                              ")},
 {i:"70779-1",n:"Nilkuu" ,t:tags("2015 protectorOf stone                                                                ")},
-{i:"70780-1",n:"Kivoda" ,t:tags("2015 protectorOf water like                                                               ")},
+{i:"70780-1",n:"Kivoda" ,t:tags("2015 protectorOf water - like                                                               ")},
 {i:"70781-1",n:"Korgot" ,t:tags("2015 protectorOf earth                                                                ")},
 {i:"70782-1",n:"Izotor" ,t:tags("2015 protectorOf ice                                                                  ")},
-{i:"70783-1",n:"Narmoto",t:tags("2015 protectorOf fire like                                                                ")},
+{i:"70783-1",n:"Narmoto",t:tags("2015 protectorOf fire - like                                                                ")},
 
 {i:"70784-1",n:"Lewa"  , t:tags("2015 Lewa   masterOf jungle                                                           ")},
-{i:"70785-1",n:"Pohatu", t:tags("2015 Pohatu masterOf like                                                             ")},
-{i:"70786-1",n:"Gali"  , t:tags("2015 Gali   masterOf like                                                             ")},
-{i:"70787-1",n:"Tahu"  , t:tags("2015 Tahu   masterOf like                                                             ")},
+{i:"70785-1",n:"Pohatu", t:tags("2015 Pohatu masterOf        - like                                                             ")},
+{i:"70786-1",n:"Gali"  , t:tags("2015 Gali   masterOf        - like                                                             ")},
+{i:"70787-1",n:"Tahu"  , t:tags("2015 Tahu   masterOf        - like                                                             ")},
 {i:"70788-1",n:"Kopaka", t:tags("2015 Kopaka masterOf                                                                  ")},
 {i:"70789-1",n:"Onua"  , t:tags("2015 Onua   masterOf                                                                  ")},
 
@@ -449,7 +449,7 @@ export const __boncleTemplateDatabase: BoncleTemplateDatabase = [
 {i:"71314-1" ,n:"Storm Beast"   ,t:tags("mid 2016 beastOf                                                              ")},
 {i:"71315-1" ,n:"Quake Beast"   ,t:tags("mid 2016 beastOf                                                              ")},
 
-{i:"71312-1" ,n:"Ekimu" ,t:tags("mid 2016 gold cyan titan Ekimu like                                                            ")},
+{i:"71312-1" ,n:"Ekimu" ,t:tags("mid 2016 gold cyan titan Ekimu - i like it                                                            ")},
 {i:"71316-1" ,n:"Umarak",t:tags("mid 2016 black red titan Umarak                                                       ")},
 
 // {i:"601601-1",n:"Skull Scorpion",t:tags("2016 small animal promotional                                                 ")},

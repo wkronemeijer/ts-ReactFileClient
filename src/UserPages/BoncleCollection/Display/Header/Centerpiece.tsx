@@ -1,6 +1,6 @@
 import { memo, useCallback } from "react";
 
-export const BoncleCenterpiece = memo((): JSX.Element => {
+export const BoncleCenterpiece = memo(function centerpiece(): JSX.Element {
     const button_onClick = useCallback(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     }, []);

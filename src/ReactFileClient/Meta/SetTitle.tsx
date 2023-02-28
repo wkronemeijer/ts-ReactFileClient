@@ -1,14 +1,19 @@
 import { memo, useEffect } from "react";
 import { ApplicationName } from "../../Manifest";
 
-export const SetTitle = memo((props: {
+export const SetTitle = memo(function setTitle(props: {
     readonly title: string;
-}): JSX.Element => {
+}): JSX.Element {
     const { title } = props;
+    
     useEffect(() => {
         const newTitle = `${title} - ${ApplicationName}`;
-        console.info(`Changing title to '${newTitle}'.`);
-        document.title = newTitle;
+        const currentTitle = document.title;
+        
+        if (newTitle !== currentTitle) {
+            console.info(`Changing title to '${newTitle}'.`);
+            document.title = newTitle;
+        }
     }, [title]);
     return <></>;
 });

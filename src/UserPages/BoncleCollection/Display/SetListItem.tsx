@@ -2,13 +2,13 @@ import { memo, useCallback } from "react";
 
 import { joinClasses } from "../../../ReactFileClient/ClassHelper";
 
-import { BoncleSetWidget_Possession } from "./SetWidgets/Possession";
 import { BoncleSetSelection_Change } from "../Domain/SetSelection";
 import { BoncleSetWidget_Element } from "./SetWidgets/Element";
-import { BoncleSetWidget_Opinion } from "./SetWidgets/Opinion";
 import { BoncleSet } from "../Domain/Set";
 
-export const BoncleSetListItem = memo(function boncleSetListItem(props: {
+// TODO: What if you cache the resulting JSX?
+
+export const BoncleSetListItem = memo(function setListItem(props: {
     readonly set: BoncleSet;
     readonly isSelected: boolean;
     readonly setSelection: BoncleSetSelection_Change;
@@ -49,9 +49,7 @@ export const BoncleSetListItem = memo(function boncleSetListItem(props: {
                 />
             </div>
             <div className="Footer Flank Widgets">
-                <BoncleSetWidget_Opinion    opinion   ={set.opinion    }/>
-                <BoncleSetWidget_Element    element   ={set.trueElement}/>
-                <BoncleSetWidget_Possession possession={set.possession }/>
+                <BoncleSetWidget_Element element={set.trueElement}/>
             </div>
         </div>
     </div>

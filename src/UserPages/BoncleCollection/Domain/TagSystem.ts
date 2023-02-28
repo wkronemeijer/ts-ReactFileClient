@@ -5,7 +5,7 @@ import { Stack } from "../../../(System)/Collections/Stack";
 import { panic } from "../../../(System)/Errors";
 import { from } from "../../../(System)/Collections/Sequence";
 
-import { BoncleTagCollection, ReadonlyBoncleTagCollection } from "./TagCollection";
+import { BoncleTagCollection, BoncleTagCollectionExpander, ReadonlyBoncleTagCollection } from "./TagCollection";
 import { BoncleSetNumber_hasInstance } from "./SetNumber";
 import { BoncleTagStandardRules } from "./Definitions/StandardRules";
 import { BoncleTagImpliedRules } from "./Definitions/ImpliedRules";
@@ -81,33 +81,22 @@ export class BoncleTagSystem {
         return this.ruleByAntecendent.get(tag) ?? panic();
     }
     
-    private expand(ogTags: ReadonlyBoncleTagCollection): BoncleTagCollection {
-        const result = new BoncleTagCollection(ogTags);
+    /** @bound */
+    expand: BoncleTagCollectionExpander = rootTags => {
+        const result = new BoncleTagCollection(rootTags);
+        
+        /** 
+         * All tags recently touched. 
+         * (Queue would be nicer, but a stack is faster.) 
+         */
+        const frontier: Stack<BoncleTag> = [...result];
         
         let current: BoncleTag | undefined;
-        // Should be a stack...and yet it shouldn't affect the result
-        // ...famous last words
-        /** All tags recently touched */
-        const frontier: Stack<BoncleTag> = [...result];
         while (current = frontier.pop()) {
             frontier.push(...result.applyRule(this.getRule(current)));
         }
         
         return result;
-    }
-    
-    ////////////////////////////////////////
-    // implements TagTemplateInstantiator //
-    ////////////////////////////////////////
-    
-    instantiate = (template: BoncleSetTemplate): BoncleSet => {
-        const id           = template.i;
-        requires(BoncleSetNumber_hasInstance(id), 
-            () => `'${id}' is not a valid set number.`);
-        const title        = template.n;
-        const originalTags = BoncleTagCollection.from(template.t);
-        const expandedTags = this.expand(originalTags);
-        return new BoncleSet(id, title, originalTags, expandedTags);
     }
     
     ////////////////////////////////
@@ -121,10 +110,7 @@ export class BoncleTagSystem {
         const size = from(this.ruleByAntecendent.keys()).max(key => key.length);
         
         for (const [antecedent, rule] of this.ruleByAntecendent) {
-            if (
-                BoncleTag.isInternal(antecedent) || 
-                rule.sequents.size === 0
-            ) {
+            if (BoncleTag.isInternal(antecedent)) {
                 continue;
             }
             
@@ -141,6 +127,7 @@ export class BoncleTagSystem {
                 builder.append(' ');
                 builder.append(internalTags);
             }
+            
             builder.appendLine();
         }
         builder.dedent();

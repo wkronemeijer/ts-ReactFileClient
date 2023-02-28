@@ -1,13 +1,13 @@
+import { memo } from "react";
+
 import { capitalize } from "../../../(System)/Text/Casing";
 import { collect } from "../../../(System)/Collections/Iterable";
-
-import { joinClasses } from "../../../ReactFileClient/ClassHelper";
 
 import { BoncleSetSelection, BoncleSetSelection_Change } from "../Domain/SetSelection";
 import { BoncleSetListItem } from "./SetListItem";
 import { BoncleSetSize } from "../Domain/Definitions/StandardEnums";
 import { BoncleSet } from "../Domain/Set";
-import { memo } from "react";
+import { BoncleYearLabel } from "./Label/Year";
 
 const BoncleSetList_SizeHeader = memo(function sizeHeader(props: {
     readonly size: BoncleSetSize;
@@ -24,12 +24,8 @@ const BoncleSetList_YearHeader = memo(function yearHeader(props: {
 }): JSX.Element {
     const { year } = props;
     
-    const realYear      = Math.floor(year);
-    const hasFractional = (year - realYear) > 0.1; 
-    // ^ Step is 0.5, so epsilon of 0.1 is good enough
-    
     return <div className="Year Header">
-        Sets of {hasFractional ? "summer" : "winter"} {realYear}
+        Sets of <BoncleYearLabel year={year}/>
     </div>
 });
 
@@ -91,7 +87,7 @@ const properOrder = collect(function* (
     }
 });
 
-export const BoncleSetList = memo(function boncleSetList(props: BoncleSetList_Props): JSX.Element {
+export const BoncleSetList = memo(function setList(props: BoncleSetList_Props): JSX.Element {
     return <div className="BoncleSetList">
         {properOrder(props)}
     </div>

@@ -1,5 +1,3 @@
-import { StringEnum } from "../../../../(System)/Data/StringEnum";
-
 // There is a desire for negative rules
 // badGuy -> -goodGuy
 // But how do you resolve conflicts? And loops?
@@ -8,11 +6,9 @@ export interface BoncleTagTree {
     [s: string] : BoncleTagTree;
 }
 
-export const BoncleTagRoot = {
+export const BoncleTagTree_Root = {
     _displayElements: {
         // Opponent process colors...
-        _displayNone: { // ➖
-        },
         _displayWhite: { // ⚪
             white : {},
             silver: {},
@@ -42,6 +38,8 @@ export const BoncleTagRoot = {
             black   : {},
             gunmetal: {},
         },
+        _displayNone: { // ➖
+        },
     },
     _opinion: {
         dislike : {
@@ -62,7 +60,13 @@ export const BoncleTagRoot = {
             maybeHaveParts: {},
         },
         have: {
-            built: {},
+            incomplete: {
+                // do you "have" a thing if its incomplete?
+                // maybeHave 
+            }, 
+            complete: {
+                built: {},
+            },
         },
     },
     _seasonOfRelease: {
@@ -96,13 +100,10 @@ export const BoncleTagRoot = {
         // Seriously, HF sets have 0 response on me.
     },
     packageDeal: {
-        "and": {},
         // TODO: Do you really care how big it is?
-        _sizedPackageDeal: {
-            "2-in-1": {},
-            "3-in-1": {},
-            "4-in-1": {},
-        },
+        "2-in-1": {},
+        "3-in-1": {},
+        "4-in-1": {},
     },
     _elemental: { // in ascending order
         _noElement: {},
@@ -289,5 +290,21 @@ export const BoncleTagRoot = {
     },
     _special: {
         selection: {}, // nothing has the selection tag, so inputting it shows just the selection.
+    },
+    _fluent: {
+        is: {},
+        of: {},
+        and: {},
+        or: {},
+        "&": {},
+        "-": {},
+        ",": {},
+        ";": {},
+        _pronouns: {
+            i: {},
+            
+            it: {},
+            its: {},
+        }
     },
 } as const satisfies BoncleTagTree;

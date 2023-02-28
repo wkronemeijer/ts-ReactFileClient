@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import { BoncleTag } from "../Domain/Definitions/Tag";
+import { BoncleTag } from "../../Domain/Definitions/Tag";
 
 export const BoncleTagLabel = memo(function tagLabel(props: {
     readonly tag: BoncleTag;

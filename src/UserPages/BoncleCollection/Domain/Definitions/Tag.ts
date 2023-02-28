@@ -4,7 +4,8 @@ import { collect } from "../../../../(System)/Collections/Iterable";
 import { assert } from "../../../../(System)/Assert";
 import { Member } from "../../../../(System)/Data/Enumeration";
 
-import { BoncleTagTree, BoncleTagRoot } from "./TagTree";
+import { BoncleTagTree, BoncleTagTree_Root } from "./TagTree";
+import { BoncleFluency } from "./StandardEnums";
 
 type AllKeys_StringKeys<T> = keyof T & string;
 type AllKeys_Spread<T>     = T extends object ? AllKeys<T> : never;
@@ -33,10 +34,13 @@ const allKeys = collect(function* recurse(
     }
 });
 
-const isHidden = (tag: string) => tag.startsWith('_');
+const isHidden = (tag: string) => (
+    tag.startsWith('_') || 
+    BoncleFluency.hasInstance(tag)
+);
 
-export type  BoncleTag = ExpandType<AllKeys<typeof BoncleTagRoot>>;
-export const BoncleTag = StringEnum_create(allKeys(BoncleTagRoot)).extend(Self => ({
+export type  BoncleTag = ExpandType<AllKeys<typeof BoncleTagTree_Root>>;
+export const BoncleTag = StringEnum_create(allKeys(BoncleTagTree_Root)).extend(Self => ({
     /** @bound */
     isPublic(self: Member<typeof Self>): boolean {
         return !isHidden(self);

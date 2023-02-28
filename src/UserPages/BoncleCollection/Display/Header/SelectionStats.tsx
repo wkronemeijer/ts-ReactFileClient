@@ -1,22 +1,20 @@
-import { Dispatch, memo, ReactNode, SetStateAction, useCallback, useMemo, useReducer, useState } from "react";
-import { from, Predicate } from "../../../../(System)/Collections/Sequence";
-import { Map_increment, Map_update } from "../../../../(System)/Collections/Map";
-import { PersistentSet } from "../../../../(System)/Collections/Persistent/PersistentSet";
-import { joinClasses } from "../../../../ReactFileClient/ClassHelper";
-import { BoncleDatabase } from "../../Domain/Database";
+import { memo, ReactNode, useCallback, useMemo } from "react";
 
+import { Map_increment } from "../../../../(System)/Collections/Map";
+import { from } from "../../../../(System)/Collections/Sequence";
+
+import { joinClasses } from "../../../../ReactFileClient/ClassHelper";
+
+import { BoncleSetSelection, BoncleSetSelection_Change, BoncleSetSelection_Empty } from "../../Domain/SetSelection";
 import { BoncleDisplayElement } from "../../Domain/Definitions/StandardEnums";
 import { BoncleTag } from "../../Domain/Definitions/Tag";
 import { BoncleSet } from "../../Domain/Set";
-import { BoncleSetNumber } from "../../Domain/SetNumber";
-import { BoncleSetSelection, BoncleSetSelection_Change, BoncleSetSelection_Empty } from "../../Domain/SetSelection";
-import { BoncleTagEnum } from "../../Domain/TagEnum";
 
 const relevantElements: readonly BoncleTag[] = 
-    BoncleDisplayElement.values.slice(1) // slice off _displayNone;
-; 
-
-
+    from(BoncleDisplayElement)
+    .where(color => color !== "_displayNone")
+    .toArray()
+;
 
 const reprByTag = {
     _displayNone  : "➖",
@@ -31,7 +29,6 @@ const reprByTag = {
     female: "♀",
 } satisfies Partial<Record<BoncleTag, ReactNode>>;
 const foo = Object.keys(reprByTag) as (keyof typeof reprByTag)[];
-
 
 function extractFrequency<T extends BoncleTag>(
     sets: Iterable<BoncleSet>, 
@@ -53,11 +50,11 @@ function extractFrequency<T extends BoncleTag>(
     return result;
 }
 
-export const BoncleSelectionStats = memo((props: {
+export const BoncleSelectionStats = memo(function selectionStats(props: {
     readonly visible: readonly BoncleSet[];
     readonly selection: BoncleSetSelection;
     readonly setSelection: BoncleSetSelection_Change;
-}): JSX.Element => {
+}): JSX.Element {
     const { visible, selection, setSelection } = props;
     
     const All_onClick = useCallback(() => 
@@ -91,8 +88,9 @@ export const BoncleSelectionStats = memo((props: {
                 key={displayElement} 
                 className={joinClasses("Label", displayElement)}
             >
-                <span className="Frequency">{frequency}</span>
-                <span className="Times">&times;</span>
+                <span className="Frequency">
+                    {frequency.toString().padStart(3, '0')}
+                </span>
             </div>)}
         </div>
     </div>

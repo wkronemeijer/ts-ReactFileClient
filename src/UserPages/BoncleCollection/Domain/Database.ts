@@ -1,13 +1,13 @@
 import { Map_increment } from "../../../(System)/Collections/Map";
-import { ensures } from "../../../(System)/Assert";
+import { assert } from "../../../(System)/Assert";
 import { panic } from "../../../(System)/Errors";
 import { from } from "../../../(System)/Collections/Sequence";
 
 import { __boncleTemplateDatabase } from "./RawDatabase";
 import { BoncleTagSystem } from "./TagSystem";
 import { BoncleSetNumber } from "./SetNumber";
-import { BoncleSet } from "./Set";
 import { BoncleTag } from "./Definitions/Tag";
+import { BoncleSet } from "./Set";
 
 export const BoncleDatabase = new class implements Iterable<BoncleSet> {
     readonly sets: readonly BoncleSet[];
@@ -16,38 +16,77 @@ export const BoncleDatabase = new class implements Iterable<BoncleSet> {
     private readonly setsByNumber: ReadonlyMap<BoncleSetNumber, BoncleSet>;
     private readonly frequencyByTag: ReadonlyMap<BoncleTag, number>;
     
+    readonly stats: {
+        readonly mostCommonTag: BoncleTag;
+        readonly mostCommonTagFrequency: number;
+        
+        /** Tags which appear only on 1 set (which makes them not useful). */
+        readonly singleTags: readonly BoncleTag[];
+    };
+    
+    private createFrequencyMap(sets: readonly BoncleSet[]): ReadonlyMap<BoncleTag, number> {
+        const result = new Map<BoncleTag, number>;
+        for (const set of sets) {
+            for (const tag of set.tags) {
+                Map_increment(result, tag);
+            }
+        }
+        return result;
+    }
+    
+    private checkSetInvariants() {
+        
+    }
+    
+    private checkTagInvariants() {
+        assert(this.getTagFrequency("selection") === 0, 
+            `Tag 'selection' should be empty.`);
+    }
+    
+    private createStats(btrs: BoncleTagSystem): typeof this.stats {
+        let mostCommonTag: BoncleTag = "-";
+        let mostCommonTagFrequency = 0;
+        const singleTags = new Array<BoncleTag>;
+        
+        for (const [tag, freq] of this.frequencyByTag) {
+            if (freq > mostCommonTagFrequency) {
+                mostCommonTag = tag;
+                mostCommonTagFrequency = freq;
+            }
+            
+            if (freq === 1) {
+                singleTags.push(tag);
+            }
+        }
+        
+        return { 
+            mostCommonTag, mostCommonTagFrequency, 
+            singleTags,
+        };
+    }
+    
     constructor() {
         const btrs = new BoncleTagSystem;
-        console.log(btrs.toString());
-        
-        const sets = this.sets = 
+        const sets =
             // make sets
             from(__boncleTemplateDatabase)
-            .select(btrs.instantiate)
+            .select(template => 
+                BoncleSet.instantiate(template, btrs.expand))
             .where(set => !set.tags.has("_excluded"))
             .orderBy((a, b) => a.compare(b))
             // done
             .toArray()
         ;
         
-        this.size = this.sets.length;
+        this.sets           = sets;
+        this.size           = sets.length;
+        this.setsByNumber   = from(sets).toMapBy(set => set.setNumber);
+        this.frequencyByTag = this.createFrequencyMap(sets);
         
-        this.setsByNumber = 
-            from(this.sets)
-            .associateBy(set => set.setNumber)
-            .to(Map<BoncleSetNumber, BoncleSet>) // HKTs...one day.
-        ;
+        this.checkSetInvariants();
+        this.checkTagInvariants();
         
-        const frequencyByTag = this.frequencyByTag = new Map<BoncleTag, number>;
-        
-        for (const set of sets) {
-            for (const tag of set.tags) {
-                Map_increment(frequencyByTag, tag);
-            }
-        }
-        
-        ensures(this.getTagFrequency("selection") === 0, 
-            `Tag 'selection' should be empty.`);
+        this.stats = this.createStats(btrs);
     }
     
     /////////////////////////

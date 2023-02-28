@@ -18,12 +18,12 @@ $monospace: "JetBrains Mono", monospace;
 
 
 // https://en.wikipedia.org/wiki/Natural_Color_System
-._displayWhite  { --display-color: #FFFFFF; }
-._displayRed    { --display-color: #C40233; }
-._displayGreen  { --display-color: #009F6B; }
-._displayBlue   { --display-color: #0087BD; }
-._displayYellow { --display-color: #FFD300; }
-._displayBlack  { --display-color: #000000; }
+._displayWhite  { --display-color: #FFFFFF; --display-color-dual: black; }
+._displayRed    { --display-color: #C40233; --display-color-dual: white; }
+._displayGreen  { --display-color: #009F6B; --display-color-dual: white; }
+._displayBlue   { --display-color: #0087BD; --display-color-dual: white; }
+._displayYellow { --display-color: #FFD300; --display-color-dual: black; }
+._displayBlack  { --display-color: #111111; --display-color-dual: white; }
 
 ////////////////
 // Components //
@@ -157,16 +157,23 @@ $monospace: "JetBrains Mono", monospace;
     
     & > .DisplayElementComparison {
         display: flex;
+        padding: 4px;
         gap: 4px;
         
         & > .Label {
-            background-color: var(--display-color, #000);
+            background-color: var(--display-color     , #000);
+            color           : var(--display-color-dual, #000);
+            
             border-radius: 9999px;
-            padding: 4px 8px;
+            border: 2px solid currentColor;
+            
+            aspect-ratio: 1/1;
+            display: grid;
+            place-content: center;
             
             & > .Frequency {
                 font-family: $monospace;
-                width: 3ch;
+                padding: 2px;
             }
         }
     }
