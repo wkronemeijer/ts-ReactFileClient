@@ -1,9 +1,9 @@
 import Express, { static as expressStatic } from "express";
-import { ApiRouter } from "./Api.mjs";
+import { devTerminal, StringBuilder } from "@local/system";
 
 import { PublicRoot, SourceRoot } from "./FindFiles.mjs";
+import { ApiRouter } from "./Api.mjs";
 import { PORT } from "./Config.mjs";
-import { devTerminal, StringBuilder } from "@local/system";
 
 // A server was born
 const app = Express();
@@ -19,12 +19,18 @@ const   indexPath = PublicRoot.join("index.html").toString();
 // Configuring routes //
 ////////////////////////
 
+const re = /(\.png|\.jpe?g)/;
+
+function shouldLogRequest(path) {
+    return !re.test(path);
+}
+
 function toSexagesimal(n) {
     return n.toString().padStart(2, '0');
 }
 
 app.use((req, _res, next) => {
-    if (!req.path.endsWith(".jpg")) {
+    if (shouldLogRequest(req.path)) {
         const msg  = new StringBuilder;
         const time = new Date();
         

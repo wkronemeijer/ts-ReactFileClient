@@ -1,12 +1,10 @@
 import { StringBuildable, StringBuilder } from "../../../(System)/Text/StringBuilder";
+import { assert } from "../../../(System)/Assert";
 
 import { BoncleWholeYear } from "./Definitions/StandardEnums";
-import { BoncleTag } from "./Definitions/Tag";
 import { BoncleTagEnum } from "./TagEnum";
 import { BoncleTagRule } from "./TagRule";
-import { assert } from "../../../(System)/Assert";
-import { from } from "../../../(System)/Collections/Sequence";
-import { fst } from "../../../(System)/Function";
+import { BoncleTag } from "./Definitions/Tag";
 
 interface IterableEntries {
     entries(): IterableIterator<[BoncleTag, number]>;
@@ -29,7 +27,7 @@ extends Iterable<BoncleTag>, IterableEntries, StringBuildable {
      * Prefers members with the lesser depth, and prefers the greater ordinal at an equal depth.  */
     search<E extends BoncleTag>(tenum: Iterable<E>): E | undefined;
     /** 
-     * Same as {@link search}, but defaults to the given enum's {@link BoncleTagEnum.default} if no member is found. 
+     * Same as {@link search}, but defaults to the given enum's default if no member is found. 
      */
     find<E extends BoncleTag>(tenum: BoncleTagEnum<E>): E;
     
@@ -168,12 +166,12 @@ implements ReadonlyBoncleTagCollection {
     
     /** @returns All tags that were modified. */
     applyRule(rule: BoncleTagRule): Iterable<BoncleTag> {
-        const { antecedent, sequents } = rule;
+        const { antecedent, sequents, weight } = rule;
         const touched = new Set<BoncleTag>;
         
         const currentDepth = this.getDepth(antecedent);
         if (currentDepth !== undefined) {
-            const seqDepth = currentDepth + 1; // <-- 👀
+            const seqDepth = currentDepth + weight; // <-- 👀
             for (const seq of sequents) {
                 if (this.add(seq, seqDepth)) {
                     touched.add(seq);
@@ -202,7 +200,6 @@ implements ReadonlyBoncleTagCollection {
         return StringBuilder.stringify(this).trim();
     }
 }
-
 
 export interface BoncleTagCollectionExpander {
     (initial: ReadonlyBoncleTagCollection): BoncleTagCollection;

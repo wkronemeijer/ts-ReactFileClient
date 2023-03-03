@@ -64,6 +64,8 @@ export class BoncleSetFilter {
                 tag    = item;
             }
             
+            tag = BoncleTag.canonicalize(tag);
+            
             all.push(tag);
             if (BoncleTag.hasInstance(tag)) {
                 target.push(tag);

@@ -5,7 +5,7 @@ import { from } from "../../../../(System)/Collections/Sequence";
 
 import { joinClasses } from "../../../../ReactFileClient/ClassHelper";
 
-import { BoncleSetSelection, BoncleSetSelection_Change, BoncleSetSelection_Empty } from "../../Domain/SetSelection";
+import { BoncleSetSelection, BoncleSetSelection_Change, BoncleSetSelection_Empty, BoncleSetSelection_format } from "../../Domain/SetSelection";
 import { BoncleDisplayElement } from "../../Domain/Definitions/StandardEnums";
 import { BoncleTag } from "../../Domain/Definitions/Tag";
 import { BoncleSet } from "../../Domain/Set";
@@ -65,6 +65,13 @@ export const BoncleSelectionStats = memo(function selectionStats(props: {
         setSelection(BoncleSetSelection_Empty)
     , [setSelection]);
     
+    const Copy_onClick = useCallback(() => {
+        if (selection.size > 0) {
+            const setList = BoncleSetSelection_format(selection);
+            navigator.clipboard.writeText(setList);
+        }
+    }, [selection]);
+    
     const counts = useMemo(() => 
         extractFrequency(selection, relevantElements)
     , [selection]);
@@ -77,6 +84,10 @@ export const BoncleSelectionStats = memo(function selectionStats(props: {
             </button>
             <button className="ClearSelection" onClick={Clear_onClick}>
                 Clear selection
+            </button>
+            <button className="CopySelection" onClick={Copy_onClick}>
+                Copy selection to clipboard
+                {/* TODO: Make it say "Copied!" for a split second. */}
             </button>
         </div>
         <div>

@@ -1,13 +1,17 @@
 // There is a desire for negative rules
 // badGuy -> -goodGuy
 // But how do you resolve conflicts? And loops?
+// currently solved with default of depth 10+, making it easily overwritten
 
 export interface BoncleTagTree {
     [s: string] : BoncleTagTree;
 }
 
 export const BoncleTagTree_Root = {
+    _default: {},
     _displayElements: {
+        _displayNone: { // ➖
+        },
         // Opponent process colors...
         _displayWhite: { // ⚪
             white : {},
@@ -38,8 +42,6 @@ export const BoncleTagTree_Root = {
             black   : {},
             gunmetal: {},
         },
-        _displayNone: { // ➖
-        },
     },
     _opinion: {
         dislike : {
@@ -69,10 +71,14 @@ export const BoncleTagTree_Root = {
             },
         },
     },
+    
     _seasonOfRelease: {
-        // winter is default, summer is by mid 
-        // "mid 2002" reads well
-        mid: {},
+        // winter provided for symmetry
+        winter: {},
+        summer: {
+            // "mid 2002" reads well
+            mid: {},
+        },
     },
     _yearOfRelease: {
         "2001": {},
@@ -89,22 +95,26 @@ export const BoncleTagTree_Root = {
         "2016": {},
         // No, GWP does not count
     },
-    _sex: {
-        male  : {},
-        female: {},
-    },
+    
     _theme: {
         gen1: {},
         gen2: {},
         // Screw hero factory
         // Seriously, HF sets have 0 response on me.
     },
+    
+    _sex: {
+        male  : {},
+        female: {},
+    },
+    
     packageDeal: {
         // TODO: Do you really care how big it is?
         "2-in-1": {},
         "3-in-1": {},
         "4-in-1": {},
     },
+    
     _elemental: { // in ascending order
         _noElement: {},
         iron: {},
@@ -174,6 +184,8 @@ export const BoncleTagTree_Root = {
                 toaNuva: {
                     // Technically Phantoka were still normal Nuva, just with new armor
                     // But for all set purposes they could be entirely different people
+                    
+                    // Also the toa team is still called Toa Mata 🤡
                 },
                 toaMetru: {},
                 toaHordika: {},
@@ -292,19 +304,18 @@ export const BoncleTagTree_Root = {
         selection: {}, // nothing has the selection tag, so inputting it shows just the selection.
     },
     _fluent: {
-        is: {},
-        of: {},
-        and: {},
-        or: {},
+        "is": {},
+        "of": {},
+        "and": {},
+        "or": {},
         "&": {},
-        "-": {},
         ",": {},
         ";": {},
         _pronouns: {
-            i: {},
+            "i": {},
             
-            it: {},
-            its: {},
+            "it": {},
+            "its": {},
         }
     },
 } as const satisfies BoncleTagTree;

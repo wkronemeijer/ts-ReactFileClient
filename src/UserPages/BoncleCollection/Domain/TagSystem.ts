@@ -35,20 +35,18 @@ search prefers arguments with the least depth
 
 */
 
-type  RuleMap = ReadonlyMap<BoncleTag, BoncleTagRule>;
-const RuleMap =         Map<BoncleTag, BoncleTagRule>;
-
-export interface BoncleTagSystemStats {
-    readonly setCount: number;
-    readonly tagCount: number;
-    readonly standardRuleCount: number;
-    readonly impliedRuleCount: number;
-}
+type  RuleMap = ReadonlyMap<BoncleTag, readonly BoncleTagRule[]>;
+const RuleMap =         Map<BoncleTag,          BoncleTagRule[]>;
 
 export class BoncleTagSystem {
-    readonly stats: BoncleTagSystemStats;
+    readonly stats: {
+        readonly setCount: number;
+        readonly tagCount: number;
+        readonly standardRuleCount: number;
+        readonly impliedRuleCount: number;
+    };
     
-    private readonly ruleByAntecendent: RuleMap;
+    private readonly rulesByAntecendent: RuleMap;
     
     constructor() {
         const tags  = [...BoncleTag];
@@ -57,14 +55,14 @@ export class BoncleTagSystem {
         const rba = new RuleMap;
         
         for (const tag of tags) {
-            rba.set(tag, BoncleTagRule.empty(tag));
+            rba.set(tag, []);
         }
         
         for (const rule of rules) {
-            Map_update(rba, rule.antecedent, panic, acc => acc.join(rule));
+            rba.get(rule.antecedent)!.push(rule);
         }
         
-        this.ruleByAntecendent = rba;
+        this.rulesByAntecendent = rba;
         this.stats = {
             setCount: -1,
             tagCount: -1,
@@ -77,8 +75,9 @@ export class BoncleTagSystem {
     // implements TagCollectionExpander //
     //////////////////////////////////////
     
-    private getRule(tag: BoncleTag): BoncleTagRule {
-        return this.ruleByAntecendent.get(tag) ?? panic();
+    /** Gets all rules with the given antecedent. */
+    private getRules(antecedent: BoncleTag): Iterable<BoncleTagRule> {
+        return this.rulesByAntecendent.get(antecedent) ?? panic();
     }
     
     /** @bound */
@@ -93,7 +92,11 @@ export class BoncleTagSystem {
         
         let current: BoncleTag | undefined;
         while (current = frontier.pop()) {
-            frontier.push(...result.applyRule(this.getRule(current)));
+            for (const rule of this.getRules(current)) {
+                for (const touched of result.applyRule(rule)) {
+                    frontier.push(touched);
+                }
+            }
         }
         
         return result;
@@ -105,30 +108,12 @@ export class BoncleTagSystem {
     
     buildString(builder: StringBuilder, displayHidden: boolean): void {
         builder.appendLine(`BoncleTagSystem contents:`);
+        
         builder.indent();
-        
-        const size = from(this.ruleByAntecendent.keys()).max(key => key.length);
-        
-        for (const [antecedent, rule] of this.ruleByAntecendent) {
-            if (BoncleTag.isInternal(antecedent)) {
-                continue;
+        for (const rules of this.rulesByAntecendent.values()) {
+            for (const rule of rules) {
+                rule.buildString(builder, true);
             }
-            
-            const publicTags   = from(rule.sequents).where(BoncleTag.isPublic  ).toString(' ');
-            const internalTags = from(rule.sequents).where(BoncleTag.isInternal).toString(' ');
-            
-            builder.append(antecedent.padEnd(size));
-            builder.append(" ⟶");
-            if (publicTags) {
-                builder.append(' ');
-                builder.append(publicTags);
-            }
-            if (displayHidden && internalTags) {
-                builder.append(' ');
-                builder.append(internalTags);
-            }
-            
-            builder.appendLine();
         }
         builder.dedent();
     }

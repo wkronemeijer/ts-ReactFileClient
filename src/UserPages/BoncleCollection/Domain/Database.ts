@@ -17,9 +17,10 @@ export const BoncleDatabase = new class implements Iterable<BoncleSet> {
     private readonly frequencyByTag: ReadonlyMap<BoncleTag, number>;
     
     readonly stats: {
-        readonly mostCommonTag: BoncleTag;
-        readonly mostCommonTagFrequency: number;
-        
+        readonly mostCommonPublicTag: {
+            readonly value: BoncleTag;
+            readonly frequency: number;
+        };
         /** Tags which appear only on 1 set (which makes them not useful). */
         readonly singleTags: readonly BoncleTag[];
     };
@@ -44,14 +45,14 @@ export const BoncleDatabase = new class implements Iterable<BoncleSet> {
     }
     
     private createStats(btrs: BoncleTagSystem): typeof this.stats {
-        let mostCommonTag: BoncleTag = "-";
-        let mostCommonTagFrequency = 0;
+        let mostCommonPublicTag: BoncleTag = "_default";
+        let mostCommonPublicTagFrequency = 0;
         const singleTags = new Array<BoncleTag>;
         
         for (const [tag, freq] of this.frequencyByTag) {
-            if (freq > mostCommonTagFrequency) {
-                mostCommonTag = tag;
-                mostCommonTagFrequency = freq;
+            if (BoncleTag.isPublic(tag) && freq > mostCommonPublicTagFrequency) {
+                mostCommonPublicTag = tag;
+                mostCommonPublicTagFrequency = freq;
             }
             
             if (freq === 1) {
@@ -60,7 +61,10 @@ export const BoncleDatabase = new class implements Iterable<BoncleSet> {
         }
         
         return { 
-            mostCommonTag, mostCommonTagFrequency, 
+            mostCommonPublicTag: {
+                value: mostCommonPublicTag, 
+                frequency: mostCommonPublicTagFrequency,
+            },
             singleTags,
         };
     }

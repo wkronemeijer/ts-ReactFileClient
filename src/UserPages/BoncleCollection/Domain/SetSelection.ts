@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 
 import { PersistentSet } from "../../../(System)/Collections/Persistent/PersistentSet";
+import { from } from "../../../(System)/Collections/Sequence";
 import { BoncleSet } from "./Set";
 
 
@@ -12,3 +13,12 @@ export const BoncleSetSelection = PersistentSet<BoncleSet>;
 export type BoncleSetSelection_Change = Dispatch<SetStateAction<BoncleSetSelection>>;
 
 export const BoncleSetSelection_Empty: BoncleSetSelection = BoncleSetSelection.default;
+
+export function BoncleSetSelection_format(self: BoncleSetSelection): string {
+    return (
+        from(self)
+        .ordered()
+        .select(set => `${set.setNumber} ${set.title}`)
+        .toString('\n')
+    );
+}

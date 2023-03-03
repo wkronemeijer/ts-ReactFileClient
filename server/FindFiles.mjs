@@ -1,6 +1,7 @@
 import { devTerminal, File, Directory } from "@local/system";
-import { dirname } from "path";
 import { fileURLToPath } from "url";
+import { dirname } from "path";
+
 import { VERBOSE_FIND_FILES } from "./Config.mjs";
 
 // I love ES modules

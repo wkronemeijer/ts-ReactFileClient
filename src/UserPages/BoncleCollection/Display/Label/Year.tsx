@@ -2,6 +2,16 @@ import { memo } from "react";
 
 import { capitalize } from "../../../../(System)/Text/Casing";
 
+// There is a complicated way of doing this
+// And there is what we do
+function getSeason(fraction: number): string {
+    // Lego has half-yearly releases
+    if (fraction > 0.1) {
+        return "summer";
+    } else {
+        return "winter";
+    }
+}
 /** 
  * Converts a fractional year (like 2007.5) into a seasonal year (like "summer 2007"). 
  */
@@ -11,14 +21,11 @@ export const BoncleYearLabel = memo(function yearLabel(props: {
 }): JSX.Element {
     const { year, capitalized: shouldCapitalize } = props;
     
-    const realYear      = Math.floor(year);
-    const hasFractional = (year - realYear) > 0.1; 
-    // ^ Step is 0.5, so epsilon of 0.1 is good enough
-    
-    const season = hasFractional ? "summer" : "winter"; 
-    // Lego has half-yearly releases, which is convenient for us
+    const intYear  = Math.floor(year);
+    const fraction = year - intYear;
+    const season   = getSeason(fraction)
     
     return <>
-        {shouldCapitalize ? capitalize(season) : season} {realYear}
+        {shouldCapitalize ? capitalize(season) : season} {intYear}
     </>;
 });

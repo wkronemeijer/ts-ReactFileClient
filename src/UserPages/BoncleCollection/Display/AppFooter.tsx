@@ -16,7 +16,9 @@ export const BoncleAppFooter = memo(function appFooter(): JSX.Element {
             <div>Each tagged with {BoncleTag.values.length} different tags</div>
             <div>There are {BoncleTagStandardRules.length} manual rules.</div>
             <div>There are {BoncleTagImpliedRules.length} rules implied by their hierarchical nature.</div>
-            <div>[<BoncleTagLabel tag={stats.mostCommonTag}/>] is the most common tag, with {stats.mostCommonTagFrequency} occurences.</div>
+            <div>
+                [<BoncleTagLabel tag={stats.mostCommonPublicTag.value}/>] is the most common tag, with {stats.mostCommonPublicTag.frequency} occurences.
+            </div>
         </div>
         <div className="HotTakes">
             <p>In my humble opinion, the best Bionicle years, in descending order:</p>

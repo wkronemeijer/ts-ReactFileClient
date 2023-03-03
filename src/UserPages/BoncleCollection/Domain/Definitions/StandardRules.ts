@@ -19,15 +19,33 @@ type Split<S extends string, D extends string> =
 
 const delimiter = ' ';
 
-// Hangul spelling for tag
-// Why? idk i was bored
 function rule<S extends string>(strings: S): Split<S, typeof delimiter> {
     const result: string[] = strings.split(delimiter).filter(identity);
     return result as any;
 }
 
-type  rootRule = readonly [BoncleTag, "->", ...readonly BoncleTag[]];
+type RuleArrow = keyof typeof weightByArrow;
+const weightByArrow = {
+    "->" :      +1,
+    "-->":     +10,
+    "~>" :    +100,
+    "~~>":  +1_000,
+};
+
+////////////////////
+// Standard rules //
+////////////////////
+
+type  rootRule = readonly [BoncleTag, RuleArrow, ...readonly BoncleTag[]];
 const rootRules: readonly rootRule[] = [
+    // All sets have a year of release which starts the chain...
+    rule("_yearOfRelease -> _default"),
+    // which ends with _default, so that...
+    rule("_default ~~> winter medium _displayNone whatever"), 
+    // these defaults have depth 13. 
+    // Add more __ tags between chain and start if that's not enough.
+    
+    
     // Species
     rule("skrall -> black rock male"), // no female skrall sets
     rule("makuta -> male shadow badGuy"), // there is 1 female makuta set, out of like 12 
@@ -140,8 +158,9 @@ const rootRules: readonly rootRule[] = [
 export const BoncleTagStandardRules: readonly BoncleTagRule[] = 
     from(rootRules)
     .select(rule => {
-        const [antecedent, _arrow, ...sequents] = rule;
-        return new BoncleTagRule(antecedent, sequents);
+        const [antecedent, arrow, ...sequents] = rule;
+        const weight = weightByArrow[arrow];
+        return new BoncleTagRule(antecedent, sequents, weight);
     })
     .toArray()
 ;
