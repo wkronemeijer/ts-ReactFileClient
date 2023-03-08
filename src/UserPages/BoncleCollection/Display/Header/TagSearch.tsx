@@ -14,7 +14,7 @@ function getSuggestions(filter: BoncleSetFilter, limit: number): BoncleTag[] {
     const  rightMost = filter.lastTag;
     return rightMost ? (
         from(publicTags)
-        .where(tag => tag.startsWith(rightMost))
+        .where(tag => BoncleTag.normalize(tag).startsWith(BoncleTag.normalize(rightMost)))
         .take(limit)
         .toArray()
     ) : [];
@@ -52,7 +52,7 @@ export const BoncleTagSearch = memo(function tagSearch(props: {
             <BoncleTagLabel 
                 key={suggestion}
                 tag={suggestion} 
-                prefix={prefix}
+                prefix={prefix?.length ?? 0}
             />)}
         </div>
         <button className="Clear" onClick={Clear_onClick}>

@@ -188,8 +188,8 @@ $monospace: "JetBrains Mono", monospace;
     
     // Most sized waves have 6 sets in them, making the elements all line up
     // Alternative with explicit grid-column did NOT work :')
-    grid-template-columns: repeat(6, 1fr);
-    // grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    // grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     place-items: center;
     padding: 8px;
     gap: 8px;
