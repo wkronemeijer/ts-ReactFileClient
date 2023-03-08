@@ -7,32 +7,8 @@ import { BoncleTagCollection, BoncleTagCollectionExpander, ReadonlyBoncleTagColl
 import { BoncleSetTemplate } from "./SetTemplate";
 import { BoncleSetNumber } from "./SetNumber";
 import { panic } from "../../../(System)/Errors";
+import { String_unPascalCase } from "../../../(System)/Text/String";
 
-const parseName_sep = /[\\\|\/\-]/; // one of / | \ -,
-
-function parseName(string: string): {
-    readonly title: string;
-    readonly name: string;
-} {
-    const [part1, part2] = string.split(parseName_sep);
-    
-    let title: string;
-    let name: string;
-    
-    if (part1) {
-        if (part2) {
-            title = part1.trim();
-            name  = part2.trim();
-        } else {
-            title = "";
-            name  = part1.trim();
-        }
-    } else {
-        panic(`Invalid name '${string}'.`);
-    }
-    
-    return { title, name };
-}
 
 export class BoncleSet implements ComparableObject {
     // Interesting properties
@@ -45,6 +21,7 @@ export class BoncleSet implements ComparableObject {
     
     // Cached tags method results
     readonly year: number;
+    readonly title: string;
     
     readonly species       : BoncleSpecies;
     readonly setSize       : BoncleSetSize;
@@ -57,7 +34,7 @@ export class BoncleSet implements ComparableObject {
     
     constructor(
         public readonly setNumber: BoncleSetNumber,
-        public readonly title    : string,
+        public readonly name     : string,
         public readonly tags     : ReadonlyBoncleTagCollection,
     ) {
         this.bricksetUrl  = `https://brickset.com/sets/${setNumber}`;
@@ -68,12 +45,11 @@ export class BoncleSet implements ComparableObject {
         this.previewTitle = tags.toString();
         this.year         = tags.determineYear();
         
-        // You could do a generic solution...
-        // The real pain of making your code better
+        this.species = tags.find(BoncleSpecies);
+        this.title   = BoncleSpecies.getTitle(this.species);
+        
         this.displayElement = tags.find(BoncleDisplayElement);
         this.setSize        = tags.find(BoncleSetSize       );
-        this.species        = tags.find(BoncleSpecies       );
-        
         this.trueElement    = tags.find(BoncleElement       );
         this.possession     = tags.find(BoncleMyPossession  );
         this.generation     = tags.find(BoncleGeneration    );

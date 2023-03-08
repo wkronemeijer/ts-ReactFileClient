@@ -18,7 +18,7 @@ export function BoncleSetSelection_format(self: BoncleSetSelection): string {
     return (
         from(self)
         .ordered()
-        .select(set => `${set.setNumber} ${set.title}`)
+        .select(set => `${set.setNumber} ${set.name}`)
         .toString('\n')
     );
 }

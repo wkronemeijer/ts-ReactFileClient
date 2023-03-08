@@ -1,5 +1,4 @@
 import { StringBuildable, StringBuilder } from "../../../(System)/Text/StringBuilder";
-import { requires } from "../../../(System)/Assert";
 
 import { BoncleTag } from "./Definitions/Tag";
 import { BoncleTagRuleArrow } from "./TagRuleArrow";

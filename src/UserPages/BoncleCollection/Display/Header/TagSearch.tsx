@@ -52,7 +52,7 @@ export const BoncleTagSearch = memo(function tagSearch(props: {
             <BoncleTagLabel 
                 key={suggestion}
                 tag={suggestion} 
-                prefix={prefix?.length ?? 0}
+                prefix={prefix?.length}
             />)}
         </div>
         <button className="Clear" onClick={Clear_onClick}>

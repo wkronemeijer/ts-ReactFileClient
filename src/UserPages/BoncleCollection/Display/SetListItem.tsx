@@ -14,10 +14,10 @@ export const BoncleSetListItem = memo(function setListItem(props: {
     readonly setSelection: BoncleSetSelection_Change;
 }): JSX.Element {
     const { set, isSelected, setSelection } = props;
-    const { title } = set;
+    const { title, name } = set;
     
     const Preview_onClick = useCallback(() => 
-        setSelection(selection => selection.toggle(set))
+        setSelection(selection => selection.add(set))
     , [set, setSelection]);
     
     return <div 
@@ -32,12 +32,12 @@ export const BoncleSetListItem = memo(function setListItem(props: {
         <div className="Content">
             <div className="Header Flank">
                 <span className="Title">{title}</span>
-                <span className="SetNumber">
-                    <a 
-                        href={set.bricksetUrl}
-                        target="_blank"
-                    >{set.setNumber}</a>
-                </span>
+                <span className="Name">{name}</span>
+                {/* <span className="SetNumber">
+                    <a href={set.bricksetUrl} target="_blank">
+                        {set.setNumber}
+                    </a>
+                </span> */}
             </div>
             <div className="Preview" onClick={Preview_onClick}>
                 <img
@@ -49,7 +49,11 @@ export const BoncleSetListItem = memo(function setListItem(props: {
                 />
             </div>
             <div className="Footer Flank Widgets">
-                <BoncleSetWidget_Element element={set.trueElement}/>
+                <a href={set.bricksetUrl}>brickset</a>
+                <span>{set.setNumber}</span>
+                <a href={set.bricklinkUrl}>bricklink</a>
+                
+                {/* <BoncleSetWidget_Element element={set.trueElement}/> */}
             </div>
         </div>
     </div>

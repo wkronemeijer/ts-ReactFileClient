@@ -43,7 +43,6 @@ $monospace: "JetBrains Mono", monospace;
         
         display: grid;
         gap: 32px;
-        grid-template-columns: 1fr auto 1fr;
         
         backdrop-filter: blur(10px);
         background-color: rgba(#000000, 0.5);
@@ -271,20 +270,18 @@ $monospace: "JetBrains Mono", monospace;
             display: grid;
             place-content: center;
             grid-template-rows: auto auto;
+            text-align: center;
             
-            & > .Title {
+            & > .Name {
                 font-family: "Trademarker", serif;
                 font-style: italic;
                 font-weight: bold;
                 font-size: 20px;
-                text-align: center;
             }
             
-            & > .SetNumber {
+            & > .Title, & > .SetNumber {
                 font-size: 12px;
-                
                 color: #ccc;
-                text-align: center;
             }
         }
         

@@ -6,8 +6,11 @@ export type  BoncleTagRuleArrow = StringEnum_Member<typeof BoncleTagRuleArrow>;
 export const BoncleTagRuleArrow = StringEnum_create([
     "==",
     "=>",
+    "==>",
     "->",
+    "-->",
     "~>",
+    "~~>",
 ] as const).extend(Self => ({
     getWeight(self: Member<typeof Self>): number {
         abstract();
@@ -19,10 +22,13 @@ export const BoncleTagRuleArrow = StringEnum_create([
 //////////////////
 
 const weightByArrow = {
-    "==":   0,
-    "=>":   1,
-    "->":  10,
-    "~>": 100,
+    "==" :         0,
+    "=>" :        +1,
+    "==>" :      +10,
+    "->" :      +100,
+    "-->":    +1_000,
+    "~>" :   +10_000,
+    "~~>":  +100_000,
 } satisfies Record<BoncleTagRuleArrow, number>;
 
 function getWeight(arrow: BoncleTagRuleArrow): number {

@@ -38,12 +38,12 @@ export function BoncleApp(_props: {}): JSX.Element {
                 value={search}
                 onChange={setSearch}
             />
-            <BoncleCenterpiece />
+            {/* <BoncleCenterpiece />
             <BoncleSelectionStats
                 visible={visible}
                 selection={selection}
                 setSelection={setSelection}
-            />
+            /> */}
         </div>
         <BoncleSetList 
             visible={visible}

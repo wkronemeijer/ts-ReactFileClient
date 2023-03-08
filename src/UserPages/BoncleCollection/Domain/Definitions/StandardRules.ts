@@ -24,16 +24,6 @@ function rule<S extends string>(strings: S): Split<S, typeof delimiter> {
     return result as any;
 }
 
-type RuleArrow = keyof typeof weightByArrow;
-const weightByArrow = {
-    "==" :       0,
-    "->" :      +1,
-    "-->":     +10,
-    "~>" :    +100,
-    "~~>":  +1_000,
-} as const satisfies Record<string, number>;
-
-
 // TODO: You should sort rules by ascending weight
 // That way, you reduce the number of total action.
 
