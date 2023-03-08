@@ -3,14 +3,27 @@
 // But how do you resolve conflicts? And loops?
 // currently solved with default of depth 10+, making it easily overwritten
 
+
+/** `_default ~~> <key with Default set>` */
+const Default           = Symbol("Default");
+const MutuallyExclusive = Symbol("MutuallyExclusive");
+
+/*
+Idea with MutuallyExclusive is that finding a tag, means searching for the "best" tag (same algo as .search) and removing the others.
+*/
+
 export interface BoncleTagTree {
+    [Default]?: true;
+    [MutuallyExclusive]?: "shallow" | "deep";
     [s: string] : BoncleTagTree;
 }
 
 export const BoncleTagTree_Root = {
     _default: {},
     _displayElements: {
+        [MutuallyExclusive]: "shallow",
         _displayNone: { // ➖
+            [Default]: true,
         },
         // Opponent process colors...
         _displayWhite: { // ⚪
@@ -53,6 +66,7 @@ export const BoncleTagTree_Root = {
         },
     },
     _possession: {
+        [MutuallyExclusive]: "deep",
         dontHave: {
             want: {
                 reallyWant: {},
@@ -73,14 +87,18 @@ export const BoncleTagTree_Root = {
     },
     
     _seasonOfRelease: {
+        [MutuallyExclusive]: "shallow",
         // winter provided for symmetry
-        winter: {},
+        winter: {
+            [Default]: true,
+        },
         summer: {
             // "mid 2002" reads well
             mid: {},
         },
     },
     _yearOfRelease: {
+        [MutuallyExclusive]: "shallow",
         "2001": {},
         "2002": {},
         "2003": {},
@@ -97,6 +115,7 @@ export const BoncleTagTree_Root = {
     },
     
     _theme: {
+        [MutuallyExclusive]: "shallow",
         gen1: {},
         gen2: {},
         // Screw hero factory
@@ -109,6 +128,8 @@ export const BoncleTagTree_Root = {
     },
     
     packageDeal: {
+        [MutuallyExclusive]: "shallow",
+        "1-in-1": { [Default]: true, },
         // TODO: Do you really care how big it is?
         "2-in-1": {},
         "3-in-1": {},
@@ -131,6 +152,7 @@ export const BoncleTagTree_Root = {
         light: { av: {} },
     },
     _sized: {
+        [MutuallyExclusive]: "shallow",
         // Use explicit size when combining
         small: {},
         medium: {},

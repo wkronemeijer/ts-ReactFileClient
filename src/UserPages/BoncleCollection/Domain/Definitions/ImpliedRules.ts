@@ -14,7 +14,7 @@ collect(function* recurse(
         const child = BoncleTag.check(key);
         
         if (parent) {
-            yield new BoncleTagRule(child, [parent]);
+            yield new BoncleTagRule(child, "->", [parent]);
         }
         if (childBranch = branch[key]) {
             yield* recurse(child, childBranch);

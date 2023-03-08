@@ -1,7 +1,7 @@
-import { collect } from "../../../../(System)/Collections/Iterable";
 import { from } from "../../../../(System)/Collections/Sequence";
 import { identity } from "../../../../(System)/Function";
 
+import { BoncleTagRuleArrow } from "../TagRuleArrow";
 import { BoncleTagRule } from "../TagRule";
 import { BoncleTag } from "./Tag";
 
@@ -26,25 +26,33 @@ function rule<S extends string>(strings: S): Split<S, typeof delimiter> {
 
 type RuleArrow = keyof typeof weightByArrow;
 const weightByArrow = {
+    "==" :       0,
     "->" :      +1,
     "-->":     +10,
     "~>" :    +100,
     "~~>":  +1_000,
-};
+} as const satisfies Record<string, number>;
+
+
+// TODO: You should sort rules by ascending weight
+// That way, you reduce the number of total action.
 
 ////////////////////
 // Standard rules //
 ////////////////////
 
-type  rootRule = readonly [BoncleTag, RuleArrow, ...readonly BoncleTag[]];
+type rootRule = readonly [
+    BoncleTag, 
+    BoncleTagRuleArrow, 
+    ...readonly BoncleTag[] 
+];
 const rootRules: readonly rootRule[] = [
     // All sets have a year of release which starts the chain...
-    rule("_yearOfRelease -> _default"),
+    rule("_yearOfRelease ~> _default"),
     // which ends with _default, so that...
-    rule("_default ~~> winter medium _displayNone whatever"), 
+    rule("_default == winter medium _displayNone whatever"), 
     // these defaults have depth 13. 
     // Add more __ tags between chain and start if that's not enough.
-    
     
     // Species
     rule("skrall -> black rock male"), // no female skrall sets
@@ -159,8 +167,7 @@ export const BoncleTagStandardRules: readonly BoncleTagRule[] =
     from(rootRules)
     .select(rule => {
         const [antecedent, arrow, ...sequents] = rule;
-        const weight = weightByArrow[arrow];
-        return new BoncleTagRule(antecedent, sequents, weight);
+        return new BoncleTagRule(antecedent, arrow, sequents);
     })
     .toArray()
 ;

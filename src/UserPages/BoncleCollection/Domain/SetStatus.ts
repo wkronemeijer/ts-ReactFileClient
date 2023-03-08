@@ -39,5 +39,10 @@ built
 
 
 
+Replace "want" with:
+    must-have
+    love-to-have
+    like-to-have
+    nice-to-have
 
 */

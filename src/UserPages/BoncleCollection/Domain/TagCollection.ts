@@ -2,9 +2,10 @@ import { StringBuildable, StringBuilder } from "../../../(System)/Text/StringBui
 import { assert } from "../../../(System)/Assert";
 
 import { BoncleWholeYear } from "./Definitions/StandardEnums";
-import { BoncleTagEnum } from "./TagEnum";
 import { BoncleTagRule } from "./TagRule";
 import { BoncleTag } from "./Definitions/Tag";
+import { panic } from "../../../(System)/Errors";
+import { BoncleTagEnum } from "./TagEnum";
 
 interface IterableEntries {
     entries(): IterableIterator<[BoncleTag, number]>;
@@ -25,11 +26,11 @@ extends Iterable<BoncleTag>, IterableEntries, StringBuildable {
      * Searches for members of the given enum in this tag set. 
      * Returns `undefined` if no member is found. 
      * Prefers members with the lesser depth, and prefers the greater ordinal at an equal depth.  */
-    search<E extends BoncleTag>(tenum: Iterable<E>): E | undefined;
+    search<E extends BoncleTag>(tags: Iterable<E>): E | undefined;
     /** 
-     * Same as {@link search}, but defaults to the given enum's default if no member is found. 
+     * Same as {@link search}, but errors if no result is found.
      */
-    find<E extends BoncleTag>(tenum: BoncleTagEnum<E>): E;
+    find<E extends BoncleTag>(tags: BoncleTagEnum<E>): E;
     
     /** 
      * (Specialized) Determines the year of release of this tag set. 
@@ -109,8 +110,8 @@ implements ReadonlyBoncleTagCollection {
         return result;
     }
     
-    find<E extends BoncleTag>(tagEnum: BoncleTagEnum<E>): E {
-        return this.search(tagEnum) ?? tagEnum.default;
+    find<E extends BoncleTag>(enum_: BoncleTagEnum<E>): E {
+        return this.search(enum_) ?? enum_.default;
     }
     
     /** 

@@ -44,7 +44,7 @@ function check<T extends BoncleTagTree>(x: unknown): AllKeys<T> {
 }
 
 const allKeys = collect(function* recurse<T extends BoncleTagTree>(branch: T): Iterable<AllKeys<T>> {
-    let childBranch: BoncleTagTree | undefined;
+    let childBranch;
     for (const key in branch) {
         yield check<T>(key);
         if (childBranch = branch[key]) {

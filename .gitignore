@@ -1,6 +1,6 @@
 node_modules
-dist/*.js
-dist/*.js.map
+dist/bundle.js
+dist/bundle.js.map
 *Cache
 
 *.jpg

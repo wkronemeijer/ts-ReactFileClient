@@ -37,12 +37,13 @@ function parseName(string: string): {
 export class BoncleSet implements ComparableObject {
     // Interesting properties
     readonly bricksetUrl: string;
+    readonly bricklinkUrl: string;
+    
     readonly previewUrl  : string;
     readonly previewAlt  : string;
     readonly previewTitle: string;
     
     // Cached tags method results
-    readonly originalTags: ReadonlyBoncleTagCollection;
     readonly year: number;
     
     readonly species       : BoncleSpecies;
@@ -55,17 +56,17 @@ export class BoncleSet implements ComparableObject {
     readonly opinion       : BoncleMyOpinion;
     
     constructor(
-        public readonly setNumber   : BoncleSetNumber,
-        public readonly title       : string,
-        public readonly tags        : ReadonlyBoncleTagCollection,
+        public readonly setNumber: BoncleSetNumber,
+        public readonly title    : string,
+        public readonly tags     : ReadonlyBoncleTagCollection,
     ) {
         this.bricksetUrl  = `https://brickset.com/sets/${setNumber}`;
+        this.bricklinkUrl = `https://www.bricklink.com/v2/catalog/catalogitem.page?S=${setNumber}`;
+        
         this.previewUrl   = `./ImageCache/${setNumber}.jpg`;
         this.previewAlt   = `A picture of LEGO set number ${setNumber}.`;
         this.previewTitle = tags.toString();
-        
-        this.originalTags = tags.getOriginalCollection();
-        this.year = tags.determineYear();
+        this.year         = tags.determineYear();
         
         // You could do a generic solution...
         // The real pain of making your code better
