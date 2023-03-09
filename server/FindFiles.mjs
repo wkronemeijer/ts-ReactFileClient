@@ -1,4 +1,4 @@
-import { devTerminal, File, Directory } from "@local/system";
+import { File, Directory } from "@local/system";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 
@@ -21,7 +21,7 @@ const newExtension  = ".rfc" // (R)eact(F)ile(C)lient
 const searchPrefixes = ["RegistryTag"];
 
 const searchPattern = `(${searchPrefixes.join('|')})\`(.+?)\``;
-devTerminal.meta(`Searching with /${searchPattern}/.`);
+console.log(`Searching with /${searchPattern}/.`);
 const targetGroup   = 2;
 const searchRegex   = new RegExp(searchPattern);
 
@@ -67,7 +67,7 @@ export function getPageMap() {
         const value = pathByTag[tag];
         
         if (VERBOSE_FIND_FILES) {
-            devTerminal.trace(`    ${key} --> ${value}`);
+            console.log(`    ${key} --> ${value}`);
         }
     }
     

@@ -1,5 +1,4 @@
 import Express, { static as expressStatic } from "express";
-import { devTerminal, StringBuilder } from "@local/system";
 
 import { PublicRoot, SourceRoot } from "./FindFiles.mjs";
 import { ApiRouter } from "./Api.mjs";
@@ -31,21 +30,21 @@ function toSexagesimal(n) {
 
 app.use((req, _res, next) => {
     if (shouldLogRequest(req.path)) {
-        const msg  = new StringBuilder;
+        const msg  = [];
         const time = new Date();
         
-        msg.append("[");
-        msg.append(toSexagesimal(time.getHours()));
-        msg.append(":");
-        msg.append(toSexagesimal(time.getMinutes()));
-        msg.append(":");
-        msg.append(toSexagesimal(time.getSeconds()));
-        msg.append("] ");
-        msg.append(req.method);
-        msg.append(" ");
-        msg.append(req.path);
+        msg.push("[");
+        msg.push(toSexagesimal(time.getHours()));
+        msg.push(":");
+        msg.push(toSexagesimal(time.getMinutes()));
+        msg.push(":");
+        msg.push(toSexagesimal(time.getSeconds()));
+        msg.push("] ");
+        msg.push(req.method);
+        msg.push(" ");
+        msg.push(req.path);
         
-        devTerminal.trace(msg.toString());
+        console.log(msg.join(""));
     }
     next();
 });
