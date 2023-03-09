@@ -3,14 +3,19 @@ import { memo, useCallback } from "react";
 import { joinClasses } from "../../../ReactFileClient/ClassHelper";
 
 import { BoncleSetSelection_Change } from "../Domain/SetSelection";
-import { BoncleSetWidget_Element } from "./SetWidgets/Element";
 import { BoncleSet } from "../Domain/Set";
 import { useDelay } from "../../../ReactFileClient/Hooks/useDelay";
 
-// TODO: What if you cache the resulting JSX?
+const minDelayMs =  100;
+const maxDelayMs = 1000;
+const parts = 20;
+
+const deltaDelay = maxDelayMs - minDelayMs;
 
 function getDelay(set: BoncleSet): number {
-    return (set.id % 10) * 100;
+    return Math.floor(
+        minDelayMs + (set.id % parts) * (deltaDelay / parts)
+    );
 }
 
 export const BoncleSetListItem = memo(function setListItem(props: {

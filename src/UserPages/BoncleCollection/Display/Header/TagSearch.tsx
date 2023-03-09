@@ -46,7 +46,13 @@ export const BoncleTagSearch = memo(function tagSearch(props: {
         isIncomplete && "Incomplete",
     )}>
         <div className="Title">Search sets</div>
-        <input className="Search" type="text" value={value} onChange={Search_onChange}/>
+        <input 
+            className="Search" 
+            type="text" 
+            value={value} 
+            onChange={Search_onChange}
+            size={1}
+        />
         <div className="Suggestions">
             {suggestions.length > 0 && suggestions.map(suggestion => 
             <BoncleTagLabel 

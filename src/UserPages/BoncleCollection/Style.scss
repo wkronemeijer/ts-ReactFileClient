@@ -44,6 +44,7 @@ $monospace: "JetBrains Mono", monospace;
         display: grid;
         gap: 32px;
         
+        -webkit-backdrop-filter: blur(10px);
         backdrop-filter: blur(10px);
         background-color: rgba(#000000, 0.5);
     }
@@ -188,6 +189,8 @@ $monospace: "JetBrains Mono", monospace;
     // Most sized waves have 6 sets in them, making the elements all line up
     // Alternative with explicit grid-column did NOT work :')
     // grid-template-columns: repeat(6, 1fr);
+    // 300px as to have 6 columns under 1920p width
+    // TODO: Find a way to limit columns to 1-6
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     place-items: center;
     padding: 8px;
@@ -293,22 +296,6 @@ $monospace: "JetBrains Mono", monospace;
         }
     }
 }
-
-// .BonclePreview {
-//     background-position: center center;
-//     background-size: cover;
-//     min-width: 0;
-//     min-height: 0;
-//     & > .Media {
-//         display: block;
-//         // ^ once again, inline screwing around
-//         width: 100%;
-//         height: 100%;
-//         object-fit: contain;
-//         -webkit-backdrop-filter: contrast(75%) blur((14px / 2));
-//         backdrop-filter: contrast(75%) blur((14px / 2));
-//     }
-// }
 
 //////////////////////
 // Assorted widgets //
