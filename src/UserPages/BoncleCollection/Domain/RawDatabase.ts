@@ -184,12 +184,12 @@ export const __boncleTemplateDatabase: BoncleTemplateDatabase = [
 // Metru Nui (in ruins) //
 //////////////////////////
 
-{i:"4868-1",n:"Rahaga [Gaaki]  ",t:tags("2005 ga  rahaga                                                                        ")},
-{i:"4869-1",n:"Rahaga [Pouks]  ",t:tags("2005 po  rahaga                                                                        ")},
-{i:"4870-1",n:"Rahaga [Kualus] ",t:tags("2005 ko  rahaga                                                                        ")},
-{i:"4877-1",n:"Rahaga [Norik]  ",t:tags("2005 ta  rahaga                                                                        ")},
-{i:"4878-1",n:"Rahaga [Bomonga]",t:tags("2005 onu rahaga                                                                        ")},
-{i:"4879-1",n:"Rahaga [Iruini] ",t:tags("2005 le  rahaga                                                                        ")},
+{i:"4868-1",n:"Gaaki  ",t:tags("2005 ga  rahaga                                                                        ")},
+{i:"4869-1",n:"Pouks  ",t:tags("2005 po  rahaga                                                                        ")},
+{i:"4870-1",n:"Kualus ",t:tags("2005 ko  rahaga                                                                        ")},
+{i:"4877-1",n:"Norik  ",t:tags("2005 ta  rahaga                                                                        ")},
+{i:"4878-1",n:"Bomonga",t:tags("2005 onu rahaga                                                                        ")},
+{i:"4879-1",n:"Iruini ",t:tags("2005 le  rahaga                                                                        ")},
 
 // EU had visorak first, the hordika
 

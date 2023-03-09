@@ -4,13 +4,13 @@ import { compare } from "../../../(System)/Traits/Comparable/Compare";
 
 import { BoncleDisplayElement, BoncleElement, BoncleMyOpinion, BoncleMyPossession, BoncleSetSize, BoncleSpecies, BoncleGeneration } from "./Definitions/StandardEnums";
 import { BoncleTagCollection, BoncleTagCollectionExpander, ReadonlyBoncleTagCollection } from "./TagCollection";
+import { BoncleSetNumber, BoncleSetNumber_getId } from "./SetNumber";
 import { BoncleSetTemplate } from "./SetTemplate";
-import { BoncleSetNumber } from "./SetNumber";
-import { panic } from "../../../(System)/Errors";
-import { String_unPascalCase } from "../../../(System)/Text/String";
-
 
 export class BoncleSet implements ComparableObject {
+    // TODO: I may have too many fields on this class
+    // OTOH you use all of them regularly, sooooo
+    
     // Interesting properties
     readonly bricksetUrl: string;
     readonly bricklinkUrl: string;
@@ -22,6 +22,7 @@ export class BoncleSet implements ComparableObject {
     // Cached tags method results
     readonly year: number;
     readonly title: string;
+    readonly id: number;
     
     readonly species       : BoncleSpecies;
     readonly setSize       : BoncleSetSize;
@@ -37,6 +38,8 @@ export class BoncleSet implements ComparableObject {
         public readonly name     : string,
         public readonly tags     : ReadonlyBoncleTagCollection,
     ) {
+        this.id = BoncleSetNumber_getId(setNumber);
+        
         this.bricksetUrl  = `https://brickset.com/sets/${setNumber}`;
         this.bricklinkUrl = `https://www.bricklink.com/v2/catalog/catalogitem.page?S=${setNumber}`;
         

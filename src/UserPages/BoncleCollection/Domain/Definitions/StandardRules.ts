@@ -38,7 +38,7 @@ type rootRule = readonly [
 ];
 const rootRules: readonly rootRule[] = [
     // All sets have a year of release which starts the chain...
-    rule("_yearOfRelease ~> _default"),
+    rule("_yearOfRelease ~~> _default"),
     // which ends with _default, so that...
     rule("_default == winter medium _displayNone whatever"), 
     // these defaults have depth 13. 
@@ -113,6 +113,8 @@ const rootRules: readonly rootRule[] = [
     
     // Sizes 
     rule("packageDeal -> large"),
+    
+    rule("titan => large"),
     
     rule("bahrag      -> large female"),
     rule("toa         -> medium"),
