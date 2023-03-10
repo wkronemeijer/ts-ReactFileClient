@@ -1,3 +1,5 @@
+import { identity } from "../(System)/Function";
+import { Falsy } from "../(System)/Types/Truthy";
 
 /** 
  * Joins strings for the `class` attribute. 
@@ -9,11 +11,11 @@
  * )}>...</div>
  */
 export function joinClasses(
-    ...args: (string | false | null | undefined)[]
+    ...args: (string | Falsy)[]
 ): string {
     return (
         args
-        .filter(x => x) // Reminder: Boolean("") == false
+        .filter(identity) // Reminder: Boolean("") == false
         .join(' ')
     );
 }

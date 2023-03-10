@@ -4,6 +4,7 @@ import { compare, compareAny } from "../Traits/Comparable/Compare";
 import { Comparable } from "../Traits/Comparable/Comparable";
 import { Comparer } from "../Traits/Comparable/Comparer";
 import { identity } from "../Function";
+import { Truthy } from "../Types/Truthy";
 
 export interface Selector<T, U> {
     (x: T): U;
@@ -158,6 +159,21 @@ export class Sequence<T> implements Iterable<T> {
         }());
     }
     
+    /** 
+     * Maps a selector, and passes on all truthy values. 
+     */
+    selectWhere<U>(selectorPredicate: Selector<T, U>): Sequence<Truthy<U>> {
+        const self = this;
+        return new Sequence(function*(): Iterable<Truthy<U>> {
+            for (const item of self) {
+                const result = selectorPredicate(item);
+                if (result) {
+                    yield result as Truthy<U>;
+                }
+            }
+        }());
+    }
+    
     /** **Warning** and TODO: only supports primitve equality (i.e. it uses `===`). */
     distinct(): Sequence<T> {
         const self = this;
@@ -171,6 +187,7 @@ export class Sequence<T> implements Iterable<T> {
             }
         }());
     }
+    
     /** @deprecated Use {@link distinct} instead. */
     unique(): Sequence<T> {
         deprecated();
@@ -266,20 +283,20 @@ export class Sequence<T> implements Iterable<T> {
         }());
     }
     
-    takeWhile(filter: Predicate<T>): Sequence<T> {
-        const self = this;
-        return new Sequence(function*(): Iterable<T> {
-            notImplemented();
-            // (Old one was a funny looking filter)
-        }());
-    }
+    // takeWhile(filter: Predicate<T>): Sequence<T> {
+    //     const self = this;
+    //     return new Sequence(function*(): Iterable<T> {
+    //         notImplemented();
+    //         // (Old one was a funny looking filter)
+    //     }());
+    // }
     
-    skipWhile(filter: Predicate<T>): Sequence<T> {
-        const self = this;
-        return new Sequence(function*(): Iterable<T> {
-            notImplemented();
-        }());
-    }
+    // skipWhile(filter: Predicate<T>): Sequence<T> {
+    //     const self = this;
+    //     return new Sequence(function*(): Iterable<T> {
+    //         notImplemented();
+    //     }());
+    // }
     
     /////////////////////////
     // To-other-collection //
@@ -335,8 +352,8 @@ export class Sequence<T> implements Iterable<T> {
         return this.toDictionary(keySelector, identity);
     }
     
-    toString(joiner = ", "): string {
-        return Array.from(this).join(joiner);
+    toString(seperator = ", "): string {
+        return Array.from(this).join(seperator);
     }
     
     // Generic to(Collection) is not possible, because HKTs aren't a thing.

@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import { BoncleTagStandardRules } from "../Domain/Definitions/StandardRules";
+import { BoncleTagCustomRules } from "../Domain/Definitions/CustomRules";
 import { BoncleTagImpliedRules } from "../Domain/Definitions/ImpliedRules";
 import { BoncleDatabase } from "../Domain/Database";
 import { BoncleTag } from "../Domain/Definitions/Tag";
@@ -14,7 +14,7 @@ export const BoncleAppFooter = memo(function appFooter(): JSX.Element {
         <div className="Assorted">
             <div>The database contains {size} sets</div>
             <div>Each tagged with {BoncleTag.values.length} different tags</div>
-            <div>There are {BoncleTagStandardRules.length} manual rules.</div>
+            <div>There are {BoncleTagCustomRules.length} manual rules.</div>
             <div>There are {BoncleTagImpliedRules.length} rules implied by their hierarchical nature.</div>
             <div>
                 [<BoncleTagLabel tag={stats.mostCommonPublicTag.value}/>] is the most common tag, with {stats.mostCommonPublicTag.frequency} occurences.

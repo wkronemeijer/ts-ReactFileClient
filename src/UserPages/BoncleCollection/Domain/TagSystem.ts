@@ -1,18 +1,18 @@
 import { StringBuilder } from "../../../(System)/Text/StringBuilder";
-import { Map_update } from "../../../(System)/Collections/Map";
-import { requires } from "../../../(System)/Assert";
+import { compare } from "../../../(System)/Traits/Comparable/Compare";
 import { Stack } from "../../../(System)/Collections/Stack";
 import { panic } from "../../../(System)/Errors";
-import { from } from "../../../(System)/Collections/Sequence";
 
-import { BoncleTagCollection, BoncleTagCollectionExpander, ReadonlyBoncleTagCollection } from "./TagCollection";
-import { BoncleSetNumber_hasInstance } from "./SetNumber";
-import { BoncleTagStandardRules } from "./Definitions/StandardRules";
+import { BoncleTagCollection, BoncleTagCollection_Expander } from "./TagCollection";
+import { BoncleTagDefaultRules } from "./Definitions/DefaultRules";
 import { BoncleTagImpliedRules } from "./Definitions/ImpliedRules";
-import { BoncleSetTemplate } from "./SetTemplate";
+import { BoncleTagCustomRules } from "./Definitions/CustomRules";
 import { BoncleTagRule } from "./TagRule";
 import { BoncleTag } from "./Definitions/Tag";
-import { BoncleSet } from "./Set";
+import { BoncleTagErasedTags } from "./Definitions/ErasedTags";
+import { BoncleTag_getExclusionGroup } from "./Definitions/ExclusionGroup";
+import { from } from "../../../(System)/Collections/Sequence";
+import { Set_dequeue } from "../../../(System)/Collections/Set";
 
 /*
 The idea:
@@ -50,7 +50,11 @@ export class BoncleTagSystem {
     
     constructor() {
         const tags  = [...BoncleTag];
-        const rules = [...BoncleTagStandardRules, ...BoncleTagImpliedRules];
+        const rules = [
+            ...BoncleTagDefaultRules,
+            ...BoncleTagImpliedRules,
+            ...BoncleTagCustomRules, 
+        ].sort((a, b) => compare(a.weight, b.weight));
         
         const rba = new RuleMap;
         
@@ -75,30 +79,53 @@ export class BoncleTagSystem {
     // implements TagCollectionExpander //
     //////////////////////////////////////
     
+    private eraseTags(result: BoncleTagCollection) {
+        for (const forbiddenTag of BoncleTagErasedTags) {
+            result.remove(forbiddenTag);
+        }
+    }
+    
     /** Gets all rules with the given antecedent. */
     private getRules(antecedent: BoncleTag): Iterable<BoncleTagRule> {
         return this.rulesByAntecendent.get(antecedent) ?? panic();
     }
     
-    /** @bound */
-    expand: BoncleTagCollectionExpander = rootTags => {
-        const result = new BoncleTagCollection(rootTags);
+    private applyRules(result: BoncleTagCollection) {
+        const frontier: Set<BoncleTag> = new Set(result);
         
-        /** 
-         * All tags recently touched. 
-         * (Queue would be nicer, but a stack is faster.) 
-         */
-        const frontier: Stack<BoncleTag> = [...result];
-        
-        let current: BoncleTag | undefined;
-        while (current = frontier.pop()) {
+        let current;
+        while (current = Set_dequeue(frontier)) {
             for (const rule of this.getRules(current)) {
                 for (const touched of result.applyRule(rule)) {
-                    frontier.push(touched);
+                    frontier.add(touched);
                 }
             }
         }
-        
+    }
+    
+    private excludeGroups(result: BoncleTagCollection) {
+        const frontier = new Set(result);
+        let current;
+        while (current = Set_dequeue(frontier)) {
+            const group = BoncleTag_getExclusionGroup(current);
+            if (group) {
+                const tagToKeep = result.search(group) ?? panic();
+                for (const groupTag of group) {
+                    if (groupTag !== tagToKeep) {
+                        result.remove(groupTag);
+                    }
+                    frontier.delete(groupTag);
+                }
+            }
+        }
+    }
+    
+    /** @bound */
+    expand: BoncleTagCollection_Expander = rootTags => {
+        const result = new BoncleTagCollection(rootTags);
+        this.eraseTags(result);
+        this.applyRules(result);
+        this.excludeGroups(result);
         return result;
     }
     

@@ -1,3 +1,4 @@
+import { requires } from "../../../(System)/Assert";
 import { StringBuildable, StringBuilder } from "../../../(System)/Text/StringBuilder";
 
 import { BoncleTag } from "./Definitions/Tag";
@@ -18,6 +19,19 @@ export class BoncleTagRule implements StringBuildable<[padded: boolean]> {
     ) {
         this.weight   = BoncleTagRuleArrow.getWeight(arrow);
         this.sequents = new Set(consequent);
+        
+        for (const seq of this.sequents) {
+            requires(BoncleTag.isOpen(seq), 
+                () => `Sequent '${seq}' should be open.`);
+        }
+    }
+    
+    static defaultRule(tag: BoncleTag): BoncleTagRule {
+        return new BoncleTagRule("__default__", "~~>", [tag]);
+    }
+    
+    static impliedRule(base: BoncleTag, derived: BoncleTag): BoncleTagRule {
+        return new BoncleTagRule(derived, "-->", [base]);
     }
     
     //////////////////////////

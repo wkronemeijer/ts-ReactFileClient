@@ -45,7 +45,7 @@ export const BoncleDatabase = new class implements Iterable<BoncleSet> {
     }
     
     private createStats(btrs: BoncleTagSystem): typeof this.stats {
-        let mostCommonPublicTag: BoncleTag = "_default";
+        let mostCommonPublicTag: BoncleTag = "__default__";
         let mostCommonPublicTagFrequency = 0;
         const singleTags = new Array<BoncleTag>;
         

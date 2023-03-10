@@ -69,3 +69,16 @@ export function Set_isEmpty(set: ReadonlySet<unknown>): boolean {
 export function Set_isNotEmpty(set: ReadonlySet<unknown>): boolean {
     return set.size !== 0;
 }
+
+/** 
+ * Tries to remove one element from the start of the set. 
+ * Returns undefined if the set is empty.
+ */
+export function Set_dequeue<T>(self: Set<T>): T | undefined {
+    const first = self[Symbol.iterator]().next();
+    if (!first.done) {
+        const result = first.value;
+        self.delete(result);
+        return result;
+    }
+}

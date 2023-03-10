@@ -2,8 +2,8 @@ import { ComparableObject } from "../../../(System)/Traits/Comparable/Comparable
 import { Ordering } from "../../../(System)/Traits/Comparable/Ordering";
 import { compare } from "../../../(System)/Traits/Comparable/Compare";
 
-import { BoncleDisplayElement, BoncleElement, BoncleMyOpinion, BoncleMyPossession, BoncleSetSize, BoncleSpecies, BoncleGeneration } from "./Definitions/StandardEnums";
-import { BoncleTagCollection, BoncleTagCollectionExpander, ReadonlyBoncleTagCollection } from "./TagCollection";
+import { BoncleDisplayElement, BoncleSetSize, BoncleSpecies } from "./Definitions/StandardEnums";
+import { BoncleTagCollection, BoncleTagCollection_Expander, ReadonlyBoncleTagCollection } from "./TagCollection";
 import { BoncleSetNumber, BoncleSetNumber_getId } from "./SetNumber";
 import { BoncleSetTemplate } from "./SetTemplate";
 
@@ -27,11 +27,6 @@ export class BoncleSet implements ComparableObject {
     readonly species       : BoncleSpecies;
     readonly setSize       : BoncleSetSize;
     readonly displayElement: BoncleDisplayElement;
-    readonly generation    : BoncleGeneration;
-    
-    readonly trueElement   : BoncleElement;
-    readonly possession    : BoncleMyPossession;
-    readonly opinion       : BoncleMyOpinion;
     
     constructor(
         public readonly setNumber: BoncleSetNumber,
@@ -53,17 +48,14 @@ export class BoncleSet implements ComparableObject {
         
         this.displayElement = tags.find(BoncleDisplayElement);
         this.setSize        = tags.find(BoncleSetSize       );
-        this.trueElement    = tags.find(BoncleElement       );
-        this.possession     = tags.find(BoncleMyPossession  );
-        this.generation     = tags.find(BoncleGeneration    );
-        this.opinion        = tags.find(BoncleMyOpinion     );
     }
     
     /** @bound */
-    static instantiate(template: BoncleSetTemplate, expander: BoncleTagCollectionExpander): BoncleSet {
+    static instantiate(template: BoncleSetTemplate, expander: BoncleTagCollection_Expander): BoncleSet {
         const setNumber   = template.i;
         const name        = template.n;
         const initialTags = BoncleTagCollection.from(template.t);
+        initialTags.addRoot("__default__");
         const tags        = expander(initialTags);
         return new BoncleSet(setNumber, name, tags);
     }

@@ -3,25 +3,61 @@
 // But how do you resolve conflicts? And loops?
 // currently solved with default of depth 10+, making it easily overwritten
 
+/** 
+ * All collections will have this tag included 
+ * (at an absurdly high weight). 
+ * Best paired with {@link Exclusive}. 
+ */
+const Default   = Symbol("Default");
+/** 
+ * Sets can have only one of the direct child tags on them. Useful if certain criteria overlap.
+ */
+const Exclusive = Symbol("Exclusive");
+/**
+ * Whether this tag can be a sequent of a rule. 
+ * Generally used for grouping tags, 
+ * or as the parent of a {@link Default} tag.
+ */
+const Closed    = Symbol("Closed");
+/** 
+ * Whether this tag shows up in the tag search and on the set hover. 
+ */
+const Private   = Symbol("Private");
+/** 
+ * Tag will be erased before expansion. 
+ * Only really useful for making more fluent sentences. 
+ * 
+ * **NB**: This tag is inherited. 
+ */
+const Erased    = Symbol("Erased");
 
-/** `_default ~~> <key with Default set>` */
-const Default           = Symbol("Default");
-const MutuallyExclusive = Symbol("MutuallyExclusive");
+export const BoncleTagTree_Default  : typeof Default   = Default;
+export const BoncleTagTree_Exclusive: typeof Exclusive = Exclusive;
+export const BoncleTagTree_Closed   : typeof Closed    = Closed;
+export const BoncleTagTree_Private  : typeof Private   = Private;
+export const BoncleTagTree_Erased   : typeof Erased    = Erased;
+// ^ Starting to feel like Java, repeating everything 4 times
 
 /*
 Idea with MutuallyExclusive is that finding a tag, means searching for the "best" tag (same algo as .search) and removing the others.
 */
 
 export interface BoncleTagTree {
-    [Default]?: true;
-    [MutuallyExclusive]?: "shallow" | "deep";
+    [Private]  ?: boolean;
+    [Closed]   ?: boolean;
+    
+    [Exclusive]?: true;
+    [Default]  ?: true;
+    [Erased]   ?: true;
     [s: string] : BoncleTagTree;
 }
 
 export const BoncleTagTree_Root = {
-    _default: {},
-    _displayElements: {
-        [MutuallyExclusive]: "shallow",
+    __root__   : {},
+    __default__: {},
+    
+    $displayElements: {
+        [Exclusive]: true,
         _displayNone: { // ➖
             [Default]: true,
         },
@@ -56,7 +92,7 @@ export const BoncleTagTree_Root = {
             gunmetal: {},
         },
     },
-    _opinion: {
+    $opinion: {
         dislike : {
             hate: {},
         },
@@ -65,11 +101,16 @@ export const BoncleTagTree_Root = {
             love: {},
         },
     },
-    _possession: {
-        [MutuallyExclusive]: "deep",
+    $possession: {
+        [Exclusive]: true,
         dontHave: {
+            [Default]: true,
             want: {
                 reallyWant: {},
+                
+                niceToHave: {},
+                likeToHave: {},
+                loveToHave: {},
             },
         },
         maybeHave: {
@@ -86,8 +127,8 @@ export const BoncleTagTree_Root = {
         },
     },
     
-    _seasonOfRelease: {
-        [MutuallyExclusive]: "shallow",
+    $seasonOfRelease: {
+        [Exclusive]: true,
         // winter provided for symmetry
         winter: {
             [Default]: true,
@@ -97,8 +138,8 @@ export const BoncleTagTree_Root = {
             mid: {},
         },
     },
-    _yearOfRelease: {
-        [MutuallyExclusive]: "shallow",
+    $yearOfRelease: {
+        [Exclusive]: true,
         "2001": {},
         "2002": {},
         "2003": {},
@@ -114,21 +155,21 @@ export const BoncleTagTree_Root = {
         // No, GWP does not count
     },
     
-    _theme: {
-        [MutuallyExclusive]: "shallow",
+    $theme: {
+        [Exclusive]: true,
         gen1: {},
         gen2: {},
         // Screw hero factory
         // Seriously, HF sets have 0 response on me.
     },
     
-    _sex: {
+    $sex: {
         male  : {},
         female: {},
     },
     
-    packageDeal: {
-        [MutuallyExclusive]: "shallow",
+    $packageDeal: {
+        [Exclusive]: true,
         "1-in-1": { [Default]: true, },
         // TODO: Do you really care how big it is?
         "2-in-1": {},
@@ -136,8 +177,7 @@ export const BoncleTagTree_Root = {
         "4-in-1": {},
     },
     
-    _elemental: { // in ascending order
-        _noElement: {},
+    elemental: { // in ascending order
         iron: {},
         rock: {}, // for the skrall, 
         earth: { onu: {} },
@@ -151,8 +191,8 @@ export const BoncleTagTree_Root = {
         shadow: {},
         light: { av: {} },
     },
-    _sized: {
-        [MutuallyExclusive]: "shallow",
+    $sized: {
+        [Exclusive]: true,
         // Use explicit size when combining
         small: {},
         medium: {},
@@ -163,7 +203,7 @@ export const BoncleTagTree_Root = {
             huge: {},
         },
     },
-    _location: {
+    $location: {
         aquaMagna: {
             mataNui: {},
             voyaNui: {},
@@ -176,7 +216,7 @@ export const BoncleTagTree_Root = {
         baraMagna: {},
         okoto: {},
     },
-    _species: {
+    $species: {
         unknownSpecies: {
 
         },
@@ -266,7 +306,7 @@ export const BoncleTagTree_Root = {
             skullHunter: {},
         },
     },
-    _namedCharacters: { 
+    namedCharacters: { 
         // Only ones with a capital letter (so far)
         ogToaTeam: {
             Tahu: {},
@@ -305,11 +345,8 @@ export const BoncleTagTree_Root = {
         Ekimu: {},
         Umarak: {},
     },
-    _faction: {
-        goodGuy: {},
-        badGuy: {},
-    },
     // These models are excluded from the set list
+    // should be implied, so $ is inappropriate
     _excluded: {
         combinerModel: {},
         playset: {},
@@ -317,27 +354,22 @@ export const BoncleTagTree_Root = {
             ammo: {},
         },
     },
-    _uncategorized: {
+    $uncategorized: {
         animal: {},
         vehicle: {},
         promotional: {},
     },
-    _special: {
-        selection: {}, // nothing has the selection tag, so inputting it shows just the selection.
-    },
-    _fluent: {
-        "is": {},
-        "of": {},
-        "and": {},
-        "or": {},
-        "&": {},
-        ",": {},
-        ";": {},
-        _pronouns: {
-            "i": {},
-            
-            "it": {},
-            "its": {},
-        }
+    selection: { [Closed]: true },
+    $fluent: {
+        "/"  : { [Erased]: true },
+        "|"  : { [Erased]: true },
+        "&"  : { [Erased]: true },
+        "is" : { [Erased]: true },
+        "of" : { [Erased]: true },
+        "and": { [Erased]: true },
+        "or" : { [Erased]: true },
+        "i"  : { [Erased]: true },
+        "it" : { [Erased]: true },
+        "its": { [Erased]: true },
     },
 } as const satisfies BoncleTagTree;

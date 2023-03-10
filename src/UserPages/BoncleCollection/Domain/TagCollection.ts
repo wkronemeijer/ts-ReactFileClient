@@ -182,6 +182,10 @@ implements ReadonlyBoncleTagCollection {
         return touched;
     }
     
+    remove(tag: BoncleTag): boolean {
+        return this.depthByTag.delete(tag);
+    }
+    
     ////////////////////////////////
     // implements StringBuildable //
     ////////////////////////////////
@@ -202,6 +206,6 @@ implements ReadonlyBoncleTagCollection {
     }
 }
 
-export interface BoncleTagCollectionExpander {
+export interface BoncleTagCollection_Expander {
     (initial: ReadonlyBoncleTagCollection): BoncleTagCollection;
 }

@@ -1,12 +1,13 @@
-import { Dictionary } from "../../../../(System)/Collections/Dictionary";
-import { Member } from "../../../../(System)/Data/Enumeration";
-import { abstract } from "../../../../(System)/Errors";
-import { capitalize } from "../../../../(System)/Text/Casing";
 import { String_unPascalCase } from "../../../../(System)/Text/String";
+import { Dictionary } from "../../../../(System)/Collections/Dictionary";
+import { capitalize } from "../../../../(System)/Text/Casing";
+import { abstract } from "../../../../(System)/Errors";
+import { Member } from "../../../../(System)/Data/Enumeration";
+
 import { BoncleTagEnum_createShallow, BoncleTagEnum_createDeep, BoncleTagEnum_Member } from "../TagEnum";
 import { BoncleTagTree_Root } from "./TagTree";
 
-const _ = BoncleTagTree_Root;
+const $ = BoncleTagTree_Root;
 
 ///////////////////
 // Shallow enums //
@@ -14,48 +15,33 @@ const _ = BoncleTagTree_Root;
 
 // Kind of the feature we are building this whole app for...
 export type  BoncleDisplayElement = BoncleTagEnum_Member<typeof BoncleDisplayElement>;
-export const BoncleDisplayElement = BoncleTagEnum_createShallow(_._displayElements).withDefault("_displayNone");
+export const BoncleDisplayElement = 
+    BoncleTagEnum_createShallow($.$displayElements)
+    .withDefault("_displayNone");
 
 export type  BoncleSetSize = BoncleTagEnum_Member<typeof BoncleSetSize>;
-export const BoncleSetSize = BoncleTagEnum_createShallow(_._sized).withDefault("medium");
-
-// Originally to distinguish BIONICLE from HeroFactory...now I suppose we could give them a different look in the css?
-export type  BoncleGeneration = BoncleTagEnum_Member<typeof BoncleGeneration>;
-export const BoncleGeneration = BoncleTagEnum_createShallow(_._theme).withDefault("gen1");
+export const BoncleSetSize = 
+    BoncleTagEnum_createShallow($.$sized)
+    .withDefault("medium");
 
 export type  BoncleWholeYear = BoncleTagEnum_Member<typeof BoncleWholeYear>;
-export const BoncleWholeYear = BoncleTagEnum_createShallow(_._yearOfRelease).withDefault("2001");
-
-export type  BoncleSex = BoncleTagEnum_Member<typeof BoncleSex>;
-export const BoncleSex = BoncleTagEnum_createShallow(_._sex);
-
-export type  BoncleElement = BoncleTagEnum_Member<typeof BoncleElement>;
-export const BoncleElement = BoncleTagEnum_createShallow(_._elemental).withDefault("_noElement");
-
-////////////////
-// Deep enums //
-////////////////
-
-export type  BoncleMyOpinion = BoncleTagEnum_Member<typeof BoncleMyOpinion>;
-export const BoncleMyOpinion = BoncleTagEnum_createDeep(_._opinion).withDefault("whatever");
-
-export type  BoncleMyPossession = BoncleTagEnum_Member<typeof BoncleMyPossession>;
-export const BoncleMyPossession = BoncleTagEnum_createDeep(_._possession).withDefault("dontHave");
-
-export type  BoncleFluency = BoncleTagEnum_Member<typeof BoncleFluency>;
-export const BoncleFluency = BoncleTagEnum_createDeep(_._fluent);
+export const BoncleWholeYear = 
+    BoncleTagEnum_createShallow($.$yearOfRelease)
+    .withDefault("2001");
 
 /////////////
 // Species //
 /////////////
 
 export type  BoncleSpecies = BoncleTagEnum_Member<typeof BoncleSpecies>;
-export const BoncleSpecies = BoncleTagEnum_createDeep(_._species).withDefault("unknownSpecies").extend(Self => ({
-    getTitle(self: Member<typeof Self>): string {
-        abstract();
-    },
-}));
-
+export const BoncleSpecies = 
+    BoncleTagEnum_createDeep($.$species)
+    .withDefault("unknownSpecies")
+    .extend(Self => ({
+        getTitle(self: Member<typeof Self>): string {
+            abstract();
+        },
+    }));
 
 const exceptionalTitleBySpecies: Dictionary<string> = {
     matoranMata: "Tohunga",
@@ -69,11 +55,11 @@ const exceptionalTitleBySpecies: Dictionary<string> = {
     turagaMata: "Turaga",
     turagaMetru: "Turaga",
     
-    creatureOf: "Creature",
+    creatureOf: "Elemental Creature",
     beastOf: "Beast",
-    protectorOf: "Protector",
-    masterOf: "Master",
-    uniterOf: "Uniter",
+    protectorOf: "Elemental Protector",
+    masterOf: "Master of Elements",
+    uniterOf: "Uniter of Elements",
 } satisfies Partial<Record<BoncleSpecies, string>>;
 
 function getTitle(species: BoncleSpecies): string {

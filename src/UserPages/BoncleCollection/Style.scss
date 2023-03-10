@@ -276,9 +276,9 @@ $monospace: "JetBrains Mono", monospace;
             text-align: center;
             
             & > .Name {
-                font-family: "Trademarker", serif;
-                font-style: italic;
+                font-family: "Trademarker", "Roboto", sans-serif;
                 font-weight: bold;
+                font-style: italic;
                 font-size: 20px;
             }
             

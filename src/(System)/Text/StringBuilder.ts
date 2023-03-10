@@ -1,5 +1,6 @@
-import { ensures } from "../Assert";
 import { Printable } from "../Traits/Printable";
+import { ensures } from "../Assert";
+import { Falsy } from "../Types/Truthy";
 
 const indentSize = 4;
 const newline    = '\n';
@@ -56,12 +57,13 @@ export class StringBuilder implements Printable {
     }
     
     /** Appends the string to the buffer. */
-    append(string: string): void {
+    append(string: string | Falsy): void {
         const isIndented = this.currentLevel > 0;
         if (isIndented && this.primedForIndent) { 
             this.parts.push(this.getIndentation());
             this.primedForIndent = false;
         }
+        string ||= "";
         this.parts.push(string);
         if (isIndented) {
             this.scanForNewlines(string);
@@ -69,7 +71,7 @@ export class StringBuilder implements Printable {
     }
     
     /** Appends optionally a string, and a line terminator to the buffer. */
-    appendLine(string?: string): void {
+    appendLine(string?: string | Falsy): void {
         if (string !== undefined) {
             this.append(string);
         }

@@ -36,8 +36,7 @@ export const BoncleSetListItem = memo(function setListItem(props: {
         <div 
             className={joinClasses(
                 "BoncleSetListItem", 
-                set.displayElement, 
-                set.generation,
+                set.displayElement,
                 isSelected && "Selected",
             )}
             style={{ backgroundImage: `url(${set.previewUrl})` }}

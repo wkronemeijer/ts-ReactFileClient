@@ -1,5 +1,5 @@
-import { from } from "../../../../(System)/Collections/Sequence";
 import { identity } from "../../../../(System)/Function";
+import { from } from "../../../../(System)/Collections/Sequence";
 
 import { BoncleTagRuleArrow } from "../TagRuleArrow";
 import { BoncleTagRule } from "../TagRule";
@@ -37,16 +37,9 @@ type rootRule = readonly [
     ...readonly BoncleTag[] 
 ];
 const rootRules: readonly rootRule[] = [
-    // All sets have a year of release which starts the chain...
-    rule("_yearOfRelease ~~> _default"),
-    // which ends with _default, so that...
-    rule("_default == winter medium _displayNone whatever"), 
-    // these defaults have depth 13. 
-    // Add more __ tags between chain and start if that's not enough.
-    
     // Species
     rule("skrall -> black rock male"), // no female skrall sets
-    rule("makuta -> male shadow badGuy"), // there is 1 female makuta set, out of like 12 
+    rule("makuta -> male shadow"), // there is 1 female makuta set, out of like 12 
     
     rule("matoranOfLight  -> light"),
     rule("matoranOfShadow -> shadow"),
@@ -112,7 +105,8 @@ const rootRules: readonly rootRule[] = [
     rule("shadow -> black"),
     
     // Sizes 
-    rule("packageDeal -> large"),
+    rule("3-in-1 ~> large"),
+    rule("4-in-1 ~> large"),
     
     rule("titan => large"),
     
@@ -124,11 +118,11 @@ const rootRules: readonly rootRule[] = [
     rule("piraka      -> medium"),
     rule("barraki     -> medium"),
     rule("makuta      -> medium"),
-    rule("visorak     -> medium badGuy rahi"),
+    rule("visorak     -> medium rahi"),
+    rule("hydruka     -> small rahi"),
     rule("turaga      -> small"),
     rule("rahaga      -> small"),
     rule("matoran     -> small"),
-    rule("hydruka     -> small"),
     rule("agori       -> small"),
     rule("bohrokVa    -> small"),
     
@@ -141,21 +135,21 @@ const rootRules: readonly rootRule[] = [
     // _faction inference 
     
     //  _theme inference
-    rule("2001 -> gen1 mataNui        "),
-    rule("2002 -> gen1 mataNui        "),
-    rule("2003 -> gen1 mataNui        "),
-    rule("2004 -> gen1 metruNui       "),
-    rule("2005 -> gen1 metruNui       "),
-    rule("2006 -> gen1 voyaNui        "),
-    rule("2007 -> gen1 mahriNui       "),
-    rule("2008 -> gen1 kardaNui       "),
-    rule("2009 -> gen1 baraMagna      "),
-    rule("2010 -> gen1 baraMagna      "),
-    rule("2015 -> gen2 okoto          "),
-    rule("2016 -> gen2 okoto          "),
+    rule("2001 -> gen1 mataNui  "),
+    rule("2002 -> gen1 mataNui  "),
+    rule("2003 -> gen1 mataNui  "),
+    rule("2004 -> gen1 metruNui "),
+    rule("2005 -> gen1 metruNui "),
+    rule("2006 -> gen1 voyaNui  "),
+    rule("2007 -> gen1 mahriNui "),
+    rule("2008 -> gen1 kardaNui "),
+    rule("2009 -> gen1 baraMagna"),
+    rule("2010 -> gen1 baraMagna"),
+    rule("2015 -> gen2 okoto    "),
+    rule("2016 -> gen2 okoto    "),
 ];
 
-export const BoncleTagStandardRules: readonly BoncleTagRule[] = 
+export const BoncleTagCustomRules: readonly BoncleTagRule[] = 
     from(rootRules)
     .select(rule => {
         const [antecedent, arrow, ...sequents] = rule;
