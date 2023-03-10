@@ -79,8 +79,9 @@ const rootRules: readonly rootRule[] = [
     rule("Macku    -> ga"),
     
     rule("Takanuva -> av white"),
+    rule("Teridax  -> kra black makuta"),
     rule("Antroz   -> male red makutaPhantoka"),
-    rule("Gresh    -> male jungle glatorian"),
+    rule("Gresh    -> male glatorian of jungle"),
     
     // Gender rules
     rule("ta  -> male"),
@@ -118,6 +119,7 @@ const rootRules: readonly rootRule[] = [
     rule("piraka      -> medium"),
     rule("barraki     -> medium"),
     rule("makuta      -> medium"),
+    rule("vahki       -> medium"),
     rule("visorak     -> medium rahi"),
     rule("hydruka     -> small rahi"),
     rule("turaga      -> small"),
@@ -126,13 +128,25 @@ const rootRules: readonly rootRule[] = [
     rule("agori       -> small"),
     rule("bohrokVa    -> small"),
     
-    rule("skullHunter -> medium"),
-    rule("masterOf    -> medium"),
-    rule("uniterOf    -> medium"),
-    rule("protectorOf -> small"),
-    rule("creatureOf  -> small"),
+    rule("skullHunter  -> medium"),
+    rule("masterOf     -> medium"),
+    rule("uniterOf     -> medium"),
+    rule("protectorOf  -> small"),
+    rule("creatureOf  --> small"),
     
-    // _faction inference 
+    // Ratings
+    
+    rule(" 0/10 -> "),
+    rule(" 1/10 -> 1+ "),
+    rule(" 2/10 -> 1+ 2+"),
+    rule(" 3/10 -> 1+ 2+ 3+"),
+    rule(" 4/10 -> 1+ 2+ 3+ 4+"),
+    rule(" 5/10 -> 1+ 2+ 3+ 4+ 5+"),
+    rule(" 6/10 -> 1+ 2+ 3+ 4+ 5+ 6+"),
+    rule(" 7/10 -> 1+ 2+ 3+ 4+ 5+ 6+ 7+"),
+    rule(" 8/10 -> 1+ 2+ 3+ 4+ 5+ 6+ 7+ 8+"),
+    rule(" 9/10 -> 1+ 2+ 3+ 4+ 5+ 6+ 7+ 8+ 9+"),
+    rule("10/10 -> 1+ 2+ 3+ 4+ 5+ 6+ 7+ 8+ 9+"),
     
     //  _theme inference
     rule("2001 -> gen1 mataNui  "),

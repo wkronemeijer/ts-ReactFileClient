@@ -48,7 +48,8 @@ const registry_future =
     .then(() => fetch("/api/GetPageMap"))
     .then(response => response.json())
     .then((object: unknown) => {
-        requires(Dictionary_hasInstance(object), `Response was not an object.`);
+        requires(Dictionary_hasInstance(object), 
+            `Response was not an object.`);
         
         const routeByTag = new Map<RegistryTag, string>;
         for (let key in object) {

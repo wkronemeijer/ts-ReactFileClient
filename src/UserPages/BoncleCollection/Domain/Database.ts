@@ -9,6 +9,8 @@ import { BoncleSetNumber } from "./SetNumber";
 import { BoncleTag } from "./Definitions/Tag";
 import { BoncleSet } from "./Set";
 
+const isPublic = BoncleTag.isPublic;
+
 export const BoncleDatabase = new class implements Iterable<BoncleSet> {
     readonly sets: readonly BoncleSet[];
     readonly size: number;
@@ -50,7 +52,7 @@ export const BoncleDatabase = new class implements Iterable<BoncleSet> {
         const singleTags = new Array<BoncleTag>;
         
         for (const [tag, freq] of this.frequencyByTag) {
-            if (BoncleTag.isPublic(tag) && freq > mostCommonPublicTagFrequency) {
+            if (isPublic(tag) && freq > mostCommonPublicTagFrequency) {
                 mostCommonPublicTag = tag;
                 mostCommonPublicTagFrequency = freq;
             }

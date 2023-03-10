@@ -114,7 +114,8 @@ const selectionContext = createContext<BoncleAppContext | undefined>(undefined);
 
 function useBoncleAppContext(): BoncleAppContext {
     const info = useContext(selectionContext);
-    requires(info, `Missing provider.`);
+    requires(info, 
+        `Missing provider.`);
     return info;
 }
 const BoncleSetSelectionContext = selectionContext.Provider;

@@ -70,6 +70,11 @@ export const BoncleTag = StringEnum_create(allKeys(BoncleTagTree_Root))
         abstract();
     },
     
+    
+    isErased(self: Member<typeof Self>): boolean {
+        abstract();
+    },
+    
     /** 
      * Converts a string to the normalized tag form. 
      * Used to check for equality with other normalized tags. 
@@ -92,6 +97,8 @@ export const BoncleTag = StringEnum_create(allKeys(BoncleTagTree_Root))
         abstract();
     }
 }));
+
+export const BoncleTag_Seperator = ' ';
 
 
 ///////////////////////////
@@ -277,6 +284,7 @@ for (const tag of rootObject) {
 
 BoncleTag.isPublic  = tag => getObject(tag).isPublic;
 BoncleTag.isOpen    = tag => getObject(tag).isOpen;
+BoncleTag.isErased  = tag => getObject(tag).isErased;
 
 ///////////////////
 // Normalization //

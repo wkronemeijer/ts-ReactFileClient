@@ -68,7 +68,6 @@ export const BoncleTagTree_Root = {
         },
         _displayRed: { // 🔴
             red   : {},
-            orange: {},
             bronze: {},
         },
         _displayBlue: { // 🔵
@@ -83,6 +82,7 @@ export const BoncleTagTree_Root = {
         _displayYellow: { // 🟡
             tan   : {},
             brown : {},
+            orange: {},
             yellow: {},
             gold  : {},
         },
@@ -101,6 +101,35 @@ export const BoncleTagTree_Root = {
             love: {},
         },
     },
+    $rating: {
+        [Exclusive]: true,
+        unrated: { [Default]: true },
+         "0/10": {},
+         "1/10": {},
+         "2/10": {},
+         "3/10": {},
+         "4/10": {},
+         "5/10": {},
+         "6/10": {},
+         "7/10": {},
+         "8/10": {},
+         "9/10": {},
+        "10/10": {},
+    },
+    $ratingRange: {
+        // "0+": {}, // Just use -unrated
+        "1+": {}, 
+        "2+": {},
+        "3+": {},
+        "4+": {},
+        "5+": {},
+        "6+": {},
+        "7+": {},
+        "8+": {},
+        "9+": {},
+        // "10+": {}, // Just use 10/10
+    },
+    
     $possession: {
         [Exclusive]: true,
         dontHave: {
@@ -178,22 +207,33 @@ export const BoncleTagTree_Root = {
     },
     
     elemental: { // in ascending order
-        iron: {},
-        rock: {}, // for the skrall, 
-        earth: { onu: {} },
-        sand: {},
-        stone: { po: {} },
-        ice: { ko: {} },
-        jungle: {},
-        air: { le: {} },
-        water: { ga: {} },
-        fire: { ta: {} },
-        shadow: {},
-        light: { av: {} },
+        rock  : {         },
+        earth : { onu: {} },
+        sand  : {         },
+        stone : { po : {} },
+        ice   : { ko : {} },
+        jungle: {         },
+        air   : { le : {} },
+        water : { ga : {} },
+        fire  : { ta : {} },
+        
+        shadow: { kra: {} },
+        light : { av : {} },
+        
+        _specialElement: {
+            electricity: {},
+            magnetism: {},
+            vacuum: {},
+            plasma: {},
+            gravity: {},
+            sonics: {},
+            iron: {},
+        },
     },
     $sized: {
         [Exclusive]: true,
         // Use explicit size when combining
+        unsized: { [Default]: true },
         small: {},
         medium: {},
         large: {
@@ -336,8 +376,11 @@ export const BoncleTagTree_Root = {
             Kopeke: {},
             Macku: {},
         },
-        Takanuva: {},
-        Teridax: {},
+        Iruini: {},
+        Norik: {},
+        
+        Takanuva: { Takua: {} },
+        Teridax: { Terry: {} },
         Antroz: {},
         Gresh: {},
         
@@ -357,19 +400,20 @@ export const BoncleTagTree_Root = {
     $uncategorized: {
         animal: {},
         vehicle: {},
+        stationary: {},
         promotional: {},
     },
     selection: { [Closed]: true },
     $fluent: {
+        "i"  : { [Erased]: true },
         "/"  : { [Erased]: true },
         "|"  : { [Erased]: true },
         "&"  : { [Erased]: true },
         "is" : { [Erased]: true },
         "of" : { [Erased]: true },
-        "and": { [Erased]: true },
         "or" : { [Erased]: true },
-        "i"  : { [Erased]: true },
         "it" : { [Erased]: true },
+        "and": { [Erased]: true },
         "its": { [Erased]: true },
     },
 } as const satisfies BoncleTagTree;

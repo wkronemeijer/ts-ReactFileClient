@@ -13,6 +13,7 @@ import { BoncleTagErasedTags } from "./Definitions/ErasedTags";
 import { BoncleTag_getExclusionGroup } from "./Definitions/ExclusionGroup";
 import { from } from "../../../(System)/Collections/Sequence";
 import { Set_dequeue } from "../../../(System)/Collections/Set";
+import { ensures } from "../../../(System)/Assert";
 
 /*
 The idea:
@@ -123,9 +124,12 @@ export class BoncleTagSystem {
     /** @bound */
     expand: BoncleTagCollection_Expander = rootTags => {
         const result = new BoncleTagCollection(rootTags);
+        
         this.eraseTags(result);
         this.applyRules(result);
         this.excludeGroups(result);
+        
+        ensures(result.search(BoncleTagErasedTags) === undefined);
         return result;
     }
     

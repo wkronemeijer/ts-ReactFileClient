@@ -130,10 +130,10 @@ function OrdinalMap_fromInitializer<E extends string>(
     const usedOrdinals = new Set<number>;
     
     function addMember(name: E, ordinal: number): void {
-        requires(!usedNames.has(name),       
-            () => `Duplicate name '${name}'.`);
-        requires(!usedOrdinals.has(ordinal), 
-            () => `Duplicate ordinal '${ordinal}'.`);
+        requires(!usedNames.has(name), () => 
+            `Duplicate name '${name}'.`);
+        requires(!usedOrdinals.has(ordinal), () => 
+            `Duplicate ordinal '${ordinal}'.`);
         
         result.set(name, ordinal);
         usedNames.add(name);

@@ -8,7 +8,7 @@ export const BoncleTagImpliedRules =
     .selectWhere(tag => 
         tag.parent &&
         tag.parent.isOpen && 
-        BoncleTagRule.impliedRule(tag.parent!.name, tag.name)
+        BoncleTagRule.implies(tag.name, tag.parent.name)
     )
     .toArray()
 ;

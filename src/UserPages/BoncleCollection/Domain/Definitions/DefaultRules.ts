@@ -7,7 +7,7 @@ export const BoncleTagDefaultRules =
     from(BoncleTag.getRootObject())
     .selectWhere(tag => 
         tag.isDefault && 
-        BoncleTagRule.defaultRule(tag.name)
+        BoncleTagRule.default(tag.name)
     )
     .toArray()
 ;

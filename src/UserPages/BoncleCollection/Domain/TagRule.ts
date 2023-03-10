@@ -1,8 +1,13 @@
-import { requires } from "../../../(System)/Assert";
 import { StringBuildable, StringBuilder } from "../../../(System)/Text/StringBuilder";
+import { requires } from "../../../(System)/Assert";
+import { negate } from "../../../(System)/Function";
+import { from } from "../../../(System)/Collections/Sequence";
 
-import { BoncleTag } from "./Definitions/Tag";
 import { BoncleTagRuleArrow } from "./TagRuleArrow";
+import { BoncleTag } from "./Definitions/Tag";
+
+const tagIsKept   = negate(BoncleTag.isErased);
+const tagIsPublic = BoncleTag.isPublic;
 
 export class BoncleTagRule implements StringBuildable<[padded: boolean]> {
     /** Tags added when the antecedent appears in the tag list. */
@@ -15,22 +20,22 @@ export class BoncleTagRule implements StringBuildable<[padded: boolean]> {
         /** Tag that expands to the consequents. */
         readonly antecedent: BoncleTag,
         readonly arrow: BoncleTagRuleArrow,
-        consequent: Iterable<BoncleTag>,
+        consequents: Iterable<BoncleTag>,
     ) {
         this.weight   = BoncleTagRuleArrow.getWeight(arrow);
-        this.sequents = new Set(consequent);
+        this.sequents = from(consequents).where(tagIsKept).toSet();
         
         for (const seq of this.sequents) {
-            requires(BoncleTag.isOpen(seq), 
-                () => `Sequent '${seq}' should be open.`);
+            requires(BoncleTag.isOpen(seq), () => 
+                `Sequent '${seq}' should be open.`);
         }
     }
     
-    static defaultRule(tag: BoncleTag): BoncleTagRule {
+    static default(tag: BoncleTag): BoncleTagRule {
         return new BoncleTagRule("__default__", "~~>", [tag]);
     }
     
-    static impliedRule(base: BoncleTag, derived: BoncleTag): BoncleTagRule {
+    static implies(derived: BoncleTag, base: BoncleTag): BoncleTagRule {
         return new BoncleTagRule(derived, "-->", [base]);
     }
     
@@ -48,7 +53,7 @@ export class BoncleTagRule implements StringBuildable<[padded: boolean]> {
         result.append(this.weight.toString());
         result.append(")->");
         for (const seq of this.sequents) {
-            if (BoncleTag.isPublic(seq)) {
+            if (tagIsPublic(seq)) {
                 result.append(' ')
                 result.append(seq);
             }

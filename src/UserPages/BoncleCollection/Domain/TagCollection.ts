@@ -1,11 +1,12 @@
 import { StringBuildable, StringBuilder } from "../../../(System)/Text/StringBuilder";
-import { assert } from "../../../(System)/Assert";
+import { assert, requires } from "../../../(System)/Assert";
+import { panic } from "../../../(System)/Errors";
 
+import { BoncleTag, BoncleTag_Seperator } from "./Definitions/Tag";
 import { BoncleWholeYear } from "./Definitions/StandardEnums";
 import { BoncleTagRule } from "./TagRule";
-import { BoncleTag } from "./Definitions/Tag";
-import { panic } from "../../../(System)/Errors";
 import { BoncleTagEnum } from "./TagEnum";
+import { identity } from "../../../(System)/Function";
 
 interface IterableEntries {
     entries(): IterableIterator<[BoncleTag, number]>;
@@ -41,6 +42,9 @@ extends Iterable<BoncleTag>, IterableEntries, StringBuildable {
     toString(): string;
 }
 
+const isPublic = BoncleTag.isPublic;
+const checkTag = BoncleTag.check;
+
 export class BoncleTagCollection 
 implements ReadonlyBoncleTagCollection {
     private readonly depthByTag: Map<BoncleTag, number>;
@@ -55,7 +59,7 @@ implements ReadonlyBoncleTagCollection {
     }
     
     /** Constructs a source set from an iterable. */
-    static from(iterable: Iterable<BoncleTag>): BoncleTagCollection {
+    static rootsFrom(iterable: Iterable<BoncleTag>): BoncleTagCollection {
         assert(!(iterable instanceof BoncleTagCollection), 
             "Create a copy using the constructor.");
         const result = new BoncleTagCollection;
@@ -63,6 +67,26 @@ implements ReadonlyBoncleTagCollection {
             result.addRoot(item);
         }
         return result;
+    }
+    
+    static from(arrayOrInstance: 
+        | readonly BoncleTag[] 
+        | ReadonlyBoncleTagCollection
+    ): BoncleTagCollection {
+        if (arrayOrInstance instanceof BoncleTagCollection) {
+            return new this(arrayOrInstance);
+        } else {
+            return this.rootsFrom(arrayOrInstance);
+        }
+    }
+    
+    static rootsFromString(string: string): BoncleTagCollection {
+        return this.rootsFrom(
+            string
+            .split(BoncleTag_Seperator)
+            .filter(identity)
+            .map(checkTag)
+        );
     }
     
     ////////////////////////////
@@ -134,7 +158,7 @@ implements ReadonlyBoncleTagCollection {
     }
     
     getOriginalCollection(): BoncleTagCollection {
-        return BoncleTagCollection.from(this.getRootTags());
+        return BoncleTagCollection.rootsFrom(this.getRootTags());
     }
     
     /////////////////////////////
@@ -165,6 +189,20 @@ implements ReadonlyBoncleTagCollection {
         return this.add(tag, 0);
     }
     
+    addCollection(other: ReadonlyBoncleTagCollection, extraWeight = 0): void {
+        requires(extraWeight >= 0, () => 
+            `Weight ${extraWeight} should be non-negative.`);
+        for (const [tag, depth] of other.entries()) {
+            this.add(tag, depth + extraWeight);
+        }
+    }
+    
+    addRoots(other: Iterable<BoncleTag>): void {
+        for (const tag of other) {
+            this.addRoot(tag);
+        }
+    }
+    
     /** @returns All tags that were modified. */
     applyRule(rule: BoncleTagRule): Iterable<BoncleTag> {
         const { antecedent, sequents, weight } = rule;
@@ -182,6 +220,21 @@ implements ReadonlyBoncleTagCollection {
         return touched;
     }
     
+    weighDown(tag: BoncleTag, extraWeight: number) {
+        requires(extraWeight >= 0, () => 
+            `Weight ${extraWeight} should be non-negative.`);
+        const currentWeight = this.getDepth(tag) ?? panic(
+            `Unknown tag '${tag}'.`);
+        this.setDepth(tag, currentWeight + extraWeight);
+    }
+    
+    /** Increases the weight of all tags in this collection. */
+    weighDownAll(extraWeight: number): void {
+        for (const tag of this) {
+            this.weighDown(tag, extraWeight);
+        }
+    }
+    
     remove(tag: BoncleTag): boolean {
         return this.depthByTag.delete(tag);
     }
@@ -192,7 +245,7 @@ implements ReadonlyBoncleTagCollection {
     
     buildString(builder: StringBuilder): void {
         for (const [tag, depth] of this.depthByTag.entries()) {
-            if (BoncleTag.isPublic(tag)) {
+            if (isPublic(tag)) {
                 builder.append(tag);
                 builder.append("(");
                 builder.append(depth.toString());

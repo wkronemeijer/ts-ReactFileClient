@@ -1,5 +1,6 @@
-import { BoncleTag } from "./Definitions/Tag";
+import { ReadonlyBoncleTagCollection } from "./TagCollection";
 import { BoncleSetNumber } from "./SetNumber";
+import { BoncleTag } from "./Definitions/Tag";
 
 export interface BoncleSetTemplate {
     /** Set number (id) */
@@ -7,5 +8,8 @@ export interface BoncleSetTemplate {
     /** Name and title, optionally seperated by "|" */
     readonly n: string;
     /** Tags */
-    readonly t: readonly BoncleTag[];
+    readonly t: 
+        | readonly BoncleTag[] 
+        | ReadonlyBoncleTagCollection
+    ;
 }
