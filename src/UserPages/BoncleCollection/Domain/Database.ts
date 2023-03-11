@@ -3,10 +3,10 @@ import { assert } from "../../../(System)/Assert";
 import { panic } from "../../../(System)/Errors";
 import { from } from "../../../(System)/Collections/Sequence";
 
-import { __boncleTemplateDatabase } from "./RawDatabase";
+import { __boncleTemplateDatabase } from "./Definitions/RawDatabase";
 import { BoncleTagSystem } from "./TagSystem";
 import { BoncleSetNumber } from "./SetNumber";
-import { BoncleTag } from "./Definitions/Tag";
+import { BoncleTag } from "./Tag";
 import { BoncleSet } from "./Set";
 
 const isPublic = BoncleTag.isPublic;

@@ -1,6 +1,6 @@
 import { collect } from "../../../(System)/Collections/Iterable";
 
-import { BoncleTag, BoncleTag_parseSet } from "./Definitions/Tag";
+import { BoncleTag, BoncleTag_parseSet } from "./Tag";
 import { BoncleSetTemplate } from "./SetTemplate";
 
 export interface BoncleSetTemplateTree {

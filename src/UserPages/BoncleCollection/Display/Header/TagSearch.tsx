@@ -6,7 +6,7 @@ import { joinClasses } from "../../../../ReactFileClient/ClassHelper";
 
 import { BoncleSetFilter } from "../../Domain/SetFilter";
 import { BoncleTagLabel } from "../Label/Tag";
-import { BoncleTag } from "../../Domain/Definitions/Tag";
+import { BoncleTag } from "../../Domain/Tag";
 
 const publicTags = from(BoncleTag).where(BoncleTag.isPublic).toArray();
 

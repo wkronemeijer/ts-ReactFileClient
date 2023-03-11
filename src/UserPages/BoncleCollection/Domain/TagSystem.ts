@@ -1,19 +1,17 @@
 import { StringBuilder } from "../../../(System)/Text/StringBuilder";
+import { Set_dequeue } from "../../../(System)/Collections/Set";
 import { compare } from "../../../(System)/Traits/Comparable/Compare";
-import { Stack } from "../../../(System)/Collections/Stack";
+import { ensures } from "../../../(System)/Assert";
 import { panic } from "../../../(System)/Errors";
 
 import { BoncleTagCollection, BoncleTagCollection_Expander } from "./TagCollection";
-import { BoncleTagDefaultRules } from "./Definitions/DefaultRules";
-import { BoncleTagImpliedRules } from "./Definitions/ImpliedRules";
+import { BoncleTag_getExclusionGroup } from "./ExclusionGroup";
+import { BoncleTagDefaultRules } from "./DefaultRules";
+import { BoncleTagImpliedRules } from "./ImpliedRules";
 import { BoncleTagCustomRules } from "./Definitions/CustomRules";
-import { BoncleTagRule } from "./TagRule";
-import { BoncleTag } from "./Definitions/Tag";
-import { BoncleTagErasedTags } from "./Definitions/ErasedTags";
-import { BoncleTag_getExclusionGroup } from "./Definitions/ExclusionGroup";
-import { from } from "../../../(System)/Collections/Sequence";
-import { Set_dequeue } from "../../../(System)/Collections/Set";
-import { ensures } from "../../../(System)/Assert";
+import { BoncleTagErasedTags } from "./ErasedTags";
+import { BoncleRule } from "./Rule";
+import { BoncleTag } from "./Tag";
 
 /*
 The idea:
@@ -36,8 +34,8 @@ search prefers arguments with the least depth
 
 */
 
-type  RuleMap = ReadonlyMap<BoncleTag, readonly BoncleTagRule[]>;
-const RuleMap =         Map<BoncleTag,          BoncleTagRule[]>;
+type  RuleMap = ReadonlyMap<BoncleTag, readonly BoncleRule[]>;
+const RuleMap =         Map<BoncleTag,          BoncleRule[]>;
 
 export class BoncleTagSystem {
     readonly stats: {
@@ -87,7 +85,7 @@ export class BoncleTagSystem {
     }
     
     /** Gets all rules with the given antecedent. */
-    private getRules(antecedent: BoncleTag): Iterable<BoncleTagRule> {
+    private getRules(antecedent: BoncleTag): Iterable<BoncleRule> {
         return this.rulesByAntecendent.get(antecedent) ?? panic();
     }
     

@@ -7,7 +7,7 @@ import { BoncleDisplayElement, BoncleSetSize, BoncleSpecies } from "./Definition
 import { BoncleTagCollection, BoncleTagCollection_Expander, ReadonlyBoncleTagCollection } from "./TagCollection";
 import { BoncleSetNumber, BoncleSetNumber_getId } from "./SetNumber";
 import { BoncleSetTemplate } from "./SetTemplate";
-import { BoncleTag } from "./Definitions/Tag";
+import { BoncleTag } from "./Tag";
 
 
 function * inferNameTags(name: string): Iterable<BoncleTag> {

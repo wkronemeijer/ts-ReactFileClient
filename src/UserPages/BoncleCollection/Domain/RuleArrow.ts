@@ -2,8 +2,8 @@ import { StringEnum_create, StringEnum_Member } from "../../../(System)/Data/Str
 import { Member } from "../../../(System)/Data/Enumeration";
 import { abstract } from "../../../(System)/Errors";
 
-export type  BoncleTagRuleArrow = StringEnum_Member<typeof BoncleTagRuleArrow>;
-export const BoncleTagRuleArrow = StringEnum_create([
+export type  BoncleRuleArrow = StringEnum_Member<typeof BoncleRuleArrow>;
+export const BoncleRuleArrow = StringEnum_create([
     "==",
     "=>",
     "==>",
@@ -29,10 +29,10 @@ const weightByArrow = {
     "-->":    +1_000,
     "~>" :   +10_000,
     "~~>":  +100_000,
-} satisfies Record<BoncleTagRuleArrow, number>;
+} satisfies Record<BoncleRuleArrow, number>;
 
-function getWeight(arrow: BoncleTagRuleArrow): number {
+function getWeight(arrow: BoncleRuleArrow): number {
     return weightByArrow[arrow];
 }
 
-BoncleTagRuleArrow.getWeight = getWeight;
+BoncleRuleArrow.getWeight = getWeight;

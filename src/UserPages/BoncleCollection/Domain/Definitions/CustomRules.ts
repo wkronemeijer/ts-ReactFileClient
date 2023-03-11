@@ -1,9 +1,9 @@
 import { identity } from "../../../../(System)/Function";
 import { from } from "../../../../(System)/Collections/Sequence";
 
-import { BoncleTagRuleArrow } from "../TagRuleArrow";
-import { BoncleTagRule } from "../TagRule";
-import { BoncleTag } from "./Tag";
+import { BoncleRuleArrow } from "../RuleArrow";
+import { BoncleRule } from "../Rule";
+import { BoncleTag } from "../Tag";
 
 ////////////////////
 // Boncle rule db //
@@ -33,7 +33,7 @@ function rule<S extends string>(strings: S): Split<S, typeof delimiter> {
 
 type rootRule = readonly [
     BoncleTag, 
-    BoncleTagRuleArrow, 
+    BoncleRuleArrow, 
     ...readonly BoncleTag[] 
 ];
 const rootRules: readonly rootRule[] = [
@@ -163,11 +163,11 @@ const rootRules: readonly rootRule[] = [
     rule("2016 -> gen2 okoto    "),
 ];
 
-export const BoncleTagCustomRules: readonly BoncleTagRule[] = 
+export const BoncleTagCustomRules: readonly BoncleRule[] = 
     from(rootRules)
     .select(rule => {
         const [antecedent, arrow, ...sequents] = rule;
-        return new BoncleTagRule(antecedent, arrow, sequents);
+        return new BoncleRule(antecedent, arrow, sequents);
     })
     .toArray()
 ;

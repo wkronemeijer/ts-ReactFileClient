@@ -1,5 +1,5 @@
-import { from } from "../../../../(System)/Collections/Sequence";
-import { fst, snd } from "../../../../(System)/Function";
+import { from } from "../../../(System)/Collections/Sequence";
+import { fst, snd } from "../../../(System)/Function";
 
 import { BoncleTag } from "./Tag";
 

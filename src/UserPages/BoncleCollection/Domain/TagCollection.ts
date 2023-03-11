@@ -3,9 +3,9 @@ import { assert, requires } from "../../../(System)/Assert";
 import { panic } from "../../../(System)/Errors";
 
 import { BoncleWholeYear } from "./Definitions/StandardEnums";
-import { BoncleTagRule } from "./TagRule";
+import { BoncleRule } from "./Rule";
 import { BoncleTagEnum } from "./TagEnum";
-import { BoncleTag } from "./Definitions/Tag";
+import { BoncleTag } from "./Tag";
 
 interface IterableEntries {
     entries(): IterableIterator<[BoncleTag, number]>;
@@ -182,7 +182,7 @@ implements ReadonlyBoncleTagCollection {
     }
     
     /** @returns All tags that were modified. */
-    applyRule(rule: BoncleTagRule): Iterable<BoncleTag> {
+    applyRule(rule: BoncleRule): Iterable<BoncleTag> {
         const { antecedent, sequents, weight } = rule;
         const touched = new Set<BoncleTag>;
         

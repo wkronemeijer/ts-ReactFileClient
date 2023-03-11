@@ -5,11 +5,11 @@
 // https://biosector01.com/wiki/Template:SetsNav
 // https://hf.biosector01.com/wiki/Template:SetsNav
 
-import { identity } from "../../../(System)/Function";
+import { identity } from "../../../../(System)/Function";
 
-import { BoncleTag, BoncleTag_Seperator } from "./Definitions/Tag";
-import { BoncleSetTemplateTree, BoncleSetTemplateTree_flatten } from "./SetTemplateTree";
-import { BoncleSetTemplate } from "./SetTemplate";
+import { BoncleTag, BoncleTag_Seperator } from "../Tag";
+import { BoncleSetTemplateTree, BoncleSetTemplateTree_flatten } from "../SetTemplateTree";
+import { BoncleSetTemplate } from "../SetTemplate";
 
 type Split<S extends string, D extends string> =
     string extends S                          ? string[]            :

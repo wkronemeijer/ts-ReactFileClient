@@ -2,7 +2,7 @@ import { Array_isEmpty, Array_lastElement } from "../../../(System)/Collections/
 import { identity, negate } from "../../../(System)/Function";
 import { StringBuilder } from "../../../(System)/Text/StringBuilder";
 
-import { BoncleTag } from "./Definitions/Tag";
+import { BoncleTag } from "./Tag";
 import { BoncleSet } from "./Set";
 
 export class BoncleSetFilter {

@@ -1,6 +1,6 @@
-import { from } from "../../../../(System)/Collections/Sequence";
+import { from } from "../../../(System)/Collections/Sequence";
 
-import { BoncleTagRule } from "../TagRule";
+import { BoncleRule } from "./Rule";
 import { BoncleTag } from "./Tag";
 
 export const BoncleTagImpliedRules = 
@@ -8,7 +8,7 @@ export const BoncleTagImpliedRules =
     .selectWhere(tag => 
         tag.parent &&
         tag.parent.isOpen && 
-        BoncleTagRule.implies(tag.name, tag.parent.name)
+        BoncleRule.implies(tag.name, tag.parent.name)
     )
     .toArray()
 ;

@@ -7,7 +7,7 @@ import { joinClasses } from "../../../../ReactFileClient/ClassHelper";
 
 import { BoncleSetSelection, BoncleSetSelection_Change, BoncleSetSelection_Empty, BoncleSetSelection_format } from "../../Domain/SetSelection";
 import { BoncleDisplayElement } from "../../Domain/Definitions/StandardEnums";
-import { BoncleTag } from "../../Domain/Definitions/Tag";
+import { BoncleTag } from "../../Domain/Tag";
 import { BoncleSet } from "../../Domain/Set";
 
 const relevantElements: readonly BoncleTag[] = 
