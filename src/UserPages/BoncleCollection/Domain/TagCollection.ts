@@ -2,11 +2,10 @@ import { StringBuildable, StringBuilder } from "../../../(System)/Text/StringBui
 import { assert, requires } from "../../../(System)/Assert";
 import { panic } from "../../../(System)/Errors";
 
-import { BoncleTag, BoncleTag_Seperator } from "./Definitions/Tag";
 import { BoncleWholeYear } from "./Definitions/StandardEnums";
 import { BoncleTagRule } from "./TagRule";
 import { BoncleTagEnum } from "./TagEnum";
-import { identity } from "../../../(System)/Function";
+import { BoncleTag } from "./Definitions/Tag";
 
 interface IterableEntries {
     entries(): IterableIterator<[BoncleTag, number]>;
@@ -43,7 +42,6 @@ extends Iterable<BoncleTag>, IterableEntries, StringBuildable {
 }
 
 const isPublic = BoncleTag.isPublic;
-const checkTag = BoncleTag.check;
 
 export class BoncleTagCollection 
 implements ReadonlyBoncleTagCollection {
@@ -59,34 +57,14 @@ implements ReadonlyBoncleTagCollection {
     }
     
     /** Constructs a source set from an iterable. */
-    static rootsFrom(iterable: Iterable<BoncleTag>): BoncleTagCollection {
+    static from(iterable: Iterable<BoncleTag>): BoncleTagCollection {
         assert(!(iterable instanceof BoncleTagCollection), 
-            "Create a copy using the constructor.");
+            "Create a copy of a collection using the constructor.");
         const result = new BoncleTagCollection;
         for (const item of iterable) {
             result.addRoot(item);
         }
         return result;
-    }
-    
-    static from(arrayOrInstance: 
-        | readonly BoncleTag[] 
-        | ReadonlyBoncleTagCollection
-    ): BoncleTagCollection {
-        if (arrayOrInstance instanceof BoncleTagCollection) {
-            return new this(arrayOrInstance);
-        } else {
-            return this.rootsFrom(arrayOrInstance);
-        }
-    }
-    
-    static rootsFromString(string: string): BoncleTagCollection {
-        return this.rootsFrom(
-            string
-            .split(BoncleTag_Seperator)
-            .filter(identity)
-            .map(checkTag)
-        );
     }
     
     ////////////////////////////
@@ -158,7 +136,7 @@ implements ReadonlyBoncleTagCollection {
     }
     
     getOriginalCollection(): BoncleTagCollection {
-        return BoncleTagCollection.rootsFrom(this.getRootTags());
+        return BoncleTagCollection.from(this.getRootTags());
     }
     
     /////////////////////////////

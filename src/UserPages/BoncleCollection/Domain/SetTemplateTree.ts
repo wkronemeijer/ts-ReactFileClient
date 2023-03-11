@@ -1,10 +1,7 @@
 import { collect } from "../../../(System)/Collections/Iterable";
 
-import { BoncleTagCollection, ReadonlyBoncleTagCollection } from "./TagCollection";
-import { BoncleTag, BoncleTag_Seperator } from "./Definitions/Tag";
-import { BoncleTagRuleArrow } from "./TagRuleArrow";
+import { BoncleTag, BoncleTag_parseSet } from "./Definitions/Tag";
 import { BoncleSetTemplate } from "./SetTemplate";
-import { identity } from "../../../(System)/Function";
 
 export interface BoncleSetTemplateTree {
     [s: string]: 
@@ -13,40 +10,39 @@ export interface BoncleSetTemplateTree {
     ;
 }
 
-function BoncleSetTemplate_applyContext(
-    template: BoncleSetTemplate, 
-    totalContext: ReadonlyBoncleTagCollection,
-): BoncleSetTemplate {
-    const resultTags   = new BoncleTagCollection(totalContext);
-    const templateTags = template.t;
-    
-    if (templateTags instanceof Array) {
-        resultTags.addRoots(templateTags);
-    } else {
-        resultTags.addCollection(templateTags);
-    }
-    
-    return { ...template, t: resultTags };
+////////////////////////////
+// Context for flattening //
+////////////////////////////
+
+type  Context = readonly BoncleTag[];
+const Context_Default: Context = [];
+
+function Context_update(ctx: Context, string: string): Context {
+    return [...ctx, ...BoncleTag_parseSet(string)];
 }
 
-const contextWeight = BoncleTagRuleArrow.getWeight("==>");
-const delimiter     = BoncleTag_Seperator;
-const checkTag      = BoncleTag.check;
+function Context_apply(
+    template: BoncleSetTemplate, 
+    totalContext: Context,
+): BoncleSetTemplate {
+    return { ...template, t: [...totalContext, ...template.t] };
+}
+
+//////////////////
+// Flatten tree //
+//////////////////
 
 export const BoncleSetTemplateTree_flatten = collect(function* recurse(
     parentBranch: BoncleSetTemplateTree,
-    parentContext: ReadonlyBoncleTagCollection = new BoncleTagCollection,
+    parentContext: Context = Context_Default,
 ): Iterable<BoncleSetTemplate> {
     let childKey, childBranch;
     for (childKey in parentBranch) {
         if (childBranch = parentBranch[childKey]) {
-            const childContext = new BoncleTagCollection(parentContext);
-            childContext.addRoots(childKey.split(delimiter).filter(identity).map(checkTag));
-            childContext.weighDownAll(contextWeight);
-            
+            const childContext = Context_update(parentContext, childKey);
             if (childBranch instanceof Array) {
                 for (const set of childBranch) {
-                    yield BoncleSetTemplate_applyContext(set, childContext);
+                    yield Context_apply(set, childContext);
                 }
             } else {
                 yield* recurse(childBranch, childContext);

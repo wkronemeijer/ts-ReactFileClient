@@ -1,4 +1,3 @@
-import { ReadonlyBoncleTagCollection } from "./TagCollection";
 import { BoncleSetNumber } from "./SetNumber";
 import { BoncleTag } from "./Definitions/Tag";
 
@@ -9,7 +8,6 @@ export interface BoncleSetTemplate {
     readonly n: string;
     /** Tags */
     readonly t: 
-        | readonly BoncleTag[] 
-        | ReadonlyBoncleTagCollection
+        | readonly BoncleTag[]
     ;
 }

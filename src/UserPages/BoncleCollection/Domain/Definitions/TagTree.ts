@@ -264,6 +264,11 @@ export const BoncleTagTree_Root = {
             steltian: {},
         },
         _matoranUniverseSpecies: {
+            rahi: {
+                hydruka: {},
+                visorak: {},
+            },
+            
             matoran: {
                 matoranMata: {},
                 matoranNuva: {},
@@ -302,10 +307,7 @@ export const BoncleTagTree_Root = {
                 toaHagah: {},
             },
             vahki: {},
-            rahi: {
-                hydruka: {},
-                visorak: {},
-            },
+            
             bohrok: {
                 bohrokKal: {},
                 bahrag: {},

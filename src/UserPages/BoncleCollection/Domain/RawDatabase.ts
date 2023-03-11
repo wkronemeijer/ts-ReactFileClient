@@ -36,7 +36,9 @@ function common(tags: BoncleTag[]): string {
     return tags.join(delimiter);
 }
 
-function listOf(...templates: readonly BoncleSetTemplate[]) {
+function listOf(
+    ...templates: readonly BoncleSetTemplate[]
+): readonly BoncleSetTemplate[] {
     return templates;
 }
 

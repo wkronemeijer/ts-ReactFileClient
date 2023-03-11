@@ -1,15 +1,15 @@
 import { StringEnum_create } from "../../../../(System)/Data/StringEnum";
+import { abstract, panic } from "../../../../(System)/Errors";
 import { from, Selector } from "../../../../(System)/Collections/Sequence";
 import { ExpandType } from "../../../../(System)/Types/Magic";
-import { abstract, panic } from "../../../../(System)/Errors";
+import { identity } from "../../../../(System)/Function";
 import { collect } from "../../../../(System)/Collections/Iterable";
+import { implies } from "../../../../(System)/Data/Boolean";
 import { assert } from "../../../../(System)/Assert";
 import { Member } from "../../../../(System)/Data/Enumeration";
 
 import { BoncleTagTree, BoncleTagTree_Closed, BoncleTagTree_Default, BoncleTagTree_Erased, BoncleTagTree_Exclusive, BoncleTagTree_Private, BoncleTagTree_Root } from "./TagTree";
-import { identity } from "../../../../(System)/Function";
 import { StringBuildable, StringBuilder } from "../../../../(System)/Text/StringBuilder";
-import { implies } from "../../../../(System)/Data/Boolean";
 
 type AllKeys_StringKeys<T> = keyof T & string;
 type AllKeys_Spread<T>     = T extends object ? AllKeys<T> : never;
@@ -95,11 +95,10 @@ export const BoncleTag = StringEnum_create(allKeys(BoncleTagTree_Root))
      */
     canonicalize(string: string): string {
         abstract();
-    }
+    },
 }));
 
 export const BoncleTag_Seperator = ' ';
-
 
 ///////////////////////////
 // BoncleTag(Tree)Object //
@@ -123,9 +122,9 @@ function Visibility_infer(
     erased: boolean,
 ): Visibility {
     const isPrivate = branch[BoncleTagTree_Private] ?? (
-        isUnderscored(tag) ||
+        isUnderscored(tag)       ||
         isDoubleUnderscored(tag) || // For clarity
-        isDollared(tag) || 
+        isDollared(tag)          || 
         erased
     );
     return isPrivate ? "private" : "public";
@@ -274,10 +273,6 @@ function getObject(tag: BoncleTag): BoncleTagTreeObject {
 BoncleTag.getObject     = getObject;
 BoncleTag.getRootObject = () => BoncleTagTreeObject.Root;
 
-for (const tag of rootObject) {
-    console.log(tag.toString());
-}
-
 //////////////////////////////////////
 // public | private | open | closed //
 //////////////////////////////////////
@@ -306,13 +301,27 @@ BoncleTag.normalize = normalize;
 
 const tagByNorm = from(BoncleTag).toMapBy(normalize);
 
-function tryCanocalize(string: string): BoncleTag | undefined {
+function BoncleTag_tryCanocalize(string: string): BoncleTag | undefined {
     return tagByNorm.get(normalize(string));
 }
 
-function canonicalize(string: string): string {
-    return tryCanocalize(string) ?? string;
+function BoncleTag_canonicalize(string: string): string {
+    return BoncleTag_tryCanocalize(string) ?? string;
 }
 
-BoncleTag.tryCanonicalize = tryCanocalize;
-BoncleTag.canonicalize    = canonicalize;
+BoncleTag.tryCanonicalize = BoncleTag_tryCanocalize;
+BoncleTag.canonicalize    = BoncleTag_canonicalize;
+
+const checkTag = BoncleTag.check;
+export function BoncleTag_parseSet(string: string): BoncleTag[] {
+    return (
+        string
+        .split(BoncleTag_Seperator)
+        .filter(identity)
+        .map(checkTag)
+    );
+}
+
+for (const tag of rootObject) {
+    console.log(tag.toString());
+}
