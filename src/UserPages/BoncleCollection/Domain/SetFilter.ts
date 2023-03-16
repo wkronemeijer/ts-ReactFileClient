@@ -2,7 +2,7 @@ import { Array_isEmpty, Array_lastElement } from "../../../(System)/Collections/
 import { identity, negate } from "../../../(System)/Function";
 import { StringBuilder } from "../../../(System)/Text/StringBuilder";
 
-import { BoncleTag } from "./Tag";
+import { BoncleTag, BoncleTag_canonicalize } from "./Tag";
 import { BoncleSet } from "./Set";
 
 export class BoncleSetFilter {
@@ -64,7 +64,7 @@ export class BoncleSetFilter {
                 tag    = item;
             }
             
-            tag = BoncleTag.canonicalize(tag);
+            tag = BoncleTag_canonicalize(tag);
             
             all.push(tag);
             if (BoncleTag.hasInstance(tag)) {

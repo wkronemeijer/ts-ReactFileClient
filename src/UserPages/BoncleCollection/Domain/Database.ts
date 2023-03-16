@@ -25,7 +25,7 @@ export const BoncleDatabase = new class implements Iterable<BoncleSet> {
         };
         /** Tags which appear only on 1 set (which makes them not useful). */
         readonly singleTags: readonly BoncleTag[];
-    };
+    } & BoncleTagSystem["stats"];
     
     private createFrequencyMap(sets: readonly BoncleSet[]): ReadonlyMap<BoncleTag, number> {
         const result = new Map<BoncleTag, number>;
@@ -62,13 +62,13 @@ export const BoncleDatabase = new class implements Iterable<BoncleSet> {
             }
         }
         
-        return { 
+        return Object.assign({ 
             mostCommonPublicTag: {
                 value: mostCommonPublicTag, 
                 frequency: mostCommonPublicTagFrequency,
             },
             singleTags,
-        };
+        }, btrs.stats);
     }
     
     constructor() {

@@ -74,28 +74,6 @@ export const BoncleTag = StringEnum_create(allKeys(BoncleTagTree_Root))
     isErased(self: Member<typeof Self>): boolean {
         abstract();
     },
-    
-    /** 
-     * Converts a string to the normalized tag form. 
-     * Used to check for equality with other normalized tags. 
-     */
-    normalize(string: string): string {
-        abstract();
-    },
-    /** 
-     * Tries to convert a string to the canonical tag form.
-     * Returns undefined if it does not match any normal form. 
-     */
-    tryCanonicalize(string: string): BoncleTag | undefined {
-        abstract();
-    },
-    /** 
-     * Tries to convert a string to the canonical tag form.
-     * Returns the string unchanged if it does not match any normal form. 
-     */
-    canonicalize(string: string): string {
-        abstract();
-    },
 }));
 
 export const BoncleTag_Seperator = ' ';
@@ -277,9 +255,14 @@ BoncleTag.getRootObject = () => BoncleTagTreeObject.Root;
 // public | private | open | closed //
 //////////////////////////////////////
 
-BoncleTag.isPublic  = tag => getObject(tag).isPublic;
-BoncleTag.isOpen    = tag => getObject(tag).isOpen;
-BoncleTag.isErased  = tag => getObject(tag).isErased;
+function createShortcut<K extends keyof BoncleTagTreeObject>(property: K): 
+(tag: BoncleTag) => BoncleTagTreeObject[K] {
+    return tag => getObject(tag)[property];
+}
+
+BoncleTag.isPublic  = createShortcut("isPublic");
+BoncleTag.isOpen    = createShortcut("isOpen");
+BoncleTag.isErased  = createShortcut("isErased");
 
 ///////////////////
 // Normalization //
@@ -288,29 +271,35 @@ BoncleTag.isErased  = tag => getObject(tag).isErased;
 const filler = /[ \-_]/g;
 // Note that no canonical tag contains a space
 
-function normalize(string: string): string {
+/** 
+ * Converts a string to the normalized tag form. 
+ * Used to check for equality with other normalized tags. 
+ */
+export function BoncleTag_normalize(string: string): string {
     return string.toLowerCase().replaceAll(filler, "");
 }
-
-// Unorthodox...but I think it works just fine.
-BoncleTag.normalize = normalize;
 
 //////////////////////
 // Canonicalization //
 //////////////////////
 
-const tagByNorm = from(BoncleTag).toMapBy(normalize);
+const tagByNorm = from(BoncleTag).toMapBy(BoncleTag_normalize);
 
-function BoncleTag_tryCanocalize(string: string): BoncleTag | undefined {
-    return tagByNorm.get(normalize(string));
+/** 
+ * Tries to convert a string to the canonical tag form.
+ * Returns undefined if it does not match any normal form. 
+ */
+export function BoncleTag_tryCanonicalize(string: string): BoncleTag | undefined {
+    return tagByNorm.get(BoncleTag_normalize(string));
 }
 
-function BoncleTag_canonicalize(string: string): string {
-    return BoncleTag_tryCanocalize(string) ?? string;
+/** 
+ * Tries to convert a string to the canonical tag form.
+ * Returns the string unchanged if it does not match any normal form. 
+ */
+export function BoncleTag_canonicalize(string: string): string {
+    return BoncleTag_tryCanonicalize(string) ?? string;
 }
-
-BoncleTag.tryCanonicalize = BoncleTag_tryCanocalize;
-BoncleTag.canonicalize    = BoncleTag_canonicalize;
 
 const checkTag = BoncleTag.check;
 export function BoncleTag_parseSet(string: string): BoncleTag[] {
@@ -320,8 +309,4 @@ export function BoncleTag_parseSet(string: string): BoncleTag[] {
         .filter(identity)
         .map(checkTag)
     );
-}
-
-for (const tag of rootObject) {
-    console.log(tag.toString());
 }

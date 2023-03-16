@@ -7,13 +7,12 @@ import { BoncleDisplayElement, BoncleSetSize, BoncleSpecies } from "./Definition
 import { BoncleTagCollection, BoncleTagCollection_Expander, ReadonlyBoncleTagCollection } from "./TagCollection";
 import { BoncleSetNumber, BoncleSetNumber_getId } from "./SetNumber";
 import { BoncleSetTemplate } from "./SetTemplate";
-import { BoncleTag } from "./Tag";
-
+import { BoncleTag, BoncleTag_tryCanonicalize } from "./Tag";
 
 function * inferNameTags(name: string): Iterable<BoncleTag> {
     let tag;
     for (const part of name.split(' ').filter(identity)) {
-        if (tag = BoncleTag.tryCanonicalize(part)) {
+        if (tag = BoncleTag_tryCanonicalize(part)) {
             yield tag;
         }
     }

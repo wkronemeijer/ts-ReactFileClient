@@ -6,7 +6,7 @@ import { joinClasses } from "../../../../ReactFileClient/ClassHelper";
 
 import { BoncleSetFilter } from "../../Domain/SetFilter";
 import { BoncleTagLabel } from "../Label/Tag";
-import { BoncleTag } from "../../Domain/Tag";
+import { BoncleTag, BoncleTag_normalize } from "../../Domain/Tag";
 
 const publicTags = from(BoncleTag).where(BoncleTag.isPublic).toArray();
 
@@ -14,7 +14,11 @@ function getSuggestions(filter: BoncleSetFilter, limit: number): BoncleTag[] {
     const  rightMost = filter.lastTag;
     return rightMost ? (
         from(publicTags)
-        .where(tag => BoncleTag.normalize(tag).startsWith(BoncleTag.normalize(rightMost)))
+        .where(tag => {
+            const normTag       = BoncleTag_normalize(tag);
+            const normRightMost = BoncleTag_normalize(rightMost);
+            return normTag.startsWith(normRightMost);
+        })
         .take(limit)
         .toArray()
     ) : [];
