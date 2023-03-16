@@ -32,7 +32,7 @@ export const BoncleTagSearch = memo(function tagSearch(props: {
     
     const filter       = BoncleSetFilter.fromString(value);
     const isIncomplete = !filter.isComplete;
-    const prefix       = filter.lastTag;
+    const lastTag      = filter.lastTag;
     const suggestions  = getSuggestions(filter, 20);
     
     const Search_onChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
@@ -44,12 +44,11 @@ export const BoncleTagSearch = memo(function tagSearch(props: {
     const Search_onKeyDown = useCallback((event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Tab") {
             event.preventDefault(); // Sometimes blocking Tab is annoying
-            if (prefix && autocompleteTag) {
-                console.log(`Attempt autocomplete '${autocompleteTag}'.`);
-                onChange(value.replace(prefix, autocompleteTag));
+            if (lastTag && autocompleteTag) {
+                onChange(value.replace(lastTag, autocompleteTag));
             }
         }
-    }, [onChange, value, prefix, autocompleteTag]);
+    }, [onChange, value, lastTag, autocompleteTag]);
     
     const Clear_onClick = useCallback(() => {
         onChange("");
@@ -73,7 +72,7 @@ export const BoncleTagSearch = memo(function tagSearch(props: {
             <BoncleTagLabel 
                 key={suggestion}
                 tag={suggestion} 
-                prefix={prefix?.length}
+                prefix={lastTag?.length}
             />)}
         </div>
         <button className="Clear" onClick={Clear_onClick}>
