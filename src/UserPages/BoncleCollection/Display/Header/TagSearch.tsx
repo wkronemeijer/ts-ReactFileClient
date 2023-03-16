@@ -1,12 +1,12 @@
-import { ChangeEvent, ChangeEventHandler, Dispatch, KeyboardEventHandler, memo, useCallback, useState } from "react";
+import { ChangeEvent, Dispatch, KeyboardEvent, memo, SetStateAction, useCallback } from "react";
 
 import { from } from "../../../../(System)/Collections/Sequence";
 
 import { joinClasses } from "../../../../ReactFileClient/ClassHelper";
 
+import { BoncleTag, BoncleTag_normalize } from "../../Domain/Tag";
 import { BoncleSetFilter } from "../../Domain/SetFilter";
 import { BoncleTagLabel } from "../Label/Tag";
-import { BoncleTag, BoncleTag_normalize } from "../../Domain/Tag";
 
 const publicTags = from(BoncleTag).where(BoncleTag.isPublic).toArray();
 
@@ -35,11 +35,21 @@ export const BoncleTagSearch = memo(function tagSearch(props: {
     const prefix       = filter.lastTag;
     const suggestions  = getSuggestions(filter, 20);
     
-    const Search_onChange = useCallback((
-        event: ChangeEvent<HTMLInputElement>,
-    ) => {
+    const Search_onChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         onChange(event.target.value);
     }, [onChange]);
+    
+    const autocompleteTag = suggestions.length === 1 ? suggestions[0] : undefined;
+    
+    const Search_onKeyDown = useCallback((event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === "Tab") {
+            event.preventDefault(); // Sometimes blocking Tab is annoying
+            if (prefix && autocompleteTag) {
+                console.log(`Attempt autocomplete '${autocompleteTag}'.`);
+                onChange(value.replace(prefix, autocompleteTag));
+            }
+        }
+    }, [onChange, value, prefix, autocompleteTag]);
     
     const Clear_onClick = useCallback(() => {
         onChange("");
@@ -55,6 +65,7 @@ export const BoncleTagSearch = memo(function tagSearch(props: {
             type="text" 
             value={value} 
             onChange={Search_onChange}
+            onKeyDown={Search_onKeyDown}
             size={1}
         />
         <div className="Suggestions">
