@@ -1,5 +1,5 @@
 // Parts are taken from the TypeScript handbook
-// DONT change this to es6 shit
+// ignore vsc, DONT change this to use ESM imports
 module.exports = {
     mode: "development",
     

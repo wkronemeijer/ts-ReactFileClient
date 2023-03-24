@@ -1,7 +1,8 @@
 {
-    "name": "uitdrukkingsrekenmachine",
+    "name": "reactfileclient",
+    "private": true,
     "version": "0.1.0",
-    "description": "A simple expresion-based calculator.",
+    "description": "Make react apps with resources in the src.",
     "author": "wkronemeijer",
     "license": "ISC",
     "devDependencies": {
@@ -12,8 +13,6 @@
         "@types/react-router-dom": "*",
         "css-loader": "*",
         "history": "*",
-        "less": "*",
-        "less-loader": "*",
         "sass": "^1.58.0",
         "sass-loader": "^13.2.0",
         "source-map-loader": "*",
@@ -24,7 +23,7 @@
         "webpack-cli": "*"
     },
     "dependencies": {
-        "@types/history": "^5.0.0",
+        "@local/system": "file:../../../../../AppData/Roaming/npm/node_modules/@local/system",
         "express": "*",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
