@@ -3,11 +3,11 @@ import { Ordering } from "../../../(System)/Traits/Comparable/Ordering";
 import { identity } from "../../../(System)/Function";
 import { compare } from "../../../(System)/Traits/Comparable/Compare";
 
-import { BoncleDisplayElement, BoncleSetSize, BoncleSpecies } from "./Definitions/StandardEnums";
 import { BoncleTagCollection, BoncleTagCollection_Expander, ReadonlyBoncleTagCollection } from "./TagCollection";
+import { BoncleDisplayElement, BoncleRating, BoncleSetSize, BoncleSpecies } from "./Definitions/StandardEnums";
 import { BoncleSetNumber, BoncleSetNumber_getId } from "./SetNumber";
-import { BoncleSetTemplate } from "./SetTemplate";
 import { BoncleTag, BoncleTag_tryCanonicalize } from "./Tag";
+import { BoncleSetTemplate } from "./SetTemplate";
 
 function * inferNameTags(name: string): Iterable<BoncleTag> {
     let tag;
@@ -35,6 +35,7 @@ export class BoncleSet implements ComparableObject {
     readonly title: string;
     readonly id: number;
     
+    readonly rating        : BoncleRating;
     readonly species       : BoncleSpecies;
     readonly setSize       : BoncleSetSize;
     readonly displayElement: BoncleDisplayElement;
@@ -58,7 +59,8 @@ export class BoncleSet implements ComparableObject {
         this.title   = BoncleSpecies.getTitle(this.species);
         
         this.displayElement = tags.find(BoncleDisplayElement);
-        this.setSize        = tags.find(BoncleSetSize       );
+        this.setSize        = tags.find(BoncleSetSize);
+        this.rating         = tags.find(BoncleRating);
     }
     
     /** @bound */

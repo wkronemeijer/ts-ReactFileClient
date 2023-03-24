@@ -7,10 +7,15 @@ import { Comparer } from "./Comparer";
 // Compare primitives //
 ////////////////////////
 
+// Essentially then <=> operator
 function nativeCompare(lhs: any, rhs: any): Ordering {
     if      (lhs > rhs) return Ordering_GT;
     else if (lhs < rhs) return Ordering_LT;
     else                return Ordering_EQ;
+}
+
+function numberCompare(lhs: number, rhs: number): Ordering {
+    return Ordering(lhs - rhs);
 }
 
 function constantEqual(lhs: unknown, rhs: unknown): Ordering {
@@ -22,7 +27,7 @@ const compareNull     : Comparer<null>      = constantEqual;
 const compareBoolean  : Comparer<boolean>   = nativeCompare;
 // TODO: NaN really screws up nativeCompare
 // Find a way to sort NaNs last
-const compareNumber   : Comparer<number>    = nativeCompare;
+const compareNumber   : Comparer<number>    = numberCompare;
 const compareBigInt   : Comparer<bigint>    = nativeCompare;
 const compareString   : Comparer<string>    = nativeCompare;
 

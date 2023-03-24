@@ -24,7 +24,7 @@ export const BoncleSetListItem = memo(function setListItem(props: {
     readonly setSelection: BoncleSetSelection_Change;
 }): JSX.Element {
     const { set, isSelected, setSelection } = props;
-    const { title, name } = set;
+    const { title, name, rating } = set;
     
     const ready = useDelay(getDelay(set));
     
@@ -54,6 +54,9 @@ export const BoncleSetListItem = memo(function setListItem(props: {
                         title={set.previewTitle}
                         draggable={false}
                     />
+                    <div className="Rating">
+                        {rating}
+                    </div>
                 </div>
                 <div className="Footer Flank Widgets">
                     <a href={set.bricksetUrl}>brickset</a>

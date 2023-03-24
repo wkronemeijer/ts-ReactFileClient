@@ -29,6 +29,11 @@ export const BoncleWholeYear =
     BoncleTagEnum_createShallow($.$yearOfRelease)
     .withDefault("2001");
 
+export type  BoncleRating = BoncleTagEnum_Member<typeof BoncleRating>;
+export const BoncleRating = 
+    BoncleTagEnum_createShallow($.$rating)
+    .withDefault("5");
+
 /////////////
 // Species //
 /////////////

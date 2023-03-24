@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, KeyboardEvent, memo, SetStateAction, useCallback } from "react";
+import { ChangeEvent, Dispatch, KeyboardEvent, memo, useCallback } from "react";
 
 import { from } from "../../../../(System)/Collections/Sequence";
 
@@ -10,7 +10,10 @@ import { BoncleTagLabel } from "../Label/Tag";
 
 const publicTags = from(BoncleTag).where(BoncleTag.isPublic).toArray();
 
-function getSuggestions(filter: BoncleSetFilter, limit: number): BoncleTag[] {
+function getSuggestions(
+    filter: BoncleSetFilter, 
+    limit: number,
+): BoncleTag[] {
     const  rightMost = filter.lastTag;
     return rightMost ? (
         from(publicTags)

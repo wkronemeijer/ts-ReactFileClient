@@ -254,6 +254,8 @@ $monospace: "JetBrains Mono", monospace;
             min-width: 0;
             min-height: 0;
             
+            position: relative;
+            
             & > .Media {
                 display: block;
                 // ^ once again, inline screwing around
@@ -261,6 +263,27 @@ $monospace: "JetBrains Mono", monospace;
                 height: 100%;
                 
                 object-fit: contain;
+            }
+            
+            & > .Rating {
+                position: absolute;
+                top: 4px;
+                right: 4px;
+                display: grid;
+                padding: 4px;
+                color: black;
+                background: gold;
+                border-radius: 9999px;
+                aspect-ratio: 1/1;
+                place-content: center;
+                height: 32px;
+                box-shadow: 0 0 5px black;
+                
+                &::after {
+                    content: "/10";
+                    font-size: 12px;
+                    color: gray
+                }
             }
         }
         
@@ -312,36 +335,5 @@ $monospace: "JetBrains Mono", monospace;
     
     & > .Main {
         
-    }
-}
-
-.BoncleSetWidget {
-    border-radius: 9999px;
-    
-    background-color: rgba(#000000, 0.5);
-    
-    width : 24px;
-    height: 24px;
-    
-    user-select: none;
-    
-    &.Element {
-        & > img.Media {
-            vertical-align: middle;
-            height: 100%;
-            aspect-ratio: 1/1;
-        }
-    }
-    
-    &.Text {
-        display: grid;
-        place-content: center;
-        
-        // &.dislike  { color: olivedrab ; }
-        &.whatever, &.dontHave { color: gray      ; }
-        
-        // &.dontHave {color: gray;}
-        // &.want     {color: red;}
-        // &.have     {color: lime;}
     }
 }
