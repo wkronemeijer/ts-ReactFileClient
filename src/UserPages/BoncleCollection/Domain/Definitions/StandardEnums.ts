@@ -6,6 +6,7 @@ import { Member } from "../../../../(System)/Data/Enumeration";
 
 import { BoncleTagEnum_createShallow, BoncleTagEnum_createDeep, BoncleTagEnum_Member } from "../TagEnum";
 import { BoncleTagTree_Root } from "./TagTree";
+import { Record_toFunction } from "../../../../(System)/Collections/Record";
 
 const $ = BoncleTagTree_Root;
 
@@ -33,6 +34,25 @@ export type  BoncleRating = BoncleTagEnum_Member<typeof BoncleRating>;
 export const BoncleRating = 
     BoncleTagEnum_createShallow($.$rating)
     .withDefault("5");
+
+const star = "⭐";
+const starsByRating: Record<BoncleRating, string> = {
+    "0" : star.repeat(1),
+    "1" : star.repeat(1),
+    "2" : star.repeat(1),
+    "3" : star.repeat(2),
+    "4" : star.repeat(2),
+    "5" : star.repeat(3),
+    "6" : star.repeat(3),
+    "7" : star.repeat(4),
+    "8" : star.repeat(4),
+    "9" : star.repeat(5),
+    "10": star.repeat(5),
+};
+// Theoretically we can parse the rating and use it as a number
+// But this is more durable if we ever switch to star ratings in the code.
+
+export const BoncleRating_toStars = Record_toFunction(starsByRating);
 
 /////////////
 // Species //

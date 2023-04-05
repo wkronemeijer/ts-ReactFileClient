@@ -5,6 +5,7 @@ import { joinClasses } from "../../../ReactFileClient/ClassHelper";
 import { BoncleSetSelection_Change } from "../Domain/SetSelection";
 import { BoncleSet } from "../Domain/Set";
 import { useDelay } from "../../../ReactFileClient/Hooks/useDelay";
+import { BoncleRating_toStars } from "../Domain/Definitions/StandardEnums";
 
 const minDelayMs =  100;
 const maxDelayMs = 1000;
@@ -55,7 +56,7 @@ export const BoncleSetListItem = memo(function setListItem(props: {
                         draggable={false}
                     />
                     <div className="Rating">
-                        {rating}
+                        {BoncleRating_toStars(rating)}
                     </div>
                 </div>
                 <div className="Footer Flank Widgets">
