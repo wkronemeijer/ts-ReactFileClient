@@ -1,4 +1,3 @@
-﻿// [Update-Pages.ps1] Generated on 02/09/2023 16:40:23.
+// [Update-Pages.ps1] Generated on 04/12/2023 20:34:55.
 import "./UserPages/BoncleCollection/index.page";
-import "./UserPages/WowCharacterSheet/index.page";
 //*/
