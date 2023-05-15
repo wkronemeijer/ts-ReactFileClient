@@ -1,4 +1,4 @@
-import { File, Directory } from "@local/system";
+import { File, Directory } from "@wkronemeijer/system";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 

@@ -23,7 +23,7 @@
         "webpack-cli": "*"
     },
     "dependencies": {
-        "@local/system": "file:../../../../../AppData/Roaming/npm/node_modules/@local/system",
+        "@wkronemeijer/system": "*",
         "express": "*",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
