@@ -55,9 +55,6 @@ export const BoncleSetListItem = memo(function setListItem(props: {
                         title={set.previewTitle}
                         draggable={false}
                     />
-                    <div className="Rating">
-                        {BoncleRating_toStars(rating)}
-                    </div>
                 </div>
                 <div className="Footer Flank Widgets">
                     <a href={set.bricksetUrl}>brickset</a>

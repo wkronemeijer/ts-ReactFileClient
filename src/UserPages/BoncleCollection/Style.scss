@@ -254,8 +254,6 @@ $monospace: "JetBrains Mono", monospace;
             min-width: 0;
             min-height: 0;
             
-            position: relative;
-            
             & > .Media {
                 display: block;
                 // ^ once again, inline screwing around
@@ -263,17 +261,6 @@ $monospace: "JetBrains Mono", monospace;
                 height: 100%;
                 
                 object-fit: contain;
-            }
-            
-            & > .Rating {
-                position: absolute;
-                top: 0;
-                left: 0;
-                margin: 8px;
-                display: grid;
-                padding: 4px;
-                color: black;
-                place-content: center;
             }
         }
         
