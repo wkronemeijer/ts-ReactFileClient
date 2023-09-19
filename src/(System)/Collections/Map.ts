@@ -1,5 +1,5 @@
 import { keyof_t } from "../Types/KeyOf";
-import { primitive_t } from "../Types/Primitive";
+import { value_t } from "../Types/Primitive";
 import { Selector } from "./Sequence";
 
 /** noot noot */
@@ -38,7 +38,7 @@ export function Map_fromPartialDictionary<K extends keyof_t, V>(
 }
 
 /** Converts a tuple into a map, using the provided default value. Useful for toggles for each enum value, for instance. */
-export function Map_associateWith<K extends primitive_t, V>(
+export function Map_associateWith<K extends value_t, V>(
     array: readonly K[], 
     valueSelector: (member: K) => V,
 ): Map<K, V> {
@@ -49,7 +49,7 @@ export function Map_associateWith<K extends primitive_t, V>(
     return result;
 }
 
-export function Map_associateBy<K extends primitive_t, V>(
+export function Map_associateBy<K extends value_t, V>(
     array: readonly V[], 
     keySelector: (member: V) => K,
 ): Map<K, V> {
@@ -61,7 +61,7 @@ export function Map_associateBy<K extends primitive_t, V>(
 }
 
 /** Reverses a map. Restricted to primitive types to remind you that {@link Map}s use the built-in equality operator. */
-export function Map_reverse<A extends primitive_t, B extends primitive_t>(
+export function Map_reverse<A extends value_t, B extends value_t>(
     self: ReadonlyMap<A, B>
 ): Map<B, A> {
     const backwardMap = new Map<B, A>();
@@ -71,7 +71,7 @@ export function Map_reverse<A extends primitive_t, B extends primitive_t>(
     return backwardMap;
 }
 
-export function Map_hasAny<K extends primitive_t>(
+export function Map_hasAny<K extends value_t>(
     self: ReadonlyMap<K, unknown>, 
     value: unknown,
 ): value is K {

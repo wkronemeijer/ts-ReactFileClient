@@ -1,4 +1,4 @@
-import { primitive_t } from "../../Types/Primitive";
+import { value_t } from "../../Types/Primitive";
 
 ///////////////
 // Equatable //
@@ -15,6 +15,6 @@ export interface EquatableObject {
 }
 
 export type Equatable = 
-    | primitive_t 
+    | value_t 
     | EquatableObject
 ;

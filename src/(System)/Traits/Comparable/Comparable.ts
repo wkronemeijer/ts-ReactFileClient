@@ -1,5 +1,5 @@
 import { Ordering } from "./Ordering";
-import { primitive_t } from "../../Types/Primitive";
+import { value_t } from "../../Types/Primitive";
 
 /** Makes an object {@link Comparable}. */
 export interface ComparableObject {
@@ -14,7 +14,7 @@ export interface ComparableObject {
 
 /** All values that are explicitly comparable. Objects can implement {@link ComparableObject}. */
 export type Comparable = 
-    | primitive_t
+    | value_t
     | ComparableObject
     // | Function 
     // Skipped to prevent accidently not applying functions

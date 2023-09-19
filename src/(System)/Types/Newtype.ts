@@ -4,7 +4,7 @@
 // based on https://stackoverflow.com/questions/49451681/typescript-what-is-the-unique-keyword-for
 /** Symbol under which the brand is located. */
 
-import { primitive_t } from "./Primitive";
+import { value_t } from "./Primitive";
 
 
 // export declare const __NewtypeSymbol: unique symbol;
@@ -39,6 +39,6 @@ interface Nominal<S extends string | symbol> {
  * const refreshRate = 60 as Hertz;
  */
 export type Newtype<
-    T extends primitive_t, 
+    T extends value_t, 
     S extends string | symbol,
 > = T & Nominal<S>;
