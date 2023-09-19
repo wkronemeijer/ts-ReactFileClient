@@ -8,3 +8,4 @@ dist/bundle.js.map
 *.png
 *.webp
 *.webm
+*.private.*
