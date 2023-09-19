@@ -511,19 +511,17 @@ const nestedDb: BoncleSetTemplateTree = {
         {i:"70788-1",n:"Kopaka", t:tags("|       |           | have |")},
         {i:"70789-1",n:"Onua"  , t:tags("|       |           | have |")},
     ), 
-    [common(tags("|"))]: listOf(
-        {i:"70790-1",n:"Skull Spiderlord",t:tags("| small rahi |")},
-    ),
 },
 
 [common(tags("mid 2015"))]: {
     [common(tags("skullHunter"))]: listOf(
-        {i:"70791-1",n:"Skull Warrior",t:tags("| have |")},
-        {i:"70792-1",n:"Skull Slicer" ,t:tags("| have |")},
-        {i:"70793-1",n:"Skull Basher" ,t:tags("| have |")},
-        {i:"70794-1",n:"Skull Scorpio",t:tags("| have |")},
+        {i:"70791-1",n:"Skull Warrior",t:tags("| ice    | have |")},
+        {i:"70792-1",n:"Skull Slicer" ,t:tags("| jungle | have |")},
+        {i:"70793-1",n:"Skull Basher" ,t:tags("| earth  | have |")},
+        {i:"70794-1",n:"Skull Scorpio",t:tags("| stone  | have |")},
     ), 
     [common(tags("|"))]: listOf(
+        {i:"70790-1",n:"Skull Spiderlord",t:tags("| small rahi |")},
         {i:"70795-1",n:"Mask Maker vs. Skull Grinder",t:tags(`| 2-in-1 | have | \
             & large skullHunter \
             & Ekimu protectorOf \
