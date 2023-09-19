@@ -1,10 +1,12 @@
 import { StringBuildable, StringBuilder } from "../../../(System)/Text/StringBuilder";
 import { assert, requires } from "../../../(System)/Assert";
 import { panic } from "../../../(System)/Errors";
+import { from } from "../../../(System)/Collections/Sequence";
+import { fst, snd } from "../../../(System)/Function";
 
 import { BoncleWholeYear } from "./Definitions/StandardEnums";
-import { BoncleRule } from "./Rule";
 import { BoncleTagEnum } from "./TagEnum";
+import { BoncleRule } from "./Rule";
 import { BoncleTag } from "./Tag";
 
 interface IterableEntries {
@@ -222,12 +224,27 @@ implements ReadonlyBoncleTagCollection {
     ////////////////////////////////
     
     buildString(builder: StringBuilder): void {
-        for (const [tag, depth] of this.depthByTag.entries()) {
+        // sort on depth, ascending
+        const entries = (
+            from(this.depthByTag.entries())
+            .orderOn(fst)
+            .orderOn(snd)
+            .toArray()
+        );
+        
+        let previousDepth = -1;
+        for (const [tag, depth] of entries) {
             if (isPublic(tag)) {
+                if (depth !== previousDepth) {
+                    builder.appendLine();
+                    builder.append("[");
+                    builder.append(depth.toString());
+                    builder.append("] ");
+                    previousDepth = depth;
+                }
+                
                 builder.append(tag);
-                builder.append("(");
-                builder.append(depth.toString());
-                builder.append(") ");
+                builder.append(" ");
             }
         }
     }
