@@ -210,6 +210,8 @@ export const BoncleTagTree_Root = {
         have: {
             incomplete: {
                 // do you "have" a thing if its incomplete?
+                missingParts: {},
+                brokenParts: {},
                 // maybeHave 
             }, 
             complete: {
