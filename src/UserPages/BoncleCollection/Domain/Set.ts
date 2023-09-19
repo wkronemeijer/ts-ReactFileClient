@@ -4,7 +4,7 @@ import { identity } from "../../../(System)/Function";
 import { compare } from "../../../(System)/Traits/Comparable/Compare";
 
 import { BoncleTagCollection, BoncleTagCollection_Expander, ReadonlyBoncleTagCollection } from "./TagCollection";
-import { BoncleDisplayElement, BoncleRating, BoncleSetSize, BoncleSpecies } from "./Definitions/StandardEnums";
+import { BoncleDisplayElement, BoncleSetSize, BoncleSpecies } from "./Definitions/StandardEnums";
 import { BoncleSetNumber, BoncleSetNumber_getId } from "./SetNumber";
 import { BoncleTag, BoncleTag_tryCanonicalize } from "./Tag";
 import { BoncleSetTemplate } from "./SetTemplate";
@@ -35,7 +35,6 @@ export class BoncleSet implements ComparableObject {
     readonly title: string;
     readonly id: number;
     
-    readonly rating        : BoncleRating;
     readonly species       : BoncleSpecies;
     readonly setSize       : BoncleSetSize;
     readonly displayElement: BoncleDisplayElement;
@@ -60,7 +59,6 @@ export class BoncleSet implements ComparableObject {
         
         this.displayElement = tags.find(BoncleDisplayElement);
         this.setSize        = tags.find(BoncleSetSize);
-        this.rating         = tags.find(BoncleRating);
     }
     
     /** @bound */

@@ -1,11 +1,10 @@
 import { memo, useCallback } from "react";
 
 import { joinClasses } from "../../../ReactFileClient/ClassHelper";
+import { useDelay } from "../../../ReactFileClient/Hooks/useDelay";
 
 import { BoncleSetSelection_Change } from "../Domain/SetSelection";
 import { BoncleSet } from "../Domain/Set";
-import { useDelay } from "../../../ReactFileClient/Hooks/useDelay";
-import { BoncleRating_toStars } from "../Domain/Definitions/StandardEnums";
 
 const minDelayMs =  100;
 const maxDelayMs = 1000;
@@ -25,7 +24,7 @@ export const BoncleSetListItem = memo(function setListItem(props: {
     readonly setSelection: BoncleSetSelection_Change;
 }): JSX.Element {
     const { set, isSelected, setSelection } = props;
-    const { title, name, rating } = set;
+    const { title, name } = set;
     
     const ready = useDelay(getDelay(set));
     
