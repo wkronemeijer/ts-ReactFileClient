@@ -4,8 +4,8 @@ import "./Base.scss";
 import "./Pages.generated";
 
 import { BrowserRouter } from "react-router-dom";
+import { createRoot } from "react-dom/client";
 import { StrictMode } from "react";
-import ReactDOM = require("react-dom/client");
 
 import { panic } from "./(System)/Errors";
 
@@ -13,12 +13,12 @@ import { DynamicPageSwitch } from "./ReactFileClient/PageRegistry/DynamicPageSwi
 import { ErrorBoundary } from "./ReactFileClient/Meta/ErrorBoundary";
 
 const container = document.getElementById("Viewport") ?? panic();
-const root = ReactDOM.createRoot(container);
+const root = createRoot(container);
 root.render(
     <StrictMode>
     <ErrorBoundary>
     <BrowserRouter>
-            <DynamicPageSwitch/>
+        <DynamicPageSwitch/>
     </BrowserRouter>
     </ErrorBoundary>
     </StrictMode>
