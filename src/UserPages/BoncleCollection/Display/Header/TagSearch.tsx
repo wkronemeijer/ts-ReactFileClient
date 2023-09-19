@@ -78,7 +78,7 @@ export const BoncleTagSearch = memo(function tagSearch(props: {
                 prefix={lastTag?.length}
             />)}
         </div>
-        <button className="Clear" onClick={Clear_onClick}>
+        <button className="Clear" onClick={Clear_onClick} disabled={!value}>
             Clear
         </button>
         <div className="Error">

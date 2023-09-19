@@ -111,6 +111,10 @@ $monospace: "JetBrains Mono", monospace;
         display: grid;
         place-content: center;
         padding: 2px;
+        
+        &:not(:disabled) {
+            cursor: pointer;
+        }
     }
     
     // & > input:not(focus) ~ .Suggestions {
