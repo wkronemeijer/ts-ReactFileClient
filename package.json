@@ -23,7 +23,7 @@
         "webpack-cli": "*"
     },
     "dependencies": {
-        "@wkronemeijer/system": "*",
+        "@wkronemeijer/system": "file:../../../Monorepos/TypeScript/ts-System",
         "express": "*",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
