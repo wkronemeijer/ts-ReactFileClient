@@ -1,3 +1,5 @@
+const globImporter = require("node-sass-glob-importer");
+
 // Parts are taken from the TypeScript handbook
 // ignore vsc, DONT change this to use ESM imports
 module.exports = {
@@ -29,16 +31,24 @@ module.exports = {
             // TypeScript
             { test: /\.tsx?$/, loader: "ts-loader" },
             
-            // Less
+            // SCSS
             {
                 test: /\.scss$/,
                 use: [
                     { loader: "style-loader" },
-                    { loader:   "css-loader", options: { sourceMap: true, url: false } },
-                    { loader:  "sass-loader", options: { sourceMap: true } }
-                ]
-            }
-        ]
+                    { loader: "css-loader", options: {
+                        sourceMap: true,
+                        url: false,
+                    } },
+                    { loader: "sass-loader", options: { 
+                        sourceMap: true, 
+                        sassOptions: {
+                            importer: globImporter(),
+                        },
+                    } },
+                ],
+            },
+        ],
     },
     ///////////////
     // UMD Stuff //

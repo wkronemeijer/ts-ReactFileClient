@@ -1,5 +1,3 @@
-import "./Style.scss";
-
 import { RegistryTag } from "../../ReactFileClient/PageRegistry/RegistryTag";
 import { register } from "../../ReactFileClient/PageRegistry/Registry";
 
