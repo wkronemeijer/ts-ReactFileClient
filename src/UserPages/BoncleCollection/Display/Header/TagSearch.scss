@@ -1,0 +1,63 @@
+@use "../Prelude.scss" as *;
+
+.BoncleTagSearch {
+    display: grid;
+    
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas: 
+        "title   error   error  "
+        "search  search  clear  "
+        "suggest suggest suggest"
+    ;
+    gap: 4px;
+    padding: 8px;
+    
+    & > .Title       { grid-area: title; }
+    & > .Search      { grid-area: search; }
+    & > .Clear       { grid-area: clear; }
+    & > .Suggestions { grid-area: suggest; }
+    & > .Error       { grid-area: error; }
+    
+    & > .Title {
+        @include BonclePanelHeader;
+    }
+    
+    & > input.Search {
+        font-family: $monospace;
+        font-size: 14px;
+    }
+    
+    & > button.Clear {
+        display: grid;
+        place-content: center;
+        padding: 2px;
+        
+        &:not(:disabled) {
+            cursor: pointer;
+        }
+    }
+    
+    // & > input:not(focus) ~ .Suggestions {
+    //     color: transparent;
+    // }
+    // idk it is not too bad is it?
+    
+    & > .Suggestions {
+        display: flex;
+        overflow: hidden;
+        padding: 4px;
+        gap: 4px;
+    }
+    
+    & > .Error {
+        
+    }
+    
+    &.Incomplete > .Error {
+        font-weight: bold;
+        padding: 4px;
+        color: white;
+        background-color: red;
+    }
+}

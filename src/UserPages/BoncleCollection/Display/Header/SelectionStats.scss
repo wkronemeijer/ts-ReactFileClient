@@ -1,0 +1,30 @@
+@use "../Prelude.scss" as *;
+
+.BoncleSelectionStats {
+    & > .Title {
+        @include BonclePanelHeader;
+    }
+    
+    & > .DisplayElementComparison {
+        display: flex;
+        padding: 4px;
+        gap: 4px;
+        
+        & > .Label {
+            background-color: var(--display-color     , #000);
+            color           : var(--display-color-dual, #000);
+            
+            border-radius: 9999px;
+            border: 2px solid currentColor;
+            
+            aspect-ratio: 1/1;
+            display: grid;
+            place-content: center;
+            
+            & > .Frequency {
+                font-family: $monospace;
+                padding: 2px;
+            }
+        }
+    }
+}

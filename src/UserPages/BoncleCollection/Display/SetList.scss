@@ -1,0 +1,27 @@
+.BoncleSetList {
+    display: grid;
+    
+    // Most sized waves have 6 sets in them, making the elements all line up
+    // Alternative with explicit grid-column did NOT work :')
+    // grid-template-columns: repeat(6, 1fr);
+    // 300px as to have 6 columns under 1920p width
+    // TODO: Find a way to limit columns to 1-6
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    place-items: center;
+    padding: 8px;
+    gap: 8px;
+    
+    & > .Header {
+        grid-column: 1 / -1;
+        text-align: center;
+        
+        &.Size {
+            font-size: 24px;
+        }
+        
+        &.Year {
+            font-size: 36px;
+            font-weight: bold;
+        }
+    }
+}

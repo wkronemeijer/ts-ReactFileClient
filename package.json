@@ -20,12 +20,12 @@
         "ts-loader": "*",
         "typescript": "*",
         "webpack": "*",
-        "webpack-cli": "*"
+        "webpack-cli": "*",
+        "webpack-import-glob-loader": "^1.6.3"
     },
     "dependencies": {
         "@wkronemeijer/system": "file:../../../Monorepos/TypeScript/ts-System",
         "express": "*",
-        "node-sass-glob-importer": "^3.0.2",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-router-dom": "^6.8.1"

@@ -1,0 +1,21 @@
+.BoncleCenterpiece {
+    display: grid;
+    place-content: center;
+    place-self: center;
+    
+    width: 120px;
+    
+    & > button {
+        display: contents;
+        cursor: pointer;
+        
+        & > img.BigLogo {
+            min-width : 0;
+            min-height: 0;
+            object-fit: contain;
+            
+            width: 100%
+        }
+    }
+    
+}

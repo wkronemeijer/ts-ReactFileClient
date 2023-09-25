@@ -1,0 +1,43 @@
+@use "./src/UserPages/BoncleCollection/Display/Prelude.scss" as *;
+
+main.Boncle-Collection {
+    background-color: #333;
+    color: #eee;
+}
+
+.BoncleApp {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    
+    & > .Header {
+        z-index: 1;
+        position: sticky;
+        top: 0;
+        left: 0;
+        right: 0;
+        
+        display: grid;
+        gap: 32px;
+        
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        background-color: rgba(#000000, 0.5);
+    }
+    
+    & > .Absorb {
+        
+    }
+    
+    & > .Footer {
+        & > .Title {
+            @include BonclePanelHeader;
+        }
+        
+        & > .Assorted {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+        }
+    }
+}

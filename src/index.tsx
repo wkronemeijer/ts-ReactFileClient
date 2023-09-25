@@ -1,5 +1,6 @@
 import "./Reset.scss";
 import "./Base.scss";
+import "./UserPages/**/*.scss";
 
 import "./Pages.generated";
 

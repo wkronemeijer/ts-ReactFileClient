@@ -1,0 +1,85 @@
+.BoncleSetListItem {
+    $radius: 5px;
+    $border: 2px;
+    
+    max-width: 250px;
+    
+    display: grid;
+    
+    aspect-ratio: 3 / 4;
+    border-radius: ($radius + $border);
+    
+    background-position: center center;
+    background-clip: padding-box;
+    background-size: cover;
+    
+    overflow: hidden;
+    
+    border: $border solid transparent;
+    transition: border-color 100ms;
+    
+    &.Selected {
+        border-color: gold;
+    }
+    
+    & > .Content {
+        -webkit-backdrop-filter: contrast(75%) blur(calc(14px / 2));
+        backdrop-filter        : contrast(75%) blur(calc(14px / 2));
+        
+        display: grid;
+        $barSize: 48px;
+        
+        // grid-template-rows: $barSize 1fr $barSize;
+        grid-template-rows: auto 1fr auto;
+        // justify-content: stretch;
+        // align-content: center;
+        
+        min-width: 0;
+        min-height: 0;
+        
+        & > .Preview {
+            min-width: 0;
+            min-height: 0;
+            
+            & > .Media {
+                display: block;
+                // ^ once again, inline screwing around
+                width: 100%;
+                height: 100%;
+                
+                object-fit: contain;
+            }
+        }
+        
+        & > .Flank {
+            background-color: rgba(#000000, 0.5);
+            padding: 4px;
+        }
+        
+        & > .Header {
+            display: grid;
+            place-content: center;
+            grid-template-rows: auto auto;
+            text-align: center;
+            
+            & > .Name {
+                font-family: "Trademarker", "Roboto", sans-serif;
+                font-weight: bold;
+                font-style: italic;
+                font-size: 20px;
+            }
+            
+            & > .Title, & > .SetNumber {
+                font-size: 12px;
+                color: #ccc;
+            }
+        }
+        
+        & > .Footer {
+            display: flex;
+            justify-content: space-evenly;
+            
+            font-size: 12px;
+        }
+    }
+}

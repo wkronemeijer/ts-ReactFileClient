@@ -1,0 +1,25 @@
+$monospace: "JetBrains Mono", monospace;
+
+@mixin BonclePanelHeader {
+    font-size: 18px;
+    font-weight: bold;
+    color: gold;
+    padding: 4px;
+}
+
+@mixin BlackLetterBorder {
+    text-shadow: 
+           1px  1px black
+        ,  1px -1px black
+        , -1px  1px black
+        , -1px -1px black
+    ;
+}
+
+// https://en.wikipedia.org/wiki/Natural_Color_System
+._displayWhite  { --display-color: #FFFFFF; --display-color-dual: black; }
+._displayRed    { --display-color: #C40233; --display-color-dual: white; }
+._displayGreen  { --display-color: #009F6B; --display-color-dual: white; }
+._displayBlue   { --display-color: #0087BD; --display-color-dual: white; }
+._displayYellow { --display-color: #FFD300; --display-color-dual: black; }
+._displayBlack  { --display-color: #111111; --display-color-dual: white; }

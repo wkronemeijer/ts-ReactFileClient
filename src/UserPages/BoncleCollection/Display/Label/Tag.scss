@@ -1,0 +1,15 @@
+@use "../Prelude.scss" as *;
+
+.BoncleTagLabel {
+    font-family: $monospace;
+    font-size: 14px;
+    
+    & > .Prefix {
+        font-weight: bold;
+        // color: gold;
+    }
+    
+    & > .Main {
+        
+    }
+}

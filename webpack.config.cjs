@@ -1,7 +1,3 @@
-const globImporter = require("node-sass-glob-importer");
-
-// Parts are taken from the TypeScript handbook
-// ignore vsc, DONT change this to use ESM imports
 module.exports = {
     mode: "development",
     
@@ -26,40 +22,37 @@ module.exports = {
         // ".json", 
         ".scss",
     ] },
-    module: {
-        rules: [
-            // TypeScript
-            { test: /\.tsx?$/, loader: "ts-loader" },
-            
-            // SCSS
-            {
-                test: /\.scss$/,
-                use: [
-                    { loader: "style-loader" },
-                    { loader: "css-loader", options: {
-                        sourceMap: true,
-                        url: false,
-                    } },
-                    { loader: "sass-loader", options: { 
-                        sourceMap: true, 
-                        sassOptions: {
-                            importer: globImporter(),
-                        },
-                    } },
-                ],
-            },
-        ],
-    },
-    ///////////////
-    // UMD Stuff //
-    ///////////////
-    // Finally removed!
+    module: { rules: [
+        // TypeScript
+        { 
+            test: /\.tsx?$/, 
+            use: [
+                { loader: "ts-loader" },
+                { loader: 'webpack-import-glob-loader' },
+            ],
+        },
+        
+        // SCSS
+        {
+            test: /\.scss$/,
+            use: [
+                { loader: "style-loader" },
+                { loader: "css-loader", options: {
+                    sourceMap: true,
+                    url: false,
+                } },
+                { loader: "sass-loader", options: { 
+                    sourceMap: true, 
+                } },
+            ],
+        },
+    ] },
     
     //////////////////
     // Presentation //
     //////////////////
     
-    // Stop webpack from barfing meaningless characters over my console
+    // webpack, I don't care about the 200+ modules you included
     stats: {
         modules: false,
     },
