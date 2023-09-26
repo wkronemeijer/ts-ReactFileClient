@@ -1,7 +1,7 @@
-import { from } from "../../../(System)/Collections/Sequence";
+import { from } from "../../../../../../(System)/Collections/Sequence";
 
-import { BoncleRule } from "./Rule";
-import { BoncleTag } from "./Tag";
+import { BoncleRule } from "../Rule";
+import { BoncleTag } from "../../Tag";
 
 export const BoncleTagImpliedRules = 
     from(BoncleTag.getRootObject())

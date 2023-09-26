@@ -5,40 +5,9 @@
 // https://biosector01.com/wiki/Template:SetsNav
 // https://hf.biosector01.com/wiki/Template:SetsNav
 
-import { identity } from "../../../../(System)/Function";
 
 import { BoncleSetTemplateTree, BoncleSetTemplateTree_flatten } from "../SetTemplateTree";
-import { BoncleTag, BoncleTag_Seperator } from "../Tag";
-import { BoncleSetTemplate } from "../SetTemplate";
-
-type Split<S extends string, D extends string> =
-    string extends S                          ? string[]            :
-    S      extends ""                         ? []                  :
-    S      extends           `${D}${infer U}` ?        Split<U, D>  :
-    S      extends `${infer T}${D}${infer U}` ? [T, ...Split<U, D>] :
-    [S]
-;
-
-const delimiter = BoncleTag_Seperator;
-
-function tags<S extends string>(strings: S): Split<S, typeof delimiter> {
-    const result: string[] = 
-        strings
-        .split(delimiter)
-        .filter(identity)
-    ;
-    return result as any;
-}
-
-function common(tags: BoncleTag[]): string {
-    return tags.join(delimiter);
-}
-
-function listOf(
-    ...templates: readonly BoncleSetTemplate[]
-): readonly BoncleSetTemplate[] {
-    return templates;
-}
+import { common, tags, listOf } from "../Tagging/TagTools";
 
 const nestedDb: BoncleSetTemplateTree = {
 ////////////////////////////////////////////////////////////////

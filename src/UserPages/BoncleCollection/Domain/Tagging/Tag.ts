@@ -1,15 +1,15 @@
-import { StringEnum_create } from "../../../(System)/Data/StringEnum";
-import { abstract, panic } from "../../../(System)/Errors";
-import { from, Selector } from "../../../(System)/Collections/Sequence";
-import { ExpandType } from "../../../(System)/Types/Magic";
-import { identity } from "../../../(System)/Function";
-import { collect } from "../../../(System)/Collections/Iterable";
-import { implies } from "../../../(System)/Data/Boolean";
-import { assert } from "../../../(System)/Assert";
-import { Member } from "../../../(System)/Data/Enumeration";
+import { StringEnum_create } from "../../../../(System)/Data/StringEnum";
+import { abstract, panic } from "../../../../(System)/Errors";
+import { from, Selector } from "../../../../(System)/Collections/Sequence";
+import { ExpandType } from "../../../../(System)/Types/Magic";
+import { identity } from "../../../../(System)/Function";
+import { collect } from "../../../../(System)/Collections/Iterable";
+import { implies } from "../../../../(System)/Data/Boolean";
+import { assert } from "../../../../(System)/Assert";
+import { Member } from "../../../../(System)/Data/Enumeration";
 
-import { BoncleTagTree, BoncleTagTree_Closed, BoncleTagTree_Default, BoncleTagTree_Erased, BoncleTagTree_Exclusive, BoncleTagTree_Private, BoncleTagTree_Root } from "./Definitions/TagTree";
-import { StringBuildable, StringBuilder } from "../../../(System)/Text/StringBuilder";
+import { BoncleTagTree, BoncleTagTree_Closed, BoncleTagTree_Default, BoncleTagTree_Erased, BoncleTagTree_Exclusive, BoncleTagTree_Private, BoncleTagTree_Root } from "../Definitions/TagTree";
+import { StringBuildable, StringBuilder } from "../../../../(System)/Text/StringBuilder";
 
 type AllKeys_StringKeys<T> = keyof T & string;
 type AllKeys_Spread<T>     = T extends object ? AllKeys<T> : never;

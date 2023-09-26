@@ -1,5 +1,4 @@
-import { from } from "../../../(System)/Collections/Sequence";
-import { fst, snd } from "../../../(System)/Function";
+import { from } from "../../../../(System)/Collections/Sequence";
 
 import { BoncleTag } from "./Tag";
 
@@ -14,7 +13,6 @@ disjoint { b c d }
 i.e. search, and remove other tags
 
 */
-
 
 // Reminder that Set keeps insertion order, and thus priority of tags
 const exclusionGroupByTag = new Map<BoncleTag, ReadonlySet<BoncleTag>>;
@@ -33,6 +31,6 @@ for (const tag of BoncleTag.getRootObject()) {
     }
 }
 
-export function BoncleTag_getExclusionGroup(self: BoncleTag): ReadonlySet<BoncleTag> | undefined{
+export function BoncleTag_getExclusionGroup(self: BoncleTag): ReadonlySet<BoncleTag> | undefined {
     return exclusionGroupByTag.get(self);
 }

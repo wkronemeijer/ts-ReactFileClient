@@ -1,16 +1,16 @@
-import { StringBuilder } from "../../../(System)/Text/StringBuilder";
-import { Set_dequeue } from "../../../(System)/Collections/Set";
-import { compare } from "../../../(System)/Traits/Comparable/Compare";
-import { ensures } from "../../../(System)/Assert";
-import { panic } from "../../../(System)/Errors";
+import { StringBuilder } from "../../../../(System)/Text/StringBuilder";
+import { Set_dequeue } from "../../../../(System)/Collections/Set";
+import { compare } from "../../../../(System)/Traits/Comparable/Compare";
+import { ensures } from "../../../../(System)/Assert";
+import { panic } from "../../../../(System)/Errors";
 
 import { BoncleTagCollection, BoncleTagCollection_Expander } from "./TagCollection";
 import { BoncleTag_getExclusionGroup } from "./ExclusionGroup";
-import { BoncleTagDefaultRules } from "./DefaultRules";
-import { BoncleTagImpliedRules } from "./ImpliedRules";
-import { BoncleTagCustomRules } from "./Definitions/CustomRules";
+import { BoncleTagDefaultRules } from "./Rules/RuleSets/DefaultRules";
+import { BoncleTagImpliedRules } from "./Rules/RuleSets/ImpliedRules";
+import { BoncleTagCustomRules } from "../Definitions/CustomRules";
 import { BoncleTagErasedTags } from "./ErasedTags";
-import { BoncleRule } from "./Rule";
+import { BoncleRule } from "./Rules/Rule";
 import { BoncleTag } from "./Tag";
 
 /*

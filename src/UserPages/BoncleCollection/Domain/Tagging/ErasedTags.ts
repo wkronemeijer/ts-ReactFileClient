@@ -1,4 +1,4 @@
-import { from } from "../../../(System)/Collections/Sequence";
+import { from } from "../../../../(System)/Collections/Sequence";
 
 import { BoncleTag } from "./Tag";
 

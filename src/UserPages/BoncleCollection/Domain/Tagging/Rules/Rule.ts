@@ -1,10 +1,10 @@
-import { StringBuildable, StringBuilder } from "../../../(System)/Text/StringBuilder";
-import { requires } from "../../../(System)/Assert";
-import { negate } from "../../../(System)/Function";
-import { from } from "../../../(System)/Collections/Sequence";
+import { StringBuildable, StringBuilder } from "../../../../../(System)/Text/StringBuilder";
+import { requires } from "../../../../../(System)/Assert";
+import { negate } from "../../../../../(System)/Function";
+import { from } from "../../../../../(System)/Collections/Sequence";
 
 import { BoncleRuleArrow } from "./RuleArrow";
-import { BoncleTag } from "./Tag";
+import { BoncleTag } from "../Tag";
 
 const tagIsKept   = negate(BoncleTag.isErased);
 const tagIsPublic = BoncleTag.isPublic;

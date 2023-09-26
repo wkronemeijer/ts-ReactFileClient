@@ -1,9 +1,9 @@
-import { StringEnum, StringEnum_create, StringEnum_Initializer, StringEnum_Member } from "../../../(System)/Data/StringEnum";
-import { __unsafeAssert } from "../../../(System)/Assert";
-import { ExpandType } from "../../../(System)/Types/Magic";
-import { collect } from "../../../(System)/Collections/Iterable";
+import { StringEnum, StringEnum_create, StringEnum_Initializer, StringEnum_Member } from "../../../../(System)/Data/StringEnum";
+import { __unsafeAssert } from "../../../../(System)/Assert";
+import { ExpandType } from "../../../../(System)/Types/Magic";
+import { collect } from "../../../../(System)/Collections/Iterable";
 
-import { BoncleTagTree } from "./Definitions/TagTree";
+import { BoncleTagTree } from "../Definitions/TagTree";
 
 export interface BoncleTagEnum<E extends string> 
 extends StringEnum<E> {

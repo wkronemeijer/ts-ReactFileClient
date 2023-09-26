@@ -4,9 +4,8 @@ import { capitalize } from "../../../../(System)/Text/Casing";
 import { abstract } from "../../../../(System)/Errors";
 import { Member } from "../../../../(System)/Data/Enumeration";
 
-import { BoncleTagEnum_createShallow, BoncleTagEnum_createDeep, BoncleTagEnum_Member } from "../TagEnum";
+import { BoncleTagEnum_createShallow, BoncleTagEnum_createDeep, BoncleTagEnum_Member } from "../Tagging/TagEnum";
 import { BoncleTagTree_Root } from "./TagTree";
-import { Record_toFunction } from "../../../../(System)/Collections/Record";
 
 const $ = BoncleTagTree_Root;
 

@@ -1,5 +1,5 @@
 import { BoncleSetNumber } from "./SetNumber";
-import { BoncleTag } from "./Tag";
+import { BoncleTag } from "./Tagging/Tag";
 
 export interface BoncleSetTemplate {
     /** Set number (id) */

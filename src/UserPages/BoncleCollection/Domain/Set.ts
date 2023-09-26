@@ -3,10 +3,10 @@ import { Ordering } from "../../../(System)/Traits/Comparable/Ordering";
 import { identity } from "../../../(System)/Function";
 import { compare } from "../../../(System)/Traits/Comparable/Compare";
 
-import { BoncleTagCollection, BoncleTagCollection_Expander, ReadonlyBoncleTagCollection } from "./TagCollection";
+import { BoncleTagCollection, BoncleTagCollection_Expander, ReadonlyBoncleTagCollection } from "./Tagging/TagCollection";
 import { BoncleDisplayElement, BoncleSetSize, BoncleSpecies } from "./Definitions/StandardEnums";
 import { BoncleSetNumber, BoncleSetNumber_getId } from "./SetNumber";
-import { BoncleTag, BoncleTag_tryCanonicalize } from "./Tag";
+import { BoncleTag, BoncleTag_tryCanonicalize } from "./Tagging/Tag";
 import { BoncleSetTemplate } from "./SetTemplate";
 
 function * inferNameTags(name: string): Iterable<BoncleTag> {

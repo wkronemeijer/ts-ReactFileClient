@@ -1,31 +1,10 @@
 import { identity } from "../../../../(System)/Function";
 import { from } from "../../../../(System)/Collections/Sequence";
 
-import { BoncleRuleArrow } from "../RuleArrow";
-import { BoncleRule } from "../Rule";
-import { BoncleTag } from "../Tag";
-
-////////////////////
-// Boncle rule db //
-////////////////////
-
-type Split<S extends string, D extends string> =
-    string extends S                          ? string[]            :
-    S      extends ""                         ? []                  :
-    S      extends           `${D}${infer U}` ?        Split<U, D>  :
-    S      extends `${infer T}${D}${infer U}` ? [T, ...Split<U, D>] :
-    [S]
-;
-
-const delimiter = ' ';
-
-function rule<S extends string>(strings: S): Split<S, typeof delimiter> {
-    const result: string[] = strings.split(delimiter).filter(identity);
-    return result as any;
-}
-
-// TODO: You should sort rules by ascending weight
-// That way, you reduce the number of total action.
+import { BoncleRuleArrow } from "../Tagging/Rules/RuleArrow";
+import { BoncleRule } from "../Tagging/Rules/Rule";
+import { BoncleTag } from "../Tagging/Tag";
+import { rule } from "../Tagging/Rules/RuleTools";
 
 ////////////////////
 // Standard rules //

@@ -1,12 +1,12 @@
-import { StringBuildable, StringBuilder } from "../../../(System)/Text/StringBuilder";
-import { assert, requires } from "../../../(System)/Assert";
-import { panic } from "../../../(System)/Errors";
-import { from } from "../../../(System)/Collections/Sequence";
-import { fst, snd } from "../../../(System)/Function";
+import { StringBuildable, StringBuilder } from "../../../../(System)/Text/StringBuilder";
+import { assert, requires } from "../../../../(System)/Assert";
+import { panic } from "../../../../(System)/Errors";
+import { from } from "../../../../(System)/Collections/Sequence";
+import { fst, snd } from "../../../../(System)/Function";
 
-import { BoncleWholeYear } from "./Definitions/StandardEnums";
+import { BoncleWholeYear } from "../Definitions/StandardEnums";
 import { BoncleTagEnum } from "./TagEnum";
-import { BoncleRule } from "./Rule";
+import { BoncleRule } from "./Rules/Rule";
 import { BoncleTag } from "./Tag";
 
 interface IterableEntries {

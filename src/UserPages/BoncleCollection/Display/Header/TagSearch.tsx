@@ -4,7 +4,7 @@ import { from } from "../../../../(System)/Collections/Sequence";
 
 import { joinClasses } from "../../../../ReactFileClient/ClassHelper";
 
-import { BoncleTag, BoncleTag_normalize } from "../../Domain/Tag";
+import { BoncleTag, BoncleTag_normalize } from "../../Domain/Tagging/Tag";
 import { BoncleSetFilter } from "../../Domain/SetFilter";
 import { BoncleTagLabel } from "../Label/Tag";
 

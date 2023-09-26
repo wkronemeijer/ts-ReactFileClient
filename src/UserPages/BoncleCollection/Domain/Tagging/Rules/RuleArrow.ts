@@ -1,6 +1,6 @@
-import { StringEnum_create, StringEnum_Member } from "../../../(System)/Data/StringEnum";
-import { Member } from "../../../(System)/Data/Enumeration";
-import { abstract } from "../../../(System)/Errors";
+import { StringEnum_create, StringEnum_Member } from "../../../../../(System)/Data/StringEnum";
+import { Member } from "../../../../../(System)/Data/Enumeration";
+import { abstract } from "../../../../../(System)/Errors";
 
 export type  BoncleRuleArrow = StringEnum_Member<typeof BoncleRuleArrow>;
 export const BoncleRuleArrow = StringEnum_create([
@@ -22,13 +22,13 @@ export const BoncleRuleArrow = StringEnum_create([
 //////////////////
 
 const weightByArrow = {
-    "==" :         0,
-    "=>" :        +1,
-    "==>" :      +10,
-    "->" :      +100,
-    "-->":    +1_000,
-    "~>" :   +10_000,
-    "~~>":  +100_000,
+    "==" :       0,
+    "=>" :       1,
+    "==>":      10,
+    "->" :     100,
+    "-->":   1_000,
+    "~>" :  10_000,
+    "~~>": 100_000,
 } satisfies Record<BoncleRuleArrow, number>;
 
 function getWeight(arrow: BoncleRuleArrow): number {

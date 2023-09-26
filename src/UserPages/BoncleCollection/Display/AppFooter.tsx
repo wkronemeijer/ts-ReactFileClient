@@ -1,9 +1,9 @@
 import { memo } from "react";
 
 import { BoncleTagCustomRules } from "../Domain/Definitions/CustomRules";
-import { BoncleTagImpliedRules } from "../Domain/ImpliedRules";
+import { BoncleTagImpliedRules } from "../Domain/Tagging/Rules/RuleSets/ImpliedRules";
 import { BoncleDatabase } from "../Domain/Database";
-import { BoncleTag } from "../Domain/Tag";
+import { BoncleTag } from "../Domain/Tagging/Tag";
 import { BoncleTagLabel } from "./Label/Tag";
 
 export const BoncleAppFooter = memo(function appFooter(): JSX.Element {

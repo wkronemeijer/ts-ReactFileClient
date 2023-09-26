@@ -4,9 +4,9 @@ import { panic } from "../../../(System)/Errors";
 import { from } from "../../../(System)/Collections/Sequence";
 
 import { __boncleTemplateDatabase } from "./Definitions/RawDatabase";
-import { BoncleTagSystem } from "./TagSystem";
+import { BoncleTagSystem } from "./Tagging/TagSystem";
 import { BoncleSetNumber } from "./SetNumber";
-import { BoncleTag } from "./Tag";
+import { BoncleTag } from "./Tagging/Tag";
 import { BoncleSet } from "./Set";
 
 const isPublic = BoncleTag.isPublic;
